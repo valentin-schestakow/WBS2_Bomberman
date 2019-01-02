@@ -29,7 +29,6 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.spawnPlayer(this.myPlayer);
-
   }
 
 
