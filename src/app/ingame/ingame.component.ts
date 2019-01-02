@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
+import {Player} from './Player';
 
 @Component({
   selector: 'app-ingame',
@@ -10,7 +11,8 @@ export class IngameComponent implements OnInit, AfterViewInit {
   /** Template reference to the canvas element */
   @ViewChild('playground') playground: ElementRef;
 
-
+  myPlayer: Player;
+  size: number;
   /** Canvas 2d context */
   context: CanvasRenderingContext2D;
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
@@ -18,11 +20,15 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   constructor() {}
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
+  ngOnInit() {
+    this.size = 25;
+    this.myPlayer =  new Player(0,0,"xXSlyerXx");
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
     this.draw();
+  }
+
+  ngAfterViewInit() {
+    this.spawnPlayer(this.myPlayer);
 
   }
 
@@ -32,18 +38,18 @@ export class IngameComponent implements OnInit, AfterViewInit {
   private draw() {
 
 
-    let size = 25;
-    let box = new Image();
+    const size = 25;
+    const box = new Image();
     box.src = '../../assets/images/box.JPG';
     console.log(box.height);
     for (let i = 0; i < 15; i++) {
       for (let j = 0; j < 20; j++) {
         this.context.beginPath();
 
-        this.context.fillStyle = ["#eee", "#eee"][(i + j) % 2];
+        this.context.fillStyle = ['#eee', '#eee'][(i + j) % 2];
         this.context.fillRect(j * size, i * size, size, size);
-        if(i>0  && Math.random()*100>40 && i< 14 ){
-          this.context.fillStyle = ["green", "green"][(i + j) % 2];
+        if (i > 0  && Math.random() * 100 > 40 && i < 14 ) {
+          this.context.fillStyle = ['green', 'green'][(i + j) % 2];
           this.context.fillRect(j * size, i * size, size, size);
         }
 
@@ -51,30 +57,61 @@ export class IngameComponent implements OnInit, AfterViewInit {
       }
     }
     // SET PLAYER ON MAP
-    this.context.drawImage(this.spaceshipAlly.nativeElement, 0*size, 0*size, size, size);
-    this.context.drawImage(this.spaceshipAlly.nativeElement, 19*size, 14*size, size, size);
+
 
   }
 
-  movePlayer(direction: string){
-    this.context.fillRect(0, 0, 25, 25);
-    this.context.drawImage(this.spaceshipAlly.nativeElement, 25, 25, 25, 25);
+  spawnPlayer(player: Player){
+    this.context.drawImage(this.spaceshipAlly.nativeElement, player.posX * this.size, player.posY * this.size, this.size, this.size);
+  }
+  movePlayer(direction: string) {
+
+
+
+    this.context.fillRect(this.myPlayer.posX, this.myPlayer.posY, 25, 25);
+
+
+    if (direction === 'up') {
+
+      this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX,this.myPlayer.posY - 25 , 25, 25);
+      this.myPlayer.posY -=this.size;
+
+    } else if (direction === 'down') {
+
+      this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX, this.myPlayer.posY + 25, 25, 25);
+      this.myPlayer.posY += this.size;
+
+    } else if (direction === 'left') {
+
+      this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX - 25, this.myPlayer.posY, 25, 25);
+      this.myPlayer.posX -= this.size;
+
+    } else if (direction === 'right') {
+
+      this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX + 25, this.myPlayer.posY, 25, 25);
+      this.myPlayer.posX +=this.size;
+
+    }
+
+
+
+
   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     console.log(event.code);
-    if(event.code==="KeyW"){
-      this.movePlayer("up");
+    if (event.code === 'KeyW') {
+      this.movePlayer('up');
     }
-    if(event.code==="KeyS"){
-      this.movePlayer("down");
+    if (event.code === 'KeyS') {
+      this.movePlayer('down');
     }
-    if(event.code==="KeyA"){
-      this.movePlayer("left");
+    if (event.code === 'KeyA') {
+      this.movePlayer('left');
     }
-    if(event.code==="KeyD"){
-      this.movePlayer("right");
+    if (event.code === 'KeyD') {
+      this.movePlayer('right');
     }
     }
 
