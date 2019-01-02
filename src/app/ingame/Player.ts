@@ -5,13 +5,17 @@ export class Player {
   public color: string;
   public name: string;
   public bombs: number;
+  public posX: number;
+  public posY: number;
 
-  constructor (name: string){
+  constructor (posX:number, posY: number, name: string){
     this.lives=3;
     this.kills=0;
     this.bombs=1;
     this.name=name;
     this.color = this.getRandomColor();
+    this.posX = posX;
+    this.posY = posY;
   }
 
   private getRandomColor() {
