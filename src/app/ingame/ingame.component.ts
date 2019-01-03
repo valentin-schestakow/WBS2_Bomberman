@@ -16,7 +16,6 @@ export class IngameComponent implements OnInit, AfterViewInit {
   /** Canvas 2d context */
   context: CanvasRenderingContext2D;
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
-  ctx: CanvasRenderingContext2D;
 
   constructor() {}
 
@@ -100,16 +99,16 @@ export class IngameComponent implements OnInit, AfterViewInit {
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     console.log(event.code);
-    if (event.code === 'KeyW') {
+    if (event.code === 'KeyW' || event.code === 'ArrowUp') {
       this.movePlayer('up');
     }
-    if (event.code === 'KeyS') {
+    if (event.code === 'KeyS' || event.code === 'ArrowDown') {
       this.movePlayer('down');
     }
-    if (event.code === 'KeyA') {
+    if (event.code === 'KeyA' || event.code === 'ArrowLeft') {
       this.movePlayer('left');
     }
-    if (event.code === 'KeyD') {
+    if (event.code === 'KeyD' || event.code === 'ArrowRight') {
       this.movePlayer('right');
     }
     }
