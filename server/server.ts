@@ -6,6 +6,60 @@ import * as pGoogle from "passport-google-oauth20";
 import {Profile} from "passport";
 import * as fs from 'fs';
 import * as https from 'https';
+import {Request, Response}      from "express";
+import * as socket     from "socket.io";
+import {
+    Collection,
+    Db,
+    DeleteWriteOpResultObject,
+    InsertOneWriteOpResult,
+    MongoClient,
+    MongoError,
+    UpdateWriteOpResult,
+} from 'mongodb';
+import {ObjectID} from 'bson';
+import * as cryptoJS   from "crypto-js";
+
+
+
+/*****************************************************************************
+ ***  setup database and its structure                                       *
+ *****************************************************************************/
+let bombermanDB: Db;
+let userlistCollection: Collection;
+//---- connect to database ----------------------------------------------------
+MongoClient.connect("mongodb://localhost:27017")
+    .then((dbClient: MongoClient) => {
+        bombermanDB = dbClient.db("bomberman");
+        userlistCollection = bombermanDB.collection("user");
+        return userlistCollection.findOne({username: "admin"})
+    })
+    .then<void>((res) => {
+        if (!res) {
+            userlistCollection.insertOne({username: "admin", password: cryptoJS.MD5("admin").toString(), vorname: "admin", nachname: "admin", description: "description"});
+        }
+        console.log("Database is connected ...\n");
+    }).catch((err : MongoError) => {
+    console.error("Error connecting to database ...\n" + err);
+});
+
+class User {
+    _id      : number;
+    time     : string; // time-time format defined[RFC 3339] e.g. 2017-12-31T23:59:6
+    username : string;
+    vorname  : string;
+    nachname : string;
+    description: string;
+    constructor(id:number, time:string, username:string, vorname:string, nachname:string, description:string) {
+        this._id       = id;
+        this.time     = time;
+        this.username = username;
+        this.vorname  = vorname;
+        this.nachname = nachname;
+        this.description = description;
+    }
+}
+
 
 
 let router = express();

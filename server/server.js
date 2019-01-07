@@ -7,6 +7,39 @@ var pFacebook = require("passport-facebook");
 var pGoogle = require("passport-google-oauth20");
 var fs = require("fs");
 var https = require("https");
+var mongodb_1 = require("mongodb");
+var cryptoJS = require("crypto-js");
+/*****************************************************************************
+ ***  setup database and its structure                                       *
+ *****************************************************************************/
+var bombermanDB;
+var userlistCollection;
+//---- connect to database ----------------------------------------------------
+mongodb_1.MongoClient.connect("mongodb://localhost:27017")
+    .then(function (dbClient) {
+    bombermanDB = dbClient.db("bomberman");
+    userlistCollection = bombermanDB.collection("user");
+    return userlistCollection.findOne({ username: "admin" });
+})
+    .then(function (res) {
+    if (!res) {
+        userlistCollection.insertOne({ username: "admin", password: cryptoJS.MD5("admin").toString(), vorname: "admin", nachname: "admin", description: "description" });
+    }
+    console.log("Database is connected ...\n");
+}).catch(function (err) {
+    console.error("Error connecting to database ...\n" + err);
+});
+var User = /** @class */ (function () {
+    function User(id, time, username, vorname, nachname, description) {
+        this._id = id;
+        this.time = time;
+        this.username = username;
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.description = description;
+    }
+    return User;
+}());
 var router = express();
 // passport ist eine authentifizzierungs middleware für nodejs.
 router.use(session({
