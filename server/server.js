@@ -9,38 +9,105 @@ var fs = require("fs");
 var https = require("https");
 var mongodb_1 = require("mongodb");
 var cryptoJS = require("crypto-js");
+var bodyParser = require("body-parser");
 /*****************************************************************************
  ***  setup database and its structure                                       *
  *****************************************************************************/
 var bombermanDB;
-var userlistCollection;
+var playerlistCollection;
 //---- connect to database ----------------------------------------------------
-mongodb_1.MongoClient.connect("mongodb://localhost:27017")
+mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true })
     .then(function (dbClient) {
     bombermanDB = dbClient.db("bomberman");
-    userlistCollection = bombermanDB.collection("user");
-    return userlistCollection.findOne({ username: "admin" });
+    playerlistCollection = bombermanDB.collection("player");
+    return playerlistCollection.findOne({ email: "test@test.de" });
 })
     .then(function (res) {
     if (!res) {
-        userlistCollection.insertOne({ username: "admin", password: cryptoJS.MD5("admin").toString(), vorname: "admin", nachname: "admin", description: "description" });
+        playerlistCollection.insertOne({ email: "test@test.de", password: cryptoJS.MD5("test").toString(), username: "test" });
     }
     console.log("Database is connected ...\n");
 }).catch(function (err) {
     console.error("Error connecting to database ...\n" + err);
 });
-var User = /** @class */ (function () {
-    function User(id, time, username, vorname, nachname, description) {
+var Player = /** @class */ (function () {
+    function Player(id, time, username, email, password) {
         this._id = id;
         this.time = time;
         this.username = username;
-        this.vorname = vorname;
-        this.nachname = nachname;
-        this.description = description;
+        this.email = email;
+        this.password = password;
+        this.gamestats = null;
     }
-    return User;
+    return Player;
+}());
+var GameStats = /** @class */ (function () {
+    function GameStats(id, gameCount, points, kills, deaths) {
+        this._id = id;
+        this.gameCount = gameCount;
+        this.points = points;
+        this.kills = kills;
+        this.deaths = deaths;
+    }
+    return GameStats;
 }());
 var router = express();
+/*****************************************************************************
+ ***  Rights Management (class and function)                                 *
+ *****************************************************************************/
+//--- Class that deals with Rights --------------------------------------------
+var Rights = /** @class */ (function () {
+    // can be extended here with other user-roles
+    function Rights(player, admin, superadmin) {
+        this.player = player;
+        this.admin = admin;
+        this.superadmin = superadmin;
+        // can be extended here with other user roles
+    }
+    return Rights;
+}());
+//--- checkRight, is there still a session and are the rights sufficient ------
+function checkRights(req, res, rights) {
+    //--- check if session is existing ------------------------------------------
+    if (!req.session.rights) {
+        res.status(401); // set HTTP response state
+        res.json({ message: "No session: Please log in" }); // send HTTP-response
+        return false;
+    }
+    //--- check rights against the needed rights (provided as parameter) --------
+    else {
+        var rightsOK = true;
+        var message = "unsufficient rights";
+        if (rights.player) {
+            rightsOK = rightsOK && req.session.rights.player;
+            message += ": not logged in";
+        }
+        if (rights.admin) { // checks if "admin" is needed
+            rightsOK = rightsOK && req.session.rights.admin;
+            message += ": not Moderator";
+        }
+        if (rights.superadmin) { // ckecks if "superadmin" is needed
+            rightsOK = rightsOK && req.session.rights.superadmin;
+            message += ", not admin";
+        }
+        // can be extended here checking other user roles
+        if (!rightsOK) {
+            res.status(401); // set HTTP response state
+            res.json({ message: message }); // send HTTP-response
+            return false;
+        }
+    }
+    //--- return TRUE if everthing was o.k. --------------------------------------
+    return true;
+}
+//--- parsing json -----------------------------------------------------------
+router.use(bodyParser.json());
+router.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 // passport ist eine authentifizzierungs middleware für nodejs.
 router.use(session({
     // das ist eine session konfigurationn die für das passport benötigt wird
@@ -50,6 +117,8 @@ router.use(session({
     saveUninitialized: true,
     // forces cookie set on every response needed to set expiration (maxAge)
     rolling: true,
+    // name of the cookie set is set by the server
+    name: "mySessionCookie",
     // encrypt session-id in cookie using "secret" as modifier
     secret: "keyboard cat"
 }));
@@ -82,6 +151,240 @@ https.createServer(credentials, router).listen(8443);
 console.log("-------------------------------------------------------------\n"
     + "Aufruf: https://localhost:8443\n" +
     "-------------------------------------------------------------\n");
+/**
+ * Check Login
+ */
+router.get("/login/check", function (req, res) {
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    res.status(200).json({ message: "player still logged in" });
+});
+/**
+ * --- login with: post /login -----------------------------------------
+ */
+router.post("/login/player", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var email = req.body.email;
+    var password = req.body.password;
+    //---- ok -> check username/password in database and set Rights -------------
+    if (password != "" && email != "") {
+        var query = { email: email, password: cryptoJS.MD5(password).toString() };
+        playerlistCollection.findOne(query).then(function (player) {
+            if (player !== null) {
+                message = email + " logged in by email/password";
+                req.session.email = email; // set session-variable email
+                req.session.rights = new Rights(true, false, false);
+                status = 200;
+            }
+            else { // username and passwort does not match message = "Id " + id + " not found";
+                message = "Not Valid: user '" + email + "' does not match password";
+                status = 401;
+            }
+            res.status(status).json({ message: message });
+        }).catch(function (error) {
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({ message: message });
+        });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
+        res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
+    }
+});
+/**
+ * --- logout with: post /logout ---------------------------------------
+ */
+router.post("/logout/player", function (req, res) {
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- ok -> delete session-variable and reset Rights ------------------------
+    var email = req.session.email;
+    req.session.email = null; // delete session-variable
+    req.session.rights = null; // reset all Rights
+    res.status(200).json({ message: email + " logout successfull" });
+});
+/**
+ * --- create new user with: post /user --------------------------------
+ */
+router.post("/create/player", function (req, res) {
+    var username = (req.body.username ? req.body.username : "").trim();
+    var email = (req.body.email ? req.body.email : "").trim();
+    var password = (req.body.password ? req.body.password : "").trim();
+    var message = "";
+    var status = 500; // Initial HTTP response status
+    /*
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    */
+    //-- ok -> insert user-data into database -----------------------------------
+    if ((username != "") && (email != "") && (password != "")) {
+        var insertData = {
+            time: new Date().toLocaleString(),
+            email: email,
+            username: username,
+            password: cryptoJS.MD5(password).toString()
+        };
+        playerlistCollection.insertOne(insertData)
+            .then(function (result) {
+            message = "Created: " + username;
+            status = 201;
+            res.status(status).json({ message: message });
+        })
+            .catch(function (error) {
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({ message: message });
+        });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
+        res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
+    }
+});
+/**
+ * --- get user with /player/:email -----------------------------------------
+ */
+router.get("/player/:email", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var email = (req.params.email != "" ? req.params.email : -1);
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- ok -> get user from database ------------------------------------------
+    var query = { email: email };
+    playerlistCollection.findOne(query)
+        .then(function (player) {
+        if (player !== null) {
+            message = "Selected item is " + player.email;
+            status = 200;
+            res.status(status).json({ player: player, message: message });
+        }
+        else {
+            message = "Player " + player.email + " not found";
+            status = 404;
+            res.status(status).json({ player: player, message: message });
+        }
+    })
+        .catch(function (error) {
+        message = "Database error: " + error.code;
+        status = 505;
+        res.status(status).json({ player: null, message: message });
+    });
+});
+/**
+ * --- update user with: put /user/:email ---------------------------------
+ */
+router.put("/user/:email", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var updateData = {}; // No type provided - depends on existence of password
+    var query;
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- check if parameters exists -> initialize each if not ------------------
+    var email = (req.params.email ? req.params.email : "");
+    //let email : string = (req.body.email ? req.body.email : "").trim();
+    var username = (req.body.username ? req.body.username : "").trim();
+    var password = (req.body.password ? req.body.password : "").trim();
+    //--- ok -> update user with new attributes ---------------------------------
+    query = { email: email };
+    if (password == "") { // no new password set
+        updateData = { username: username };
+    }
+    else { // new password set
+        updateData = { password: cryptoJS.MD5(password).toString(), username: username };
+    }
+    playerlistCollection.updateOne(query, { $set: updateData })
+        .then(function (result) {
+        if (result.matchedCount === 1) {
+            message = username + " successfully updated";
+            status = 201;
+            res.status(status).json({ message: message });
+        }
+        else {
+            message = "Not Valid: E-Mail " + email + " not valid";
+            status = 500;
+            res.status(status).json({ message: message });
+        }
+    })
+        .catch(function (error) {
+        message = "Database error: " + error.code;
+        status = 505;
+        res.status(status).json({ message: message });
+    });
+});
+/**
+ * --- delete user with /player/:email --------------------------------------
+ */
+router.delete("/player/:email", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var email = (req.body.id != "" ? req.params.id : -1);
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- ok -> delete user from database ---------------------------------------
+    var query = { email: email };
+    playerlistCollection.findOne(query)
+        .then(function (res) {
+        if (res["username"] == 'admin') {
+            return Promise.reject(new Error("Cannot delete admin."));
+        }
+        else {
+            return playerlistCollection.deleteOne(query);
+        }
+    })
+        .then(function (result) {
+        if (result.deletedCount === 1) {
+            message = "E-Mail " + email + " successfully deleted";
+            status = 200;
+        }
+        else {
+            message = "E-Mail " + email + " not found";
+            status = 404;
+        }
+        res.status(status).json({ message: message });
+    }).catch(function (error) {
+        message = "Database error: " + error;
+        status = 505;
+        res.status(status).json({ message: message });
+    });
+});
+/**
+ * return all users
+ */
+router.get("/players", function (req, res) {
+    if (!checkRights(req, res, new Rights(false, true, true))) {
+        return;
+    }
+    var query = {};
+    playerlistCollection.find(query).toArray()
+        .then(function (players) {
+        players = players.map(function (player) {
+            player['id'] = player['_id'];
+            player['_id'] = undefined;
+            player['password'] = undefined;
+            return player;
+        });
+        res.status(200).json({ message: "fetched users", players: players });
+    })
+        .catch(function (error) {
+        res.status(500).json({ message: "Database error" + error.code });
+    });
+});
 //kofnigurationsklasse welche die clientid und secret enthält
 var GoogleAuthConfig = /** @class */ (function () {
     function GoogleAuthConfig() {
