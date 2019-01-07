@@ -2,14 +2,14 @@ import {Field} from './Field';
 
 export class Bomb extends Field {
 
-  public timestamp: number;
+  public timeLeft: number;
   public range:number = 1;
 
 
-  constructor(posX:number, posY: number, timestamp: number ){
+  constructor(posX:number, posY: number, timeLeft: number ){
     super(posX, posY);
 
-    this.timestamp = timestamp;
+    this.timeLeft = timeLeft;
     this.type = "Bomb";
     this.posX = posX;
     this.posY = posY;
