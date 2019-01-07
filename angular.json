@@ -27,9 +27,17 @@
               "src/assets"
             ],
             "styles": [
-              "client/src/styles.scss"
+              "client/node_modules/bootstrap/scss/bootstrap.scss",
+              "client/node_modules/font-awesome/scss/font-awesome.scss",
+              "src/assets/scss/style.scss",
+              "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/vendors/jquery/dist/jquery.min.js",
+              "src/assets/vendors/popper.js/dist/umd/popper.min.js",
+              "src/assets/vendors/bootstrap/dist/js/bootstrap.min.js",
+              "src/assets/js/main.js"
+            ]
           },
           "configurations": {
             "production": {
