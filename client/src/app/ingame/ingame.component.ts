@@ -245,19 +245,41 @@ export class IngameComponent implements OnInit, AfterViewInit {
   bombExplode(posY:number,posX:number){
 
     if(posY > 1){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY, 25, 25);
+
       this.playField[posY-1][posX] = new Field(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY);
     }
     if(posY < 13){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY, 25, 25);
+
       this.playField[posY+1][posX] = new Field(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY);
     }
     if(posX > 1){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY, 25, 25);
+
       this.playField[posY][posX-1] = new Field(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY);
     }
     if(posX < 19){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY, 25, 25);
+
       this.playField[posY][posX+1] = new Field(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY);
     }
     this.playField[posY][posX] = new Field(this.playField[posY][posX].posX,this.playField[posY][posX].posY);
-    this.reprintCanvas();
+    //this.reprintCanvas();
+    var timeleft = 1;
+    let interval = setInterval(() => {
+      if(timeleft > 0) {
+        timeleft--;
+      } else {
+        this.reprintCanvas();
+        clearInterval(interval);
+      }
+    },1000);
   }
+
 
   }
