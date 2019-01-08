@@ -4,7 +4,7 @@ import {Bomb} from './Bomb';
 import {Field} from './Field';
 import {Block} from './Block';
 import {delay} from 'rxjs/operators';
-import {timer} from 'rxjs';
+import {interval, timer} from 'rxjs';
 
 
 
@@ -26,6 +26,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
   @ViewChild('playground') playground: ElementRef;
   myPlayer: Player;
   size: number;
+  myBomb: Bomb;
   /** Canvas 2d context */
   context: CanvasRenderingContext2D;
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
@@ -164,13 +165,25 @@ export class IngameComponent implements OnInit, AfterViewInit {
     if (action === 'plantBomb') {
       console.log("Plant Bomb at x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
       this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
-        new Bomb(this.myPlayer.posX,this.myPlayer.posY,12);
+        new Bomb(this.myPlayer.posX,this.myPlayer.posY,2);
+      this.myBomb =  new Bomb(this.myPlayer.posX,this.myPlayer.posY,2);
       this.context.fillStyle = 'orange';
       this.context.fillRect(this.myPlayer.posX, this.myPlayer.posY, 25, 25);
       this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX, this.myPlayer.posY, 25, 25);
       timer(500);
 
-      this.bombExplode(this.convertAbsolutePosToRelativePos(this.myPlayer.posY),this.convertAbsolutePosToRelativePos(this.myPlayer.posX));
+
+      /*Tiemr*/
+      //let timeLeft =3;
+
+      let interval = setInterval(() => {
+        if(this.myBomb.timeLeft > 0) {
+          this.myBomb.timeLeft--;
+        } else {
+          this.bombExplode(this.convertAbsolutePosToRelativePos(this.myBomb.posY),this.convertAbsolutePosToRelativePos(this.myBomb.posX));
+          clearInterval(interval);
+        }
+      },1000);
     } else if (action === 'printDebug'){
       let row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9\n";
       for (let i = 0; i < this.playField.length; i++ ){
@@ -230,19 +243,43 @@ export class IngameComponent implements OnInit, AfterViewInit {
   }*/
 
   bombExplode(posY:number,posX:number){
-    if(posY > 1){
+
+    if(posY > 0){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY, 25, 25);
+
       this.playField[posY-1][posX] = new Field(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY);
     }
     if(posY < 13){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY, 25, 25);
+
       this.playField[posY+1][posX] = new Field(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY);
     }
-    if(posX > 1){
+    if(posX > 0){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY, 25, 25);
+
       this.playField[posY][posX-1] = new Field(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY);
     }
     if(posX < 19){
+      this.context.fillStyle = 'red';
+      this.context.fillRect(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY, 25, 25);
+
       this.playField[posY][posX+1] = new Field(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY);
     }
-    this.reprintCanvas();
+    this.playField[posY][posX] = new Field(this.playField[posY][posX].posX,this.playField[posY][posX].posY);
+    //this.reprintCanvas();
+    var timeleft = 1;
+    let interval = setInterval(() => {
+      if(timeleft > 0) {
+        timeleft--;
+      } else {
+        this.reprintCanvas();
+        clearInterval(interval);
+      }
+    },1000);
   }
+
 
   }
