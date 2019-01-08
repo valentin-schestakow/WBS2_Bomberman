@@ -176,8 +176,13 @@ function checkRights(req: Request, res: Response, rights: Rights) : boolean {
 
 }
 /*****************************************************************************
- ***  Middleware Routers for Parsing, Session- and Rights-Management         *
+ ***  Middleware Routers for Parsing, Session- and Rights-Management, and OAuth2         *
  *****************************************************************************/
+router.use(passport.initialize());
+//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
+router.use(passport.session()); // persistent login sessions
+
+
 //--- parsing json -----------------------------------------------------------
 router.use(bodyParser.json());
 
@@ -486,9 +491,6 @@ router.use("/*", express.static(__dirname + "/../client/dist/bomberman"))
 /*****************************************************************************
  ***  OAuth2         *
  *****************************************************************************/
-router.use(passport.initialize());
-//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
-router.use(passport.session()); // persistent login sessions
 
 // used to serialize the user for the session
 // cokkie erstellen
