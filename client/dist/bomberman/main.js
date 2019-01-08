@@ -205,6 +205,7 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         this.playerService.getUsers();
+        this.playerService.logIn();
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -522,7 +523,6 @@ var IngameComponent = /** @class */ (function () {
         this.playerService = playerService;
     }
     IngameComponent.prototype.ngOnInit = function () {
-        this.playerService.getUsers();
         this.size = 25;
         this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
@@ -1005,18 +1005,32 @@ var httpOptions = {
 var PlayerService = /** @class */ (function () {
     function PlayerService(http) {
         this.http = http;
+        this.isLoggedIn = false;
     }
     PlayerService.prototype.getUsers = function () {
         this.http.get('https://localhost:8080/players')
             .toPromise()
             .then(function (data) {
-            console.log(data);
+            console.log(data.players);
         }).catch(function (err) {
             console.log(err);
         });
     };
+    PlayerService.prototype.logIn = function () {
+        var _this = this;
+        return this.http.post('https://localhost:8080/login/player', { email: "test@test.de", password: "test" }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            _this.isLoggedIn = true;
+            console.log(res.message);
+        })
+            .catch(function (err) {
+            console.log(err.message);
+        });
+    };
     PlayerService.prototype.ngOnInit = function () {
         this.getUsers();
+        this.logIn();
     };
     PlayerService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

@@ -178,9 +178,6 @@ function checkRights(req: Request, res: Response, rights: Rights) : boolean {
 /*****************************************************************************
  ***  Middleware Routers for Parsing, Session- and Rights-Management, and OAuth2         *
  *****************************************************************************/
-router.use(passport.initialize());
-//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
-router.use(passport.session()); // persistent login sessions
 
 
 //--- parsing json -----------------------------------------------------------
@@ -373,7 +370,7 @@ router.get    ("/player/:email",    function (req: Request, res: Response) {
 /**
  * --- update user with: put /user/:email ---------------------------------
  */
-router.put    ("/user/:email",    function (req: Request, res: Response) {
+router.put    ("/player/:email",    function (req: Request, res: Response) {
     let status      : number = 500; // Initial HTTP response status
     let message     : string = ""; // To be set
     let updateData  : any = {}; // No type provided - depends on existence of password
@@ -487,6 +484,12 @@ router.get("/players", function(req: Request, res: Response) {
 });
 
 
+
+router.get("/userlogin", function(req: Request, res: Response) {
+    res.status(200).json({"message" : "test"});
+});
+
+
 router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
 // Routen innerhalb der Angular-Anwendung zurückleiten
 router.use("/*", express.static(__dirname + "/../client/dist/bomberman"))
@@ -496,6 +499,11 @@ router.use("/*", express.static(__dirname + "/../client/dist/bomberman"))
 /*****************************************************************************
  ***  OAuth2         *
  *****************************************************************************/
+
+router.use(passport.initialize());
+//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
+router.use(passport.session()); // persistent login sessions
+
 
 // used to serialize the user for the session
 // cokkie erstellen

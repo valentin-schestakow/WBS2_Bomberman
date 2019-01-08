@@ -36,7 +36,6 @@ export class IngameComponent implements OnInit, AfterViewInit {
   constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
-    this.playerService.getUsers();
     this.size = 25;
     this.myPlayer =  new Player(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
