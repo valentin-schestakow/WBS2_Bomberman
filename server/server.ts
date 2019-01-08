@@ -166,7 +166,10 @@ router.use( session( {
   secret: "keyboard cat"
 }));
 
-router.use("/client", express.static(__dirname + "/../client"));
+router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
+// Routen innerhalb der Angular-Anwendung zurückleiten
+router.use("/*", express.static(__dirname + "/../client/dist/bomberman"));
+
 router.use("/jquery", express.static( __dirname + "/node_modules/jquery/dist"));
 
 
@@ -197,9 +200,9 @@ let privateKey = fs.readFileSync(__dirname + '/sslcert/server.key', 'utf8');
 let certificate = fs.readFileSync(__dirname + '/sslcert/server.crt', 'utf8');
 let credentials = {key: privateKey, cert: certificate};
 // instead of: router.listen(8080);
-https.createServer(credentials, router).listen(8443);
+https.createServer(credentials, router).listen(8080);
 console.log("-------------------------------------------------------------\n"
-  + "Aufruf: https://localhost:8443\n" +
+  + "Aufruf: https://localhost:8080\n" +
   "-------------------------------------------------------------\n");
 
 
@@ -491,7 +494,7 @@ class GoogleAuthConfig {
   googleAuth :iGoogleAuth = {
     clientID: '85564632151-r3mqfgrsrhk2kcdrdn0fe4hvsvcm7do6.apps.googleusercontent.com',
     clientSecret: 'zfmPBLMIxWEDdg8lJJJkuag9',
-    callbackURL: 'https://localhost:8443/auth/google/callback'
+    callbackURL: 'https://localhost:8080/auth/google/callback'
   };
 }
 
@@ -505,7 +508,7 @@ class FacebookAuthConfig {
   facebookAuth :iFacebookAuth = {
     clientID: '286966021819558',
     clientSecret: '1b6e3a21f4d58b43e54b70822611bddc',
-    callbackURL: 'https://localhost:8443/auth/facebook/callback'
+    callbackURL: 'https://localhost:8080/auth/facebook/callback'
   };
 }
 

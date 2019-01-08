@@ -30,7 +30,7 @@ mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: tr
 }).catch(function (err) {
     console.error("Error connecting to database ...\n" + err);
 });
-var Player = /** @class */ (function () {
+var Player = (function () {
     function Player(id, time, username, email, password) {
         this._id = id;
         this.time = time;
@@ -41,7 +41,7 @@ var Player = /** @class */ (function () {
     }
     return Player;
 }());
-var GameStats = /** @class */ (function () {
+var GameStats = (function () {
     function GameStats(id, gameCount, points, kills, deaths) {
         this._id = id;
         this.gameCount = gameCount;
@@ -56,7 +56,7 @@ var router = express();
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
 //--- Class that deals with Rights --------------------------------------------
-var Rights = /** @class */ (function () {
+var Rights = (function () {
     // can be extended here with other user-roles
     function Rights(player, admin, superadmin) {
         this.player = player;
@@ -74,7 +74,6 @@ function checkRights(req, res, rights) {
         res.json({ message: "No session: Please log in" }); // send HTTP-response
         return false;
     }
-    //--- check rights against the needed rights (provided as parameter) --------
     else {
         var rightsOK = true;
         var message = "unsufficient rights";
@@ -82,11 +81,11 @@ function checkRights(req, res, rights) {
             rightsOK = rightsOK && req.session.rights.player;
             message += ": not logged in";
         }
-        if (rights.admin) { // checks if "admin" is needed
+        if (rights.admin) {
             rightsOK = rightsOK && req.session.rights.admin;
             message += ": not Moderator";
         }
-        if (rights.superadmin) { // ckecks if "superadmin" is needed
+        if (rights.superadmin) {
             rightsOK = rightsOK && req.session.rights.superadmin;
             message += ", not admin";
         }
@@ -122,7 +121,9 @@ router.use(session({
     // encrypt session-id in cookie using "secret" as modifier
     secret: "keyboard cat"
 }));
-router.use("/client", express.static(__dirname + "/../client"));
+router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
+// Routen innerhalb der Angular-Anwendung zurückleiten
+router.use("/*", express.static(__dirname + "/../client/dist/bomberman"));
 router.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist"));
 router.use(passport.initialize());
 //initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
@@ -147,9 +148,9 @@ var privateKey = fs.readFileSync(__dirname + '/sslcert/server.key', 'utf8');
 var certificate = fs.readFileSync(__dirname + '/sslcert/server.crt', 'utf8');
 var credentials = { key: privateKey, cert: certificate };
 // instead of: router.listen(8080);
-https.createServer(credentials, router).listen(8443);
+https.createServer(credentials, router).listen(8080);
 console.log("-------------------------------------------------------------\n"
-    + "Aufruf: https://localhost:8443\n" +
+    + "Aufruf: https://localhost:8080\n" +
     "-------------------------------------------------------------\n");
 /**
  * Check Login
@@ -179,7 +180,7 @@ router.post("/login/player", function (req, res) {
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
             }
-            else { // username and passwort does not match message = "Id " + id + " not found";
+            else {
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
             }
@@ -190,8 +191,7 @@ router.post("/login/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    //--- nok -------------------------------------------------------------------
-    else { // either username or password not provided
+    else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -244,8 +244,7 @@ router.post("/create/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    //--- nok -------------------------------------------------------------------
-    else { // some parameters are not provided
+    else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -300,10 +299,10 @@ router.put("/user/:email", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     query = { email: email };
-    if (password == "") { // no new password set
+    if (password == "") {
         updateData = { username: username };
     }
-    else { // new password set
+    else {
         updateData = { password: cryptoJS.MD5(password).toString(), username: username };
     }
     playerlistCollection.updateOne(query, { $set: updateData })
@@ -386,22 +385,22 @@ router.get("/players", function (req, res) {
     });
 });
 //kofnigurationsklasse welche die clientid und secret enthält
-var GoogleAuthConfig = /** @class */ (function () {
+var GoogleAuthConfig = (function () {
     function GoogleAuthConfig() {
         this.googleAuth = {
             clientID: '85564632151-r3mqfgrsrhk2kcdrdn0fe4hvsvcm7do6.apps.googleusercontent.com',
             clientSecret: 'zfmPBLMIxWEDdg8lJJJkuag9',
-            callbackURL: 'https://localhost:8443/auth/google/callback'
+            callbackURL: 'https://localhost:8080/auth/google/callback'
         };
     }
     return GoogleAuthConfig;
 }());
-var FacebookAuthConfig = /** @class */ (function () {
+var FacebookAuthConfig = (function () {
     function FacebookAuthConfig() {
         this.facebookAuth = {
             clientID: '286966021819558',
             clientSecret: '1b6e3a21f4d58b43e54b70822611bddc',
-            callbackURL: 'https://localhost:8443/auth/facebook/callback'
+            callbackURL: 'https://localhost:8080/auth/facebook/callback'
         };
     }
     return FacebookAuthConfig;
