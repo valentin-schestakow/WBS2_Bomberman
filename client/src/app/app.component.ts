@@ -13,6 +13,7 @@ export class AppComponent implements  OnInit{
 
   ngOnInit(): void {
     this.playerService.getUsers();
+    this.playerService.logIn();
   }
 
 }

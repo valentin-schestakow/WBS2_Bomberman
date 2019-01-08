@@ -134,9 +134,6 @@ function checkRights(req, res, rights) {
 /*****************************************************************************
  ***  Middleware Routers for Parsing, Session- and Rights-Management, and OAuth2         *
  *****************************************************************************/
-router.use(passport.initialize());
-//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
-router.use(passport.session()); // persistent login sessions
 //--- parsing json -----------------------------------------------------------
 router.use(bodyParser.json());
 router.use(function (req, res, next) {
@@ -291,7 +288,7 @@ router.get("/player/:email", function (req, res) {
 /**
  * --- update user with: put /user/:email ---------------------------------
  */
-router.put("/user/:email", function (req, res) {
+router.put("/player/:email", function (req, res) {
     var status = 500; // Initial HTTP response status
     var message = ""; // To be set
     var updateData = {}; // No type provided - depends on existence of password
@@ -394,12 +391,18 @@ router.get("/players", function (req, res) {
         res.status(500).json({ message: "Database error" + error.code });
     });
 });
+router.get("/userlogin", function (req, res) {
+    res.status(200).json({ "message": "test" });
+});
 router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
 // Routen innerhalb der Angular-Anwendung zurückleiten
 router.use("/*", express.static(__dirname + "/../client/dist/bomberman"));
 /*****************************************************************************
  ***  OAuth2         *
  *****************************************************************************/
+router.use(passport.initialize());
+//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
+router.use(passport.session()); // persistent login sessions
 // used to serialize the user for the session
 // cokkie erstellen
 // serialisiert das user profille um es in der session zu speichern
