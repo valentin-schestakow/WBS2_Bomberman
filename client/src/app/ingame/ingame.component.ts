@@ -179,25 +179,28 @@ export class IngameComponent implements OnInit, AfterViewInit {
     }
 
     if (action === 'plantBomb') {
-      console.log("Plant Bomb at x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
-      this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
-        new Bomb(this.myPlayer.posX,this.myPlayer.posY,2);
-      this.myBomb =  new Bomb(this.myPlayer.posX,this.myPlayer.posY,2);
-      this.reprintCanvas();
-      //timer(500);
+      if (this.myPlayer.bombPlanted < 1) {
+
+        this.myPlayer.bombPlanted++;
+        console.log("Plant Bomb at x:" + this.convertAbsolutePosToRelativePos(this.myPlayer.posX) + " y: " + this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+        this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
+          new Bomb(this.myPlayer.posX, this.myPlayer.posY, 2);
+        this.myBomb = new Bomb(this.myPlayer.posX, this.myPlayer.posY, 2);
+        this.reprintCanvas();
+        //timer(500);
 
 
-      /*Tiemr*/
-      //let timeLeft =3;
-
-      let interval = setInterval(() => {
-        if(this.myBomb.timeLeft > 0) {
-          this.myBomb.timeLeft--;
-        } else {
-          this.bombExplode(this.convertAbsolutePosToRelativePos(this.myBomb.posY),this.convertAbsolutePosToRelativePos(this.myBomb.posX));
-          clearInterval(interval);
-        }
-      },1000);
+        /*Tiemr*/
+        //let timeLeft =3;
+        let interval = setInterval(() => {
+          if (this.myBomb.timeLeft > 0) {
+            this.myBomb.timeLeft--;
+          } else {
+            this.bombExplode(this.convertAbsolutePosToRelativePos(this.myBomb.posY), this.convertAbsolutePosToRelativePos(this.myBomb.posX));
+            clearInterval(interval);
+          }
+        }, 1000);
+      }
     } else if (action === 'printDebug'){
       let row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9|\n";
       for (let i = 0; i < this.playField.length; i++ ){
@@ -292,6 +295,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
         timeleft--;
       } else {
         this.explosionHelper(posY,posX,"Field");
+        this.myPlayer.bombPlanted--;
         this.reprintCanvas();
         clearInterval(interval);
       }
