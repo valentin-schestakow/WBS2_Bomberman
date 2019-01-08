@@ -482,7 +482,7 @@ module.exports = "<h2>ingame Component!</h2>\r\n<img id=\"box\" src=\"../../asse
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaW5nYW1lL0M6XFxVc2Vyc1xcX0FJTk9cXE5leHRjbG91ZFxcTWF4IFNwaWVzXFxUSE1cXFNvY2lhbCBNZWRpYSBTeXN0ZW1zXFxXQlMyXFxCb21iZXJtYW4tR0lUXFxuc2Vydlxcd2JzMi1ib21iZXJtYW5cXGNsaWVudC9zcmNcXGFwcFxcaW5nYW1lXFxpbmdhbWUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDQyxZQUFXLEVBQ1g7O0FBQ0Q7RUFDRSxjQUFhLEVBQ2QiLCJmaWxlIjoic3JjL2FwcC9pbmdhbWUvaW5nYW1lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiY2FudmFzIHtcclxuIHdpZHRoOiAxMDAlO1xyXG59XHJcbmltZyB7XHJcbiAgZGlzcGxheTogbm9uZTtcclxufVxyXG4iXX0= */"
+module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaW5nYW1lL0M6XFxVc2Vyc1xcZGtyaW9uXFxEb2N1bWVudHNcXF9TdHVkaXVtXFxXQlMyXFx3YnMyLWJvbWJlcm1hblxcY2xpZW50L3NyY1xcYXBwXFxpbmdhbWVcXGluZ2FtZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLFlBQVcsRUFDWDs7QUFDRDtFQUNFLGNBQWEsRUFDZCIsImZpbGUiOiJzcmMvYXBwL2luZ2FtZS9pbmdhbWUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJjYW52YXMge1xyXG4gd2lkdGg6IDEwMCU7XHJcbn1cclxuaW1nIHtcclxuICBkaXNwbGF5OiBub25lO1xyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -1169,7 +1169,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\_AINO\Nextcloud\Max Spies\THM\Social Media Systems\WBS2\Bomberman-GIT\nserv\wbs2-bomberman\client\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\dkrion\Documents\_Studium\WBS2\wbs2-bomberman\client\src\main.ts */"./src/main.ts");
 
 
 /***/ })

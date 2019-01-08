@@ -7,7 +7,6 @@ import {Profile} from "passport";
 import * as fs from 'fs';
 import * as https from 'https';
 import {Request, Response}      from "express";
-import * as socket     from "socket.io";
 import {
     Collection,
     Db,
@@ -20,6 +19,7 @@ import {
 import {ObjectID} from 'bson';
 import * as cryptoJS   from "crypto-js";
 import bodyParser = require("body-parser");
+import * as gameServer from '../server/gameServer';
 
 
 
@@ -97,22 +97,10 @@ console.log("-------------------------------------------------------------\n"
 /*****************************************************************************
  ***  set up webSocket                                                       *
  *****************************************************************************/
-let io = socket(server);
-io.on('connection', (socket) => {
-    console.log('made socket connection', socket.id);
-    //--- Handle lock event -----------------------------------------------------
-    socket.on('lock', function (user) {
-        socket.broadcast.emit('lock', user);
-    });
-    //--- Handle update event ---------------------------------------------------
-    socket.on('update', function () {
-        socket.broadcast.emit('update');
-    });
-    //--- Handle disconnect event -----------------------------------------------
-    socket.on('disconnect', function () {
-        socket.broadcast.emit('update');
-    });
-});
+
+gameServer.run(server);
+
+
 
 
 

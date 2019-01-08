@@ -7,10 +7,10 @@ var pFacebook = require("passport-facebook");
 var pGoogle = require("passport-google-oauth20");
 var fs = require("fs");
 var https = require("https");
-var socket = require("socket.io");
 var mongodb_1 = require("mongodb");
 var cryptoJS = require("crypto-js");
 var bodyParser = require("body-parser");
+var gameServer = require("../server/gameServer");
 /*****************************************************************************
  ***  setup database and its structure                                       *
  *****************************************************************************/
@@ -31,7 +31,7 @@ mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: tr
 }).catch(function (err) {
     console.error("Error connecting to database ...\n" + err);
 });
-var Player = /** @class */ (function () {
+var Player = (function () {
     function Player(id, time, username, email, password) {
         this._id = id;
         this.time = time;
@@ -42,7 +42,7 @@ var Player = /** @class */ (function () {
     }
     return Player;
 }());
-var GameStats = /** @class */ (function () {
+var GameStats = (function () {
     function GameStats(id, gameCount, points, kills, deaths) {
         this._id = id;
         this.gameCount = gameCount;
@@ -68,27 +68,12 @@ console.log("-------------------------------------------------------------\n"
 /*****************************************************************************
  ***  set up webSocket                                                       *
  *****************************************************************************/
-var io = socket(server);
-io.on('connection', function (socket) {
-    console.log('made socket connection', socket.id);
-    //--- Handle lock event -----------------------------------------------------
-    socket.on('lock', function (user) {
-        socket.broadcast.emit('lock', user);
-    });
-    //--- Handle update event ---------------------------------------------------
-    socket.on('update', function () {
-        socket.broadcast.emit('update');
-    });
-    //--- Handle disconnect event -----------------------------------------------
-    socket.on('disconnect', function () {
-        socket.broadcast.emit('update');
-    });
-});
+gameServer.run(server);
 /*****************************************************************************
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
 //--- Class that deals with Rights --------------------------------------------
-var Rights = /** @class */ (function () {
+var Rights = (function () {
     // can be extended here with other user-roles
     function Rights(player, admin, superadmin) {
         this.player = player;
@@ -106,7 +91,6 @@ function checkRights(req, res, rights) {
         res.json({ message: "No session: Please log in" }); // send HTTP-response
         return false;
     }
-    //--- check rights against the needed rights (provided as parameter) --------
     else {
         var rightsOK = true;
         var message = "unsufficient rights";
@@ -114,11 +98,11 @@ function checkRights(req, res, rights) {
             rightsOK = rightsOK && req.session.rights.player;
             message += ": not logged in";
         }
-        if (rights.admin) { // checks if "admin" is needed
+        if (rights.admin) {
             rightsOK = rightsOK && req.session.rights.admin;
             message += ": not Moderator";
         }
-        if (rights.superadmin) { // ckecks if "superadmin" is needed
+        if (rights.superadmin) {
             rightsOK = rightsOK && req.session.rights.superadmin;
             message += ", not admin";
         }
@@ -159,6 +143,12 @@ router.use(session({
 }));
 //router.use("/jquery", express.static( __dirname + "/node_modules/jquery/dist"));
 /**
+ * User Login
+ */
+router.post('/userLogin', function (req, res) {
+    res.status(200).json({ message: "success" });
+});
+/**
  * Check Login
  */
 router.get("/login/check", function (req, res) {
@@ -186,7 +176,7 @@ router.post("/login/player", function (req, res) {
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
             }
-            else { // username and passwort does not match message = "Id " + id + " not found";
+            else {
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
             }
@@ -197,8 +187,7 @@ router.post("/login/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    //--- nok -------------------------------------------------------------------
-    else { // either username or password not provided
+    else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -251,8 +240,7 @@ router.post("/create/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    //--- nok -------------------------------------------------------------------
-    else { // some parameters are not provided
+    else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -307,10 +295,10 @@ router.put("/player/:email", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     query = { email: email };
-    if (password == "") { // no new password set
+    if (password == "") {
         updateData = { username: username };
     }
-    else { // new password set
+    else {
         updateData = { password: cryptoJS.MD5(password).toString(), username: username };
     }
     playerlistCollection.updateOne(query, { $set: updateData })
@@ -419,7 +407,7 @@ passport.deserializeUser(function (profile, done) {
     done(null, profile);
 });
 //kofnigurationsklasse welche die clientid und secret enthält
-var GoogleAuthConfig = /** @class */ (function () {
+var GoogleAuthConfig = (function () {
     function GoogleAuthConfig() {
         this.googleAuth = {
             clientID: '85564632151-r3mqfgrsrhk2kcdrdn0fe4hvsvcm7do6.apps.googleusercontent.com',
@@ -429,7 +417,7 @@ var GoogleAuthConfig = /** @class */ (function () {
     }
     return GoogleAuthConfig;
 }());
-var FacebookAuthConfig = /** @class */ (function () {
+var FacebookAuthConfig = (function () {
     function FacebookAuthConfig() {
         this.facebookAuth = {
             clientID: '286966021819558',
@@ -454,6 +442,9 @@ router.get('/profile', isLoggedIn, function (req, res) {
     res.sendFile(path.resolve(__dirname + '/../client/views/lala.html'));
 });
 router.get('/login', function (req, res) {
+    res.status(200).json({ message: "success" });
+});
+router.post('/userLogin', function (req, res) {
     res.status(200).json({ message: "success" });
 });
 // route for logging out
