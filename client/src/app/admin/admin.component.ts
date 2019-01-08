@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {User} from "./User";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-admin',
@@ -9,13 +11,29 @@ import {Router} from '@angular/router';
 export class AdminComponent implements OnInit {
   role: string;
   path: string;
-  constructor( protected route: Router) { }
+  email: string;
+  password: string;
+  user: User;
+  constructor( protected route: Router, protected authService: AuthService) { }
 
   ngOnInit() {
     this.role = 'admin';
     this.path = this.route.url;
+    this.email ='';
+    this.password='';
+    this.user = null;
   }
 
+  login(){
+    console.log(this.email+" :: "+this.password);
+    this.authService.userLogin(this.email, this.password).then((result) => {
+      this.user = new User(this.email, this.password);
+    }).catch((err) => {
+      // !!!! NACH TESTS EINKOMMENTIEREN this.user = null;
+      this.user = new User(this.email, this.password);
+    });
+
+  }
   logout () {
   }
 }
