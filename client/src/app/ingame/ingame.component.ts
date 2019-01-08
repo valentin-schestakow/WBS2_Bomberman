@@ -39,9 +39,8 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    socket.on('erase', function(data){
-      //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
-    });
+
+
 
     this.size = 25;
     this.myPlayer =  new Player(0, 0, 'xXSlyerXx');
@@ -56,6 +55,12 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.context.scale(4,4);
 
     this.draw();
+    socket.emit( 'getField', this.playField);
+    socket.on('getField', function(field){
+      this.playField = field;
+      //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
+    });
+
   }
 
   ngAfterViewInit() {
@@ -70,6 +75,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
 
     const size = 25;
+
     const box = new Image();
     box.src = '../../assets/images/box.JPG';
     console.log(box.height);

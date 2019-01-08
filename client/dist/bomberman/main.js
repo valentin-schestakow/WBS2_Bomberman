@@ -527,9 +527,6 @@ var IngameComponent = /** @class */ (function () {
         this.playerService = playerService;
     }
     IngameComponent.prototype.ngOnInit = function () {
-        socket.on('erase', function (data) {
-            //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
-        });
         this.size = 25;
         this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
@@ -540,6 +537,11 @@ var IngameComponent = /** @class */ (function () {
         this.playground.nativeElement.setAttribute('height', '2400');
         this.context.scale(4, 4);
         this.draw();
+        socket.emit('getField', this.playField);
+        socket.on('getField', function (field) {
+            this.playField = field;
+            //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
+        });
     };
     IngameComponent.prototype.ngAfterViewInit = function () {
         this.spawnPlayer(this.myPlayer);

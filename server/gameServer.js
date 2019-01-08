@@ -14,6 +14,7 @@ var socket = require("socket.io");
 var size = 25;
 var playField;
 function run(server) {
+    //generateField();
     console.log("Start GameServer");
     var io = socket(server);
     io.on('connection', function (socket) {
@@ -33,24 +34,35 @@ function run(server) {
         socket.on('bombplace', function (Field) {
             socket.broadcast.emit('bombplace', Field);
         });
+        socket.on('getField', function (field) {
+            socket.broadcast.emit('getField', field);
+            playField = field;
+            //console.log(field);
+            printField();
+        });
     });
 }
 exports.run = run;
-function generateField() {
-    this.playField = [];
-    for (var i = 0; i < 14; i++) {
-        this.playField[i] = [];
+function printField() {
+    var row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9|\n";
+    for (var i = 0; i < playField.length; i++) {
+        row = row.concat(i + ":\t");
         for (var j = 0; j < 20; j++) {
-            this.context.beginPath();
-            this.context.fillStyle = ['#eee', '#eee'][(i + j) % 2];
-            this.context.fillRect(j * size, i * size, size, size);
-            this.playField[i][j] = new Field(j * size, i * size);
+            row = row.concat(playField[i][j].type.charAt(0) + "|");
+        }
+        row = row.concat("\n");
+    }
+    console.log(row);
+}
+function generateField() {
+    playField = [];
+    for (var i = 0; i < 14; i++) {
+        playField[i] = [];
+        for (var j = 0; j < 20; j++) {
+            playField[i][j] = new Field(j * size, i * size);
             if (i > 0 && Math.random() * 100 > 40 && i < 14) {
-                this.context.fillStyle = ['green', 'green'][(i + j) % 2];
-                this.context.fillRect(j * size, i * size, size, size);
-                this.playField[i][j] = new Block(j * size, i * size);
+                playField[i][j] = new Block(j * size, i * size);
             }
-            this.context.closePath();
         }
     }
 }
