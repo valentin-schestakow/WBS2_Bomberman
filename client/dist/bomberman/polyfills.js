@@ -3256,10 +3256,10 @@ Zone.__load_patch('ZoneAwarePromise', function (global, Zone, api) {
                 reject = rej;
             });
             function onResolve(value) {
-                promise && (promise = null || resolve(value));
+                promise && (promise =  false || resolve(value));
             }
             function onReject(error) {
-                promise && (promise = null || reject(error));
+                promise && (promise =  false || reject(error));
             }
             for (var _i = 0, values_1 = values; _i < values_1.length; _i++) {
                 var value = values_1[_i];
@@ -5497,8 +5497,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/valentin/Desktop/THM/semester_4/wbs2-bomberman/client/src/polyfills.ts */"./src/polyfills.ts");
-module.exports = __webpack_require__(/*! /home/valentin/Desktop/THM/semester_4/wbs2-bomberman/client/node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
+__webpack_require__(/*! C:\Users\_AINO\Nextcloud\Max Spies\THM\Social Media Systems\WBS2\Bomberman-GIT\nserv\wbs2-bomberman\client\src\polyfills.ts */"./src/polyfills.ts");
+module.exports = __webpack_require__(/*! C:\Users\_AINO\Nextcloud\Max Spies\THM\Social Media Systems\WBS2\Bomberman-GIT\nserv\wbs2-bomberman\client\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\jit-polyfills.js */"./node_modules/@angular-devkit/build-angular/src/angular-cli-files/models/jit-polyfills.js");
 
 
 /***/ })

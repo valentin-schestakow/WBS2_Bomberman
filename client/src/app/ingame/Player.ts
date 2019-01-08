@@ -10,11 +10,12 @@ export class Player extends Field{
   public bombs: number;
   public posX: number;
   public posY: number;
+  public bombPlanted:number;
 
   constructor (posX: number, posY: number, name: string) {
     super(posX, posY);
     this.type = "Player";
-
+    this.bombPlanted = 0;
     this.lives = 3;
     this.kills = 0;
     this.bombs = 1;

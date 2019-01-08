@@ -13,6 +13,7 @@ export class Bomb extends Field {
     this.type = "Bomb";
     this.posX = posX;
     this.posY = posY;
+
   }
 
 

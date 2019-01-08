@@ -1,4 +1,4 @@
-<div *ngIf="role=='admin'">
+<div *ngIf="user">
 
   <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
@@ -121,4 +121,23 @@
 
   </div><!-- /#right-panel -->
 
+</div>
+<div *ngIf="!user" class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-4">
+      <h2>Please log in!</h2>
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input [(ngModel)]="email" type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input [(ngModel)]="password" type="text" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <button type="submit" (click)="login()" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>

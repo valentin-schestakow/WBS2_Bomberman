@@ -209,7 +209,12 @@ router.use( session( {
 //router.use("/jquery", express.static( __dirname + "/node_modules/jquery/dist"));
 
 
-
+/**
+ * User Login
+ */
+router.post('/userLogin', function (req, res) {
+    res.status(200).json({message: "success"});
+});
 
 /**
  * Check Login
@@ -576,6 +581,10 @@ router.get('/profile', isLoggedIn, function(req, res) {
 router.get('/login', function (req, res) {
   res.status(200).json({message: "success"});
   });
+
+router.post('/userLogin', function (req, res) {
+    res.status(200).json({message: "success"});
+});
 
 
 
