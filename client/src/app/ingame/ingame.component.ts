@@ -244,7 +244,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   bombExplode(posY:number,posX:number){
 
-    if(posY > 1){
+    if(posY > 0){
       this.context.fillStyle = 'red';
       this.context.fillRect(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY, 25, 25);
 
@@ -256,7 +256,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
       this.playField[posY+1][posX] = new Field(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY);
     }
-    if(posX > 1){
+    if(posX > 0){
       this.context.fillStyle = 'red';
       this.context.fillRect(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY, 25, 25);
 
