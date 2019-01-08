@@ -462,7 +462,7 @@ module.exports = "<h2>ingame Component!</h2>\n<img id=\"box\" src=\"../../assets
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3ZhbGVudGluL0Rvd25sb2Fkcy93YnMyLWJvbWJlcm1hbi0zZC9jbGllbnQvc3JjL2FwcC9pbmdhbWUvaW5nYW1lLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0MsWUFBVyxFQUNYOztBQUNEO0VBQ0UsY0FBYSxFQUNkIiwiZmlsZSI6InNyYy9hcHAvaW5nYW1lL2luZ2FtZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImNhbnZhcyB7XG4gd2lkdGg6IDEwMCU7XG59XG5pbWcge1xuICBkaXNwbGF5OiBub25lO1xufVxuIl19 */"
+module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3ZhbGVudGluL0Rlc2t0b3AvVEhNL3NlbWVzdGVyXzQvd2JzMi1ib21iZXJtYW4vY2xpZW50L3NyYy9hcHAvaW5nYW1lL2luZ2FtZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLFlBQVcsRUFDWDs7QUFDRDtFQUNFLGNBQWEsRUFDZCIsImZpbGUiOiJzcmMvYXBwL2luZ2FtZS9pbmdhbWUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJjYW52YXMge1xuIHdpZHRoOiAxMDAlO1xufVxuaW1nIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cbiJdfQ== */"
 
 /***/ }),
 
@@ -482,6 +482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 /* harmony import */ var _Block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Block */ "./src/app/ingame/Block.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -497,11 +498,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var IngameComponent = /** @class */ (function () {
     //ctx: CanvasRenderingContext2D;
-    function IngameComponent() {
+    function IngameComponent(playerService) {
+        this.playerService = playerService;
     }
     IngameComponent.prototype.ngOnInit = function () {
+        this.playerService.getUsers();
         this.size = 25;
         this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
@@ -740,7 +744,7 @@ var IngameComponent = /** @class */ (function () {
         //liste von fiels field kann player oder leer oder
         //field of 20x15 objects -> max300 objects
         ,
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_6__["PlayerService"]])
     ], IngameComponent);
     return IngameComponent;
 }());
@@ -848,8 +852,7 @@ var PlayerService = /** @class */ (function () {
             .then(function (data) {
             console.log(data);
         }).catch(function (err) {
-            //this.alertService.addAlert({type: 'danger',  message: err.message});
-            console.log(err.message);
+            console.log(err);
         });
     };
     PlayerService.prototype.ngOnInit = function () {
@@ -992,7 +995,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/valentin/Downloads/wbs2-bomberman-3d/client/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/valentin/Desktop/THM/semester_4/wbs2-bomberman/client/src/main.ts */"./src/main.ts");
 
 
 /***/ })
