@@ -673,7 +673,7 @@ if(false) {}
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!************************************************************************************************************************************************************!*\
   !*** multi ./node_modules/bootstrap/scss/bootstrap.scss ./node_modules/font-awesome/scss/font-awesome.scss ./src/assets/scss/style.scss ./src/styles.scss ***!
   \************************************************************************************************************************************************************/
@@ -688,5 +688,5 @@ module.exports = __webpack_require__(/*! C:\Users\dkrion\Documents\_Studium\WBS2
 
 /***/ })
 
-},[[2,"runtime"]]]);
+},[[3,"runtime"]]]);
 //# sourceMappingURL=styles.js.map

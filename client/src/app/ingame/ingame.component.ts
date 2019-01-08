@@ -6,9 +6,9 @@ import {Block} from './Block';
 import {delay} from 'rxjs/operators';
 import {interval, timer} from 'rxjs';
 import {PlayerService} from '../services/player.service';
+import * as io from 'socket.io-client';
 
-
-
+let socket = io.connect(window.location.protocol + '//' + window.location.host);
 
 @Component({
   selector: 'app-ingame',
@@ -33,9 +33,16 @@ export class IngameComponent implements OnInit, AfterViewInit {
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
   //ctx: CanvasRenderingContext2D;
 
+
+
   constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
+
+    socket.on('erase', function(data){
+      //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
+    });
+
     this.size = 25;
     this.myPlayer =  new Player(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
