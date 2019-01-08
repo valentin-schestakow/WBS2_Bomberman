@@ -7,6 +7,7 @@ var pFacebook = require("passport-facebook");
 var pGoogle = require("passport-google-oauth20");
 var fs = require("fs");
 var https = require("https");
+var socket = require("socket.io");
 var mongodb_1 = require("mongodb");
 var cryptoJS = require("crypto-js");
 var bodyParser = require("body-parser");
@@ -51,7 +52,38 @@ var GameStats = (function () {
     }
     return GameStats;
 }());
+/*****************************************************************************
+ *** Create servers with handler function and start it
+ *
+ *****************************************************************************/
 var router = express();
+var privateKey = fs.readFileSync(__dirname + '/sslcert/server.key', 'utf8');
+var certificate = fs.readFileSync(__dirname + '/sslcert/server.crt', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
+// instead of: router.listen(8080);
+var server = https.createServer(credentials, router).listen(8080);
+console.log("-------------------------------------------------------------\n"
+    + "Aufruf: https://localhost:8080\n" +
+    "-------------------------------------------------------------\n");
+/*****************************************************************************
+ ***  set up webSocket                                                       *
+ *****************************************************************************/
+var io = socket(server);
+io.on('connection', function (socket) {
+    console.log('made socket connection', socket.id);
+    //--- Handle lock event -----------------------------------------------------
+    socket.on('lock', function (user) {
+        socket.broadcast.emit('lock', user);
+    });
+    //--- Handle update event ---------------------------------------------------
+    socket.on('update', function () {
+        socket.broadcast.emit('update');
+    });
+    //--- Handle disconnect event -----------------------------------------------
+    socket.on('disconnect', function () {
+        socket.broadcast.emit('update');
+    });
+});
 /*****************************************************************************
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
@@ -99,6 +131,12 @@ function checkRights(req, res, rights) {
     //--- return TRUE if everthing was o.k. --------------------------------------
     return true;
 }
+/*****************************************************************************
+ ***  Middleware Routers for Parsing, Session- and Rights-Management, and OAuth2         *
+ *****************************************************************************/
+router.use(passport.initialize());
+//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
+router.use(passport.session()); // persistent login sessions
 //--- parsing json -----------------------------------------------------------
 router.use(bodyParser.json());
 router.use(function (req, res, next) {
@@ -107,7 +145,7 @@ router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-// passport ist eine authentifizzierungs middleware für nodejs.
+//--- session management -----------------------------------------------------
 router.use(session({
     // das ist eine session konfigurationn die für das passport benötigt wird
     // save session even if not modified
@@ -121,37 +159,7 @@ router.use(session({
     // encrypt session-id in cookie using "secret" as modifier
     secret: "keyboard cat"
 }));
-router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
-// Routen innerhalb der Angular-Anwendung zurückleiten
-router.use("/*", express.static(__dirname + "/../client/dist/bomberman"));
-router.use("/jquery", express.static(__dirname + "/node_modules/jquery/dist"));
-router.use(passport.initialize());
-//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
-router.use(passport.session()); // persistent login sessions
-// used to serialize the user for the session
-// cokkie erstellen
-// serialisiert das user profille um es in der session zu speichern
-passport.serializeUser(function (profile, done) {
-    done(null, profile);
-});
-// used to deserialize the user
-// user informationen aus cookie auslesen
-// desalisiert das user profile aus der session d
-passport.deserializeUser(function (profile, done) {
-    done(null, profile);
-});
-/*****************************************************************************
- *** Create servers with handler function and start it
- *
- *****************************************************************************/
-var privateKey = fs.readFileSync(__dirname + '/sslcert/server.key', 'utf8');
-var certificate = fs.readFileSync(__dirname + '/sslcert/server.crt', 'utf8');
-var credentials = { key: privateKey, cert: certificate };
-// instead of: router.listen(8080);
-https.createServer(credentials, router).listen(8080);
-console.log("-------------------------------------------------------------\n"
-    + "Aufruf: https://localhost:8080\n" +
-    "-------------------------------------------------------------\n");
+//router.use("/jquery", express.static( __dirname + "/node_modules/jquery/dist"));
 /**
  * Check Login
  */
@@ -340,7 +348,7 @@ router.delete("/player/:email", function (req, res) {
     playerlistCollection.findOne(query)
         .then(function (res) {
         if (res["username"] == 'admin') {
-            return Promise.reject(new Error("Cannot delete admin."));
+            //return Promise.reject<DeleteWriteOpResultObject>(new Error("Cannot delete admin."))
         }
         else {
             return playerlistCollection.deleteOne(query);
@@ -366,9 +374,11 @@ router.delete("/player/:email", function (req, res) {
  * return all users
  */
 router.get("/players", function (req, res) {
-    if (!checkRights(req, res, new Rights(false, true, true))) {
+    /*
+    if (!checkRights(req,res, new Rights (false, false, false))) {
         return;
     }
+    */
     var query = {};
     playerlistCollection.find(query).toArray()
         .then(function (players) {
@@ -383,6 +393,24 @@ router.get("/players", function (req, res) {
         .catch(function (error) {
         res.status(500).json({ message: "Database error" + error.code });
     });
+});
+router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
+// Routen innerhalb der Angular-Anwendung zurückleiten
+router.use("/*", express.static(__dirname + "/../client/dist/bomberman"));
+/*****************************************************************************
+ ***  OAuth2         *
+ *****************************************************************************/
+// used to serialize the user for the session
+// cokkie erstellen
+// serialisiert das user profille um es in der session zu speichern
+passport.serializeUser(function (profile, done) {
+    done(null, profile);
+});
+// used to deserialize the user
+// user informationen aus cookie auslesen
+// desalisiert das user profile aus der session d
+passport.deserializeUser(function (profile, done) {
+    done(null, profile);
 });
 //kofnigurationsklasse welche die clientid und secret enthält
 var GoogleAuthConfig = (function () {

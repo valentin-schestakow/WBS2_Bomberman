@@ -20,8 +20,7 @@ export class PlayerService implements OnInit{
       .then((data: any) => {
         console.log(data);
       }).catch((err: HttpErrorResponse) => {
-      //this.alertService.addAlert({type: 'danger',  message: err.message});
-      console.log(err.message);
+      console.log(err);
     });
   }
 

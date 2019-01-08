@@ -22,6 +22,10 @@
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "@angular/router": "~7.0.0",
+    "@types/request": "^2.47.0",
+    "@types/request-promise": "^4.1.41",
+    "@types/socket.io": "^1.4.31",
+    "@types/socket.io-client": "^1.4.32",
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26",
@@ -29,9 +33,9 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
-    "@types/socket.io": "^1.4.31",
-    "@types/socket.io-client": "^1.4.32",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "request": "^2.86.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.0",
