@@ -23,28 +23,6 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
-/***/ "./src/app/admin/User.ts":
-/*!*******************************!*\
-  !*** ./src/app/admin/User.ts ***!
-  \*******************************/
-/*! exports provided: User */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "User", function() { return User; });
-var User = /** @class */ (function () {
-    function User(mail, pwd) {
-        this.email = mail;
-        this.password = pwd;
-    }
-    return User;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/admin/admin.component.html":
 /*!********************************************!*\
   !*** ./src/app/admin/admin.component.html ***!
@@ -79,8 +57,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminComponent", function() { return AdminComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./User */ "./src/app/admin/User.ts");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/auth.service */ "./src/app/services/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -90,7 +67,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -107,14 +83,8 @@ var AdminComponent = /** @class */ (function () {
         this.user = null;
     };
     AdminComponent.prototype.login = function () {
-        var _this = this;
         console.log(this.email + " :: " + this.password);
-        this.authService.userLogin(this.email, this.password).then(function (result) {
-            _this.user = new _User__WEBPACK_IMPORTED_MODULE_2__["User"](_this.email, _this.password);
-        }).catch(function (err) {
-            // !!!! NACH TESTS EINKOMMENTIEREN this.user = null;
-            _this.user = new _User__WEBPACK_IMPORTED_MODULE_2__["User"](_this.email, _this.password);
-        });
+        this.authService.userLogin(this.email, this.password);
     };
     AdminComponent.prototype.logout = function () {
     };
@@ -124,7 +94,7 @@ var AdminComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./admin.component.html */ "./src/app/admin/admin.component.html"),
             styles: [__webpack_require__(/*! ./admin.component.scss */ "./src/app/admin/admin.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _services_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]])
     ], AdminComponent);
     return AdminComponent;
 }());
@@ -968,10 +938,11 @@ var AuthService = /** @class */ (function () {
             .then(function (res) {
             _this.isLoggedIn = true;
             _this.role = res.role;
-            return true;
+            console.log(email + " angemeldet!");
         })
             .catch(function (err) {
-            return false;
+            _this.isLoggedIn = false;
+            console.log(email + " NICHT angemeldet!");
         });
     };
     AuthService.prototype.logout = function () {

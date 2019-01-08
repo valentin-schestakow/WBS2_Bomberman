@@ -26,12 +26,7 @@ export class AdminComponent implements OnInit {
 
   login(){
     console.log(this.email+" :: "+this.password);
-    this.authService.userLogin(this.email, this.password).then((result) => {
-      this.user = new User(this.email, this.password);
-    }).catch((err) => {
-      // !!!! NACH TESTS EINKOMMENTIEREN this.user = null;
-      this.user = new User(this.email, this.password);
-    });
+    this.authService.userLogin(this.email, this.password);
 
   }
   logout () {
