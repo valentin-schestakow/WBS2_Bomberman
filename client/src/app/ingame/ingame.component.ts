@@ -5,6 +5,7 @@ import {Field} from './Field';
 import {Block} from './Block';
 import {delay} from 'rxjs/operators';
 import {interval, timer} from 'rxjs';
+import {PlayerService} from '../services/player.service';
 
 
 
@@ -32,9 +33,10 @@ export class IngameComponent implements OnInit, AfterViewInit {
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
   //ctx: CanvasRenderingContext2D;
 
-  constructor() {}
+  constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
+    this.playerService.getUsers();
     this.size = 25;
     this.myPlayer =  new Player(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
