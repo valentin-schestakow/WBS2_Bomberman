@@ -1,0 +1,64 @@
+<!--
+<div class="card m-3" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{player.email}} {{player._id}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{player.username}}</h6>
+    <p class="card-text">"deaths: " {{player.stats.deaths}}</p>
+    <p class="card-text">{{player.stats.kills}}</p>
+    <p class="card-text">{{player.stats.points}}</p>
+    <p class="card-text">{{player.stats.gameCount}}</p>
+  </div>
+</div>
+-->
+<div class="container">
+  <div class="row">
+
+    <div class="" >
+
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3 class="panel-title">Player Info</h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+
+            <div class=" col-md-9 col-lg-9 ">
+              <table class="table table-user-information">
+                <tbody>
+
+                <tr>
+                  <td>Username: </td>
+                  <td>{{player.username}}</td>
+                  <td> <a href="#" class="btn btn-info">Edit</a></td>
+                </tr>
+                <tr>
+                  <td>Email: </td>
+                  <td>{{player.email}}</td>
+                  <td> <a href="#" class="btn btn-info">Edit</a></td>
+                </tr>
+                <tr>
+                  <td>Game Count: </td>
+                  <td>{{player.stats.gameCount}}</td>
+                </tr>
+                <tr>
+                  <td>Points: </td>
+                  <td>{{player.stats.points}}</td>
+                </tr>
+                <tr>
+                  <td>Kills: </td>
+                  <td>{{player.stats.kills}}</td>
+                </tr>
+                <tr>
+                  <td>Deaths: </td>
+                  <td>{{player.stats.deaths}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

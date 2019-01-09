@@ -57,7 +57,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminComponent", function() { return AdminComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/auth.service */ "./src/app/services/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -160,7 +159,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Welcome to {{ title }}!</h1>\r\n\r\n\r\n<router-outlet></router-outlet>\r\n"
+module.exports = "<h1>Welcome to {{ title }}!</h1>\n\n\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -241,16 +240,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 /* harmony import */ var _admin_admin_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./admin/admin.component */ "./src/app/admin/admin.component.ts");
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
 
 
 
@@ -275,13 +270,9 @@ var AppModule = /** @class */ (function () {
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"]
             ],
-            providers: [
-                _services_auth_service__WEBPACK_IMPORTED_MODULE_10__["AuthService"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
-            ],
+            providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
     ], AppModule);
@@ -409,16 +400,16 @@ var Field = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/ingame/Gamer.ts":
-/*!*********************************!*\
-  !*** ./src/app/ingame/Gamer.ts ***!
-  \*********************************/
-/*! exports provided: Gamer */
+/***/ "./src/app/ingame/Player.ts":
+/*!**********************************!*\
+  !*** ./src/app/ingame/Player.ts ***!
+  \**********************************/
+/*! exports provided: Player */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Gamer", function() { return Gamer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -434,12 +425,11 @@ var __extends = (undefined && undefined.__extends) || (function () {
     };
 })();
 
-var Gamer = /** @class */ (function (_super) {
-    __extends(Gamer, _super);
-    function Gamer(posX, posY, name) {
+var Player = /** @class */ (function (_super) {
+    __extends(Player, _super);
+    function Player(posX, posY, name) {
         var _this = _super.call(this, posX, posY) || this;
-        _this.type = "Gamer";
-        _this.bombPlanted = 0;
+        _this.type = "Player";
         _this.lives = 3;
         _this.kills = 0;
         _this.bombs = 1;
@@ -449,7 +439,7 @@ var Gamer = /** @class */ (function (_super) {
         _this.posY = posY;
         return _this;
     }
-    Gamer.prototype.getRandomColor = function () {
+    Player.prototype.getRandomColor = function () {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
@@ -457,7 +447,7 @@ var Gamer = /** @class */ (function (_super) {
         }
         return color;
     };
-    return Gamer;
+    return Player;
 }(_Field__WEBPACK_IMPORTED_MODULE_0__["Field"]));
 
 
@@ -471,7 +461,7 @@ var Gamer = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2>ingame Component!</h2>\r\n<img id=\"box\" src=\"../../assets/images/box.JPG\" alt=\"Box Icon\">\r\n<canvas #playground width=800 height=600></canvas>\r\n\r\n\r\n<img #spaceshipimg class=\"imageLoader\" src=\"https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/apps/kspaceduel.png\" alt=\"The Spaceship\">\r\n"
+module.exports = "<h2>ingame Component!</h2>\n<img id=\"box\" src=\"../../assets/images/box.JPG\" alt=\"Box Icon\">\n<canvas #playground width=800 height=600></canvas>\n\n\n<img #spaceshipimg class=\"imageLoader\" src=\"https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/apps/kspaceduel.png\" alt=\"The Spaceship\">\n"
 
 /***/ }),
 
@@ -482,7 +472,7 @@ module.exports = "<h2>ingame Component!</h2>\r\n<img id=\"box\" src=\"../../asse
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaW5nYW1lL0M6XFxVc2Vyc1xcZGtyaW9uXFxEb2N1bWVudHNcXF9TdHVkaXVtXFxXQlMyXFx3YnMyLWJvbWJlcm1hblxcY2xpZW50L3NyY1xcYXBwXFxpbmdhbWVcXGluZ2FtZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLFlBQVcsRUFDWDs7QUFDRDtFQUNFLGNBQWEsRUFDZCIsImZpbGUiOiJzcmMvYXBwL2luZ2FtZS9pbmdhbWUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJjYW52YXMge1xyXG4gd2lkdGg6IDEwMCU7XHJcbn1cclxuaW1nIHtcclxuICBkaXNwbGF5OiBub25lO1xyXG59XHJcbiJdfQ== */"
+module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3ZhbGVudGluL0Rlc2t0b3AvVEhNL3NlbWVzdGVyXzQvd2JzMi1ib21iZXJtYW4vY2xpZW50L3NyYy9hcHAvaW5nYW1lL2luZ2FtZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLFlBQVcsRUFDWDs7QUFDRDtFQUNFLGNBQWEsRUFDZCIsImZpbGUiOiJzcmMvYXBwL2luZ2FtZS9pbmdhbWUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJjYW52YXMge1xuIHdpZHRoOiAxMDAlO1xufVxuaW1nIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cbiJdfQ== */"
 
 /***/ }),
 
@@ -497,13 +487,12 @@ module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*#
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IngameComponent", function() { return IngameComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Gamer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gamer */ "./src/app/ingame/Gamer.ts");
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ "./src/app/ingame/Player.ts");
 /* harmony import */ var _Bomb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bomb */ "./src/app/ingame/Bomb.ts");
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 /* harmony import */ var _Block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Block */ "./src/app/ingame/Block.ts");
-/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -520,7 +509,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_6__["connect"](window.location.protocol + '//' + window.location.host);
 var IngameComponent = /** @class */ (function () {
     //ctx: CanvasRenderingContext2D;
     function IngameComponent(playerService) {
@@ -528,24 +516,13 @@ var IngameComponent = /** @class */ (function () {
     }
     IngameComponent.prototype.ngOnInit = function () {
         this.size = 25;
-        this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, 'xXSlyerXx');
+        this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
         var width = 800;
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '600');
-        this.playground.nativeElement.setAttribute('width', '3200');
-        this.playground.nativeElement.setAttribute('height', '2400');
-        this.context.scale(4, 4);
+        this.playground.nativeElement.setAttribute('width', '800');
+        this.playground.nativeElement.setAttribute('height', '600');
+        //this.context.scale(0.5,0.5);
         this.draw();
-    };
-    IngameComponent.prototype.ngDoCheck = function () {
-        socket.on('getField', function (field) {
-            this.playField = field;
-            console.log("socket works");
-            //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
-        });
-        //socket.emit( 'getField', this.playField);
-        this.reprintCanvas();
     };
     IngameComponent.prototype.ngAfterViewInit = function () {
         this.spawnPlayer(this.myPlayer);
@@ -579,7 +556,7 @@ var IngameComponent = /** @class */ (function () {
     IngameComponent.prototype.movePlayer = function (oldX, oldY, newX, newY) {
         //array
         // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
+        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Player(newX,newY, "Slyaer");
         //drawing
         //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
         /*if(this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Field"){
@@ -607,23 +584,13 @@ var IngameComponent = /** @class */ (function () {
                 else if (this.playField[i][j].getType() == 'Bomb') {
                     this.context.fillStyle = 'orange';
                 }
-                else if (this.playField[i][j].getType() == 'Fire') {
-                    this.context.fillStyle = 'red';
-                }
                 this.context.fillRect(this.playField[i][j].posX, this.playField[i][j].posY, 25, 25);
             }
         }
         this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX, this.myPlayer.posY, 25, 25);
-        this.printPlayer();
-    };
-    IngameComponent.prototype.printPlayer = function () {
-        this.context.font = "5px";
-        this.context.fillStyle = "black";
-        this.context.fillText(this.myPlayer.name, this.myPlayer.posX + 25, this.myPlayer.posY + 25);
     };
     IngameComponent.prototype.playerAction = function (action) {
         var _this = this;
-        socket.emit('getField', this.playField);
         if (action === 'moveUp') {
             if (this.myPlayer.posY > 0) {
                 if (this.playField[this.myPlayer.posY / 25 - 1][this.myPlayer.posX / 25].getType() !== 'Block') {
@@ -657,29 +624,28 @@ var IngameComponent = /** @class */ (function () {
             }
         }
         if (action === 'plantBomb') {
-            if (this.myPlayer.bombPlanted < 1) {
-                this.myPlayer.bombPlanted++;
-                console.log("Plant Bomb at x:" + this.convertAbsolutePosToRelativePos(this.myPlayer.posX) + " y: " + this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
-                this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
-                    new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
-                this.myBomb = new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
-                this.reprintCanvas();
-                //timer(500);
-                /*Tiemr*/
-                //let timeLeft =3;
-                var interval_1 = setInterval(function () {
-                    if (_this.myBomb.timeLeft > 0) {
-                        _this.myBomb.timeLeft--;
-                    }
-                    else {
-                        _this.bombExplode(_this.convertAbsolutePosToRelativePos(_this.myBomb.posY), _this.convertAbsolutePosToRelativePos(_this.myBomb.posX));
-                        clearInterval(interval_1);
-                    }
-                }, 1000);
-            }
+            console.log("Plant Bomb at x:" + this.convertAbsolutePosToRelativePos(this.myPlayer.posX) + " y: " + this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+            this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
+                new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
+            this.myBomb = new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
+            this.context.fillStyle = 'orange';
+            this.context.fillRect(this.myPlayer.posX, this.myPlayer.posY, 25, 25);
+            this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX, this.myPlayer.posY, 25, 25);
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["timer"])(500);
+            /*Tiemr*/
+            //let timeLeft =3;
+            var interval_1 = setInterval(function () {
+                if (_this.myBomb.timeLeft > 0) {
+                    _this.myBomb.timeLeft--;
+                }
+                else {
+                    _this.bombExplode(_this.convertAbsolutePosToRelativePos(_this.myBomb.posY), _this.convertAbsolutePosToRelativePos(_this.myBomb.posX));
+                    clearInterval(interval_1);
+                }
+            }, 1000);
         }
         else if (action === 'printDebug') {
-            var row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9|\n";
+            var row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9\n";
             for (var i = 0; i < this.playField.length; i++) {
                 row = row.concat(i + ":\t");
                 for (var j = 0; j < 20; j++) {
@@ -687,7 +653,7 @@ var IngameComponent = /** @class */ (function () {
                 }
                 row = row.concat("\n");
             }
-            console.log("%c" + row, "color:orange");
+            console.log(row);
         }
         else if (action === 'reprintField') {
             this.reprintCanvas();
@@ -731,62 +697,38 @@ var IngameComponent = /** @class */ (function () {
     }*/
     IngameComponent.prototype.bombExplode = function (posY, posX) {
         var _this = this;
-        /*
-            if(posY > 0){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY, 25, 25);
-    
-              this.playField[posY-1][posX] = new Field(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY);
-            }
-            if(posY < 13){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY, 25, 25);
-    
-              this.playField[posY+1][posX] = new Field(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY);
-            }
-            if(posX > 0){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY, 25, 25);
-    
-              this.playField[posY][posX-1] = new Field(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY);
-            }
-            if(posX < 19){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY, 25, 25);
-    
-              this.playField[posY][posX+1] = new Field(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY);
-            }
-            this.playField[posY][posX] = new Field(this.playField[posY][posX].posX,this.playField[posY][posX].posY);
-            */
-        this.explosionHelper(posY, posX, "Fire");
-        this.reprintCanvas();
+        if (posY > 0) {
+            this.context.fillStyle = 'red';
+            this.context.fillRect(this.playField[posY - 1][posX].posX, this.playField[posY - 1][posX].posY, 25, 25);
+            this.playField[posY - 1][posX] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY - 1][posX].posX, this.playField[posY - 1][posX].posY);
+        }
+        if (posY < 13) {
+            this.context.fillStyle = 'red';
+            this.context.fillRect(this.playField[posY + 1][posX].posX, this.playField[posY + 1][posX].posY, 25, 25);
+            this.playField[posY + 1][posX] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY + 1][posX].posX, this.playField[posY + 1][posX].posY);
+        }
+        if (posX > 0) {
+            this.context.fillStyle = 'red';
+            this.context.fillRect(this.playField[posY][posX - 1].posX, this.playField[posY][posX - 1].posY, 25, 25);
+            this.playField[posY][posX - 1] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY][posX - 1].posX, this.playField[posY][posX - 1].posY);
+        }
+        if (posX < 19) {
+            this.context.fillStyle = 'red';
+            this.context.fillRect(this.playField[posY][posX + 1].posX, this.playField[posY][posX + 1].posY, 25, 25);
+            this.playField[posY][posX + 1] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY][posX + 1].posX, this.playField[posY][posX + 1].posY);
+        }
+        this.playField[posY][posX] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY][posX].posX, this.playField[posY][posX].posY);
+        //this.reprintCanvas();
         var timeleft = 1;
         var interval = setInterval(function () {
             if (timeleft > 0) {
                 timeleft--;
             }
             else {
-                _this.explosionHelper(posY, posX, "Field");
-                _this.myPlayer.bombPlanted--;
                 _this.reprintCanvas();
                 clearInterval(interval);
             }
         }, 1000);
-    };
-    IngameComponent.prototype.explosionHelper = function (posY, posX, type) {
-        if (posY > 0) {
-            this.playField[posY - 1][posX].type = type;
-        }
-        if (posY < 13) {
-            this.playField[posY + 1][posX].type = type;
-        }
-        if (posX > 0) {
-            this.playField[posY][posX - 1].type = type;
-        }
-        if (posX < 19) {
-            this.playField[posY][posX + 1].type = type;
-        }
-        this.playField[posY][posX].type = type;
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('playground'),
@@ -811,7 +753,7 @@ var IngameComponent = /** @class */ (function () {
         //liste von fiels field kann player oder leer oder
         //field of 20x15 objects -> max300 objects
         ,
-        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_5__["PlayerService"]])
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_6__["PlayerService"]])
     ], IngameComponent);
     return IngameComponent;
 }());
@@ -827,7 +769,7 @@ var IngameComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"UTF-8\">\r\n  <title>Title</title>\r\n  <link href=\"https://use.fontawesome.com/releases/v5.0.10/css/all.css\" rel=\"stylesheet\" type=\"text/css\">\r\n  <script type=\"application/javascript\" src=\"../client/node_modules/jquery/dist/jquery.js\"></script>\r\n  <script type=\"application/javascript\" src=\"../client/node_modules/popper.js/dist/popper.js\"></script>\r\n  <script type=\"application/javascript\" src=\"../client/node_modules/bootstrap/dist/js/bootstrap.js\"></script>\r\n  <script type=\"application/javascript\" src=\"../client/script/client.js\"></script>\r\n  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">\r\n</head>\r\n<body>\r\n\r\n<div class=\"container\">\r\n  <div class=\"d-flex justify-content-center\">\r\n    <h3 class=\"p-12\">Play BOMBERMAN</h3>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n  <div class=\"d-flex justify-content-center\">\r\n\r\n    <a class=\"btn btn-secondary\" href=\"/auth/google\">Login</a>\r\n\r\n    <form action=\"https://localhost:8443/auth/google\" method=\"get\">\r\n      <button type=\"submit\" class=\" btn btn-danger\" id=\"google\" >Google</button>\r\n    </form>\r\n\r\n    <form action=\"https://localhost:8443/auth/facebook\" method=\"get\">\r\n      <button type=\"submit\" class=\" btn btn-primary\" id=\"facebook\" >Facebook</button>\r\n    </form>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n</body>\r\n</html>\r\n"
+module.exports = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Title</title>\n  <link href=\"https://use.fontawesome.com/releases/v5.0.10/css/all.css\" rel=\"stylesheet\" type=\"text/css\">\n  <script type=\"application/javascript\" src=\"../client/node_modules/jquery/dist/jquery.js\"></script>\n  <script type=\"application/javascript\" src=\"../client/node_modules/popper.js/dist/popper.js\"></script>\n  <script type=\"application/javascript\" src=\"../client/node_modules/bootstrap/dist/js/bootstrap.js\"></script>\n  <script type=\"application/javascript\" src=\"../client/script/client.js\"></script>\n  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">\n</head>\n<body>\n\n<div class=\"container\">\n  <div class=\"d-flex justify-content-center\">\n    <h3 class=\"p-12\">Play BOMBERMAN</h3>\n  </div>\n\n</div>\n\n\n<div class=\"container\">\n  <div class=\"d-flex justify-content-center\">\n\n    <a class=\"btn btn-secondary\" href=\"/auth/google\">Login</a>\n\n    <form action=\"https://localhost:8443/auth/google\" method=\"get\">\n      <button type=\"submit\" class=\" btn btn-danger\" id=\"google\" >Google</button>\n    </form>\n\n    <form action=\"https://localhost:8443/auth/facebook\" method=\"get\">\n      <button type=\"submit\" class=\" btn btn-primary\" id=\"facebook\" >Facebook</button>\n    </form>\n  </div>\n\n</div>\n\n\n</body>\n</html>\n"
 
 /***/ }),
 
@@ -877,113 +819,6 @@ var LoginComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], LoginComponent);
     return LoginComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/services/auth.service.ts":
-/*!******************************************!*\
-  !*** ./src/app/services/auth.service.ts ***!
-  \******************************************/
-/*! exports provided: AuthService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var httpOptions = {
-    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' }),
-    crossDomain: true,
-    xhrFields: { withCredentials: true }
-};
-var AuthService = /** @class */ (function () {
-    function AuthService(router, http) {
-        this.router = router;
-        this.http = http;
-    }
-    AuthService.prototype.checkLogin = function () {
-        var _this = this;
-        this.http.get('http://localhost:8080/login/check')
-            .toPromise()
-            .then(function (data) {
-            console.log(data.message);
-            _this.isLoggedIn = true;
-        }).catch(function (err) {
-            console.log(err.message);
-            _this.isLoggedIn = false;
-        });
-    };
-    AuthService.prototype.login = function (email, password) {
-        var _this = this;
-        this.http.post('http://localhost:8080/login', {
-            email: email,
-            password: password
-        })
-            .toPromise()
-            .then(function (data) {
-            _this.isLoggedIn = true;
-            _this.email = email;
-            //console.log(data.message);
-        }).catch(function (err) {
-            _this.isLoggedIn = false;
-        });
-    };
-    AuthService.prototype.userLogin = function (email, password) {
-        var _this = this;
-        return this.http.post('http://localhost:8080/userLogin', { email: email, password: password }, httpOptions)
-            .toPromise()
-            .then(function (res) {
-            _this.isLoggedIn = true;
-            _this.role = res.role;
-            console.log(email + " angemeldet!");
-        })
-            .catch(function (err) {
-            _this.isLoggedIn = false;
-            console.log(email + " NICHT angemeldet!");
-        });
-    };
-    AuthService.prototype.logout = function () {
-        var _this = this;
-        this.http.post('http://localhost:8080/logout', {
-            username: this.email
-        })
-            .toPromise()
-            .then(function (data) {
-            _this.isLoggedIn = false;
-            _this.router.navigate(['']);
-            //console.log(data.message);
-        }).catch(function (err) {
-            //this.isLoggedIn = false;
-            console.log(err.message);
-        });
-    };
-    AuthService.prototype.ngOnInit = function () {
-        this.checkLogin();
-    };
-    AuthService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
-            providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], AuthService);
-    return AuthService;
 }());
 
 
@@ -1066,7 +901,7 @@ var PlayerService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  user works!\r\n</p>\r\n"
+module.exports = "<p>\n  user works!\n</p>\n"
 
 /***/ }),
 
@@ -1183,19 +1018,8 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\dkrion\Documents\_Studium\WBS2\wbs2-bomberman\client\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/valentin/Desktop/THM/semester_4/wbs2-bomberman/client/src/main.ts */"./src/main.ts");
 
-
-/***/ }),
-
-/***/ 1:
-/*!********************!*\
-  !*** ws (ignored) ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
 
 /***/ })
 

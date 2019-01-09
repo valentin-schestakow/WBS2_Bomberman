@@ -46,15 +46,15 @@ MongoClient.connect("mongodb://localhost:27017",{ useNewUrlParser: true })
 
 class Player {
     _id      : number;
-    time     : string; // time-time format defined[RFC 3339] e.g. 2017-12-31T23:59:6
-    email:string;
-    password:string;
+    //time     : string; // time-time format defined[RFC 3339] e.g. 2017-12-31T23:59:6
+    email: string;
+    password: string;
     username : string;
-    gamestats:object;
+    gamestats: GameStats;
 
-    constructor(id:number, time:string, username:string, email:string, password:string) {
+    constructor(id:number, time:string, username:string, email:string, password:string, stats: GameStats) {
         this._id       = id;
-        this.time     = time;
+        //this.time     = time;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -63,14 +63,12 @@ class Player {
 }
 
 class GameStats {
-    _id: string;
     gameCount: number;
     points: number;
     kills: number;
     deaths: number;
 
-    constructor(id:string, gameCount:number, points:number, kills:number, deaths:number){
-        this._id = id;
+    constructor(gameCount:number, points:number, kills:number, deaths:number){
         this.gameCount = gameCount;
         this.points = points;
         this.kills = kills;
@@ -99,8 +97,6 @@ console.log("-------------------------------------------------------------\n"
  *****************************************************************************/
 
 gameServer.run(server);
-
-
 
 
 
@@ -161,8 +157,9 @@ function checkRights(req: Request, res: Response, rights: Rights) : boolean {
 
     //--- return TRUE if everthing was o.k. --------------------------------------
     return true;
-
 }
+
+
 /*****************************************************************************
  ***  Middleware Routers for Parsing, Session- and Rights-Management, and OAuth2         *
  *****************************************************************************/
@@ -228,7 +225,7 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
     let email: string = req.body.email;
     let password : string = req.body.password;
 
-    //---- ok -> check username/password in database and set Rights -------------
+    //---- ok -> check email/password in database and set Rights -------------
     if (password != "" && email != "") {
         let query: Object = {email: email, password: cryptoJS.MD5(password).toString()};
         playerlistCollection.findOne(query).then((player:Player) => {
@@ -238,11 +235,12 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
 
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
+                res.status(status).json({message: message, player: player});
             } else { // username and passwort does not match message = "Id " + id + " not found";
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
+                res.status(status).json({message: message});
             }
-            res.status(status).json({message: message});
         }).catch((error: MongoError) => { // database error
             message = "Database error: " + error.code;
             status = 505;
@@ -275,7 +273,7 @@ router.post   ("/logout/player",      function (req: Request, res: Response) {
 
 
 /**
- * --- create new user with: post /user --------------------------------
+ * --- create new player with: post /create/player --------------------------------
  */
 router.post   ("/create/player",        function (req: Request, res: Response) {
     let username : string = (req.body.username ? req.body.username : "").trim();
@@ -283,6 +281,7 @@ router.post   ("/create/player",        function (req: Request, res: Response) {
     let password : string = (req.body.password ? req.body.password : "").trim();
     let message  : string = "";
     let status   : number = 500; // Initial HTTP response status
+    let stats: GameStats = new GameStats(0,0,0,0);
 
     /*
     //--- check Rights -> RETURN if not sufficient ------------------------------
@@ -295,10 +294,10 @@ router.post   ("/create/player",        function (req: Request, res: Response) {
     if ((username != "") && (email != "") && (password != "")) {
 
         let insertData = {
-            time     : new Date().toLocaleString(),
             email: email,
             username : username,
-            password : cryptoJS.MD5(password).toString()
+            password : cryptoJS.MD5(password).toString(),
+            stats: stats
         };
         playerlistCollection.insertOne(insertData)
             .then((result: InsertOneWriteOpResult) => {
@@ -378,6 +377,8 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
     query = {email: email};
     if (password == "") { // no new password set
         updateData = {username: username};
+    } else if (username == "") {
+        updateData = {password: password};
     } else { // new password set
         updateData = { password: cryptoJS.MD5(password).toString(), username: username};
     }
@@ -389,7 +390,7 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
                 status = 201;
                 res.status(status).json({message: message});
             } else {
-                message = "Not Valid: E-Mail " + email + " not valid";
+                message = "Not Valid: E-Mail: " + email + " not valid";
                 status = 500;
                 res.status(status).json({message: message});
             }
@@ -464,17 +465,11 @@ router.get("/players", function(req: Request, res: Response) {
                 player['password'] = undefined;
                 return player;
             })
-            res.status(200).json({message: "fetched users", players: players});
+            res.status(200).json({message: "get all players succes", players: players});
         })
         .catch((error: MongoError) => {
             res.status(500).json({message: "Database error" + error.code});
         });
-});
-
-
-
-router.get("/userlogin", function(req: Request, res: Response) {
-    res.status(200).json({"message" : "test"});
 });
 
 
