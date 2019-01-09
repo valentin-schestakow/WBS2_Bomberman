@@ -37,8 +37,8 @@ function run(server) {
             socket.broadcast.emit('bombplace', Field);
         });
         socket.on('getField', function (field) {
-            field = this.playField;
-            socket.broadcast.emit('getField', this.playField);
+            playField = field;
+            socket.broadcast.emit('getField', playField);
             //playField = field;
             //console.log(field);
             printField();

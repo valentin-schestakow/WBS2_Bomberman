@@ -556,8 +556,6 @@ var IngameComponent = /** @class */ (function () {
         this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
         var width = 800;
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '600');
         this.playground.nativeElement.setAttribute('width', '3200');
         this.playground.nativeElement.setAttribute('height', '2400');
         this.context.scale(4, 4);
@@ -566,7 +564,7 @@ var IngameComponent = /** @class */ (function () {
     IngameComponent.prototype.ngDoCheck = function () {
         socket.on('getField', function (field) {
             this.playField = field;
-            console.log("socket works");
+            console.log("socket works" + field);
             //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
         });
         //socket.emit( 'getField', this.playField);
@@ -577,23 +575,14 @@ var IngameComponent = /** @class */ (function () {
     };
     IngameComponent.prototype.draw = function () {
         var size = 25;
-        var box = new Image();
-        box.src = '../../assets/images/box.JPG';
-        console.log(box.height);
         this.playField = [];
         for (var i = 0; i < 14; i++) {
             this.playField[i] = [];
             for (var j = 0; j < 20; j++) {
-                this.context.beginPath();
-                this.context.fillStyle = ['#eee', '#eee'][(i + j) % 2];
-                this.context.fillRect(j * size, i * size, size, size);
                 this.playField[i][j] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](j * size, i * size);
                 if (i > 0 && Math.random() * 100 > 40 && i < 14) {
-                    this.context.fillStyle = ['green', 'green'][(i + j) % 2];
-                    this.context.fillRect(j * size, i * size, size, size);
                     this.playField[i][j] = new _Block__WEBPACK_IMPORTED_MODULE_4__["Block"](j * size, i * size);
                 }
-                this.context.closePath();
             }
         }
         // SET PLAYER ON MAP

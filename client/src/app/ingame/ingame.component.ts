@@ -6,14 +6,13 @@ import {Block} from './Block';
 import {delay} from 'rxjs/operators';
 import {interval, timer} from 'rxjs';
 import {PlayerService} from '../services/player.service';
-import * as io from 'socket.io-client';
 
-let socket = io.connect(window.location.protocol + '//' + window.location.host);
 
 @Component({
   selector: 'app-ingame',
   templateUrl: './ingame.component.html',
-  styleUrls: ['./ingame.component.scss']
+  styleUrls: ['./ingame.component.scss'],
+  providers:[PlayerService]
 })
 
 //liste von fiels field kann player oder leer oder
@@ -47,23 +46,27 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
     let width = 800;
 
-    //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
-    //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '600');
 
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '3200');
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '2400');
     this.context.scale(4,4);
 
-    this.draw();
-
+    //this.draw();
+    /*socket.on('getField', function(field){
+      this.playField = field;
+      console.log("socket works"+field);
+      //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
+    });*/
   }
 
   ngDoCheck() {
+    /*
     socket.on('getField', function(field){
       this.playField = field;
-      console.log("socket works");
+      console.log("socket works"+field);
       //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
     });
+    */
     //socket.emit( 'getField', this.playField);
     this.reprintCanvas();
   }
@@ -77,34 +80,17 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
 
   private draw() {
-
-
     const size = 25;
-
-    const box = new Image();
-    box.src = '../../assets/images/box.JPG';
-    console.log(box.height);
     this.playField = [];
     for (let i = 0; i < 14; i++) {
       this.playField[i] = [];
       for (let j = 0; j < 20; j++) {
-        this.context.beginPath();
-
-        this.context.fillStyle = ['#eee', '#eee'][(i + j) % 2];
-        this.context.fillRect(j * size, i * size, size, size);
         this.playField[i][j] = new Field(j * size, i * size);
         if (i > 0  && Math.random() * 100 > 40 && i < 14 ) {
-          this.context.fillStyle = ['green', 'green'][(i + j) % 2];
-          this.context.fillRect(j * size, i * size, size, size);
           this.playField[i][j] = new Block(j * size, i * size);
         }
-
-        this.context.closePath();
       }
     }
-    // SET PLAYER ON MAP
-
-
   }
 
   spawnPlayer(player: Gamer) {
@@ -162,7 +148,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   playerAction(action: string) {
 
-    socket.emit( 'getField', this.playField);
+    //socket.emit( 'getField', this.playField);
     if (action === 'moveUp') {
       if(this.myPlayer.posY > 0) {
         if(this.playField[this.myPlayer.posY/25 - 1][this.myPlayer.posX/25].getType() !== 'Block') {

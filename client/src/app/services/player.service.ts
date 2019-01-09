@@ -1,6 +1,8 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Player} from '../player/Player';
+import * as io from 'socket.io-client';
+
 
 
 const httpOptions = {
@@ -11,6 +13,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PlayerService implements OnInit{
+
+  private socket = io.connect(window.location.protocol + '//' + window.location.host);
 
   public currentPlayer: Player;
   public isLoggedIn = false;
