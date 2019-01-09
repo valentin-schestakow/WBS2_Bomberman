@@ -5,12 +5,11 @@
       <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/styles.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/styles.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -99,11 +98,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="207" lean-forward="true" selection-start-line="207" selection-end-line="207" />
+            <state relative-caret-position="-10794">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -111,7 +110,23 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gameServer.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="32" column="35" lean-forward="true" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -229,17 +244,17 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10616000" />
+    <option name="totallyTimeSpent" value="11798000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="993" y="25" width="927" height="1055" extended-state="4" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2721239" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15226555" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26702702" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32719395" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -275,11 +290,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="207" lean-forward="true" selection-start-line="207" selection-end-line="207" />
+        <state relative-caret-position="-10794">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gameServer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="35" lean-forward="true" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
         </state>
       </provider>
     </entry>

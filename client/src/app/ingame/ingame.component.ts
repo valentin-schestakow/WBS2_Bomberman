@@ -245,7 +245,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
 
 
-  @HostListener('window:keyup', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   keyEvent(event: KeyboardEvent) {
     //console.log(event.code);
     //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
