@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
-import {Player} from './Player';
+import {Gamer} from './Gamer';
 import {Bomb} from './Bomb';
 import {Field} from './Field';
 import {Block} from './Block';
 import {delay} from 'rxjs/operators';
 import {interval, timer} from 'rxjs';
 import {PlayerService} from '../services/player.service';
+import * as io from 'socket.io-client';
 
-
-
+let socket = io.connect(window.location.protocol + '//' + window.location.host);
 
 @Component({
   selector: 'app-ingame',
@@ -25,7 +25,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   /** Template reference to the canvas element */
   @ViewChild('playground') playground: ElementRef;
-  myPlayer: Player;
+  myPlayer: Gamer;
   size: number;
   myBomb: Bomb;
   /** Canvas 2d context */
@@ -33,11 +33,17 @@ export class IngameComponent implements OnInit, AfterViewInit {
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
   //ctx: CanvasRenderingContext2D;
 
+
+
   constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
+
+
+
+
     this.size = 25;
-    this.myPlayer =  new Player(0, 0, 'xXSlyerXx');
+    this.myPlayer =  new Gamer(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
     let width = 800;
 
@@ -49,6 +55,17 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.context.scale(4,4);
 
     this.draw();
+
+  }
+
+  ngDoCheck() {
+    socket.on('getField', function(field){
+      this.playField = field;
+      console.log("socket works");
+      //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
+    });
+    //socket.emit( 'getField', this.playField);
+    this.reprintCanvas();
   }
 
   ngAfterViewInit() {
@@ -63,6 +80,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
 
     const size = 25;
+
     const box = new Image();
     box.src = '../../assets/images/box.JPG';
     console.log(box.height);
@@ -89,14 +107,14 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   }
 
-  spawnPlayer(player: Player) {
+  spawnPlayer(player: Gamer) {
     this.context.drawImage(this.spaceshipAlly.nativeElement, player.posX * this.size, player.posY * this.size, this.size, this.size);
   }
 
   movePlayer(oldX: number, oldY: number, newX:number, newY:number){
     //array
    // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-    //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Player(newX,newY, "Slyaer");
+    //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
 
     //drawing
     //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
@@ -144,7 +162,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   playerAction(action: string) {
 
-
+    socket.emit( 'getField', this.playField);
     if (action === 'moveUp') {
       if(this.myPlayer.posY > 0) {
         if(this.playField[this.myPlayer.posY/25 - 1][this.myPlayer.posX/25].getType() !== 'Block') {

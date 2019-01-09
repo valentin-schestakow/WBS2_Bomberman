@@ -1,4 +1,4 @@
-import {Player} from './Player';
+import {Gamer} from './Gamer';
 import {Bomb} from './Bomb';
 
 export class Field {
@@ -23,7 +23,7 @@ export class Field {
     return this.type;
   }
 
-  spawnPlayer(player: Player){
+  spawnPlayer(player: Gamer){
 
   }
 
