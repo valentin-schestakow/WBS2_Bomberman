@@ -409,16 +409,16 @@ var Field = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/ingame/Player.ts":
-/*!**********************************!*\
-  !*** ./src/app/ingame/Player.ts ***!
-  \**********************************/
-/*! exports provided: Player */
+/***/ "./src/app/ingame/Gamer.ts":
+/*!*********************************!*\
+  !*** ./src/app/ingame/Gamer.ts ***!
+  \*********************************/
+/*! exports provided: Gamer */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Gamer", function() { return Gamer; });
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -434,11 +434,11 @@ var __extends = (undefined && undefined.__extends) || (function () {
     };
 })();
 
-var Player = /** @class */ (function (_super) {
-    __extends(Player, _super);
-    function Player(posX, posY, name) {
+var Gamer = /** @class */ (function (_super) {
+    __extends(Gamer, _super);
+    function Gamer(posX, posY, name) {
         var _this = _super.call(this, posX, posY) || this;
-        _this.type = "Player";
+        _this.type = "Gamer";
         _this.bombPlanted = 0;
         _this.lives = 3;
         _this.kills = 0;
@@ -449,7 +449,7 @@ var Player = /** @class */ (function (_super) {
         _this.posY = posY;
         return _this;
     }
-    Player.prototype.getRandomColor = function () {
+    Gamer.prototype.getRandomColor = function () {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
@@ -457,7 +457,7 @@ var Player = /** @class */ (function (_super) {
         }
         return color;
     };
-    return Player;
+    return Gamer;
 }(_Field__WEBPACK_IMPORTED_MODULE_0__["Field"]));
 
 
@@ -497,7 +497,7 @@ module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*#
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IngameComponent", function() { return IngameComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ "./src/app/ingame/Player.ts");
+/* harmony import */ var _Gamer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gamer */ "./src/app/ingame/Gamer.ts");
 /* harmony import */ var _Bomb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bomb */ "./src/app/ingame/Bomb.ts");
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 /* harmony import */ var _Block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Block */ "./src/app/ingame/Block.ts");
@@ -528,7 +528,7 @@ var IngameComponent = /** @class */ (function () {
     }
     IngameComponent.prototype.ngOnInit = function () {
         this.size = 25;
-        this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
+        this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
         var width = 800;
         //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
@@ -579,7 +579,7 @@ var IngameComponent = /** @class */ (function () {
     IngameComponent.prototype.movePlayer = function (oldX, oldY, newX, newY) {
         //array
         // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Player(newX,newY, "Slyaer");
+        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
         //drawing
         //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
         /*if(this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Field"){

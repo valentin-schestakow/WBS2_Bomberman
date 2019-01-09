@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
-import {Player} from './Player';
+import {Gamer} from './Gamer';
 import {Bomb} from './Bomb';
 import {Field} from './Field';
 import {Block} from './Block';
@@ -25,7 +25,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   /** Template reference to the canvas element */
   @ViewChild('playground') playground: ElementRef;
-  myPlayer: Player;
+  myPlayer: Gamer;
   size: number;
   myBomb: Bomb;
   /** Canvas 2d context */
@@ -43,7 +43,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
 
     this.size = 25;
-    this.myPlayer =  new Player(0, 0, 'xXSlyerXx');
+    this.myPlayer =  new Gamer(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
     let width = 800;
 
@@ -107,14 +107,14 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   }
 
-  spawnPlayer(player: Player) {
+  spawnPlayer(player: Gamer) {
     this.context.drawImage(this.spaceshipAlly.nativeElement, player.posX * this.size, player.posY * this.size, this.size, this.size);
   }
 
   movePlayer(oldX: number, oldY: number, newX:number, newY:number){
     //array
    // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-    //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Player(newX,newY, "Slyaer");
+    //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
 
     //drawing
     //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
