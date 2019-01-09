@@ -1,6 +1,6 @@
 import {Field} from './Field';
 
-export class Player extends Field{
+export class Gamer extends Field{
 
   public points: number;
   public lives: number;
@@ -14,7 +14,7 @@ export class Player extends Field{
 
   constructor (posX: number, posY: number, name: string) {
     super(posX, posY);
-    this.type = "Player";
+    this.type = "Gamer";
     this.bombPlanted = 0;
     this.lives = 3;
     this.kills = 0;

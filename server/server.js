@@ -7,10 +7,10 @@ var pFacebook = require("passport-facebook");
 var pGoogle = require("passport-google-oauth20");
 var fs = require("fs");
 var https = require("https");
-var socket = require("socket.io");
 var mongodb_1 = require("mongodb");
 var cryptoJS = require("crypto-js");
 var bodyParser = require("body-parser");
+var gameServer = require("../server/gameServer");
 /*****************************************************************************
  ***  setup database and its structure                                       *
  *****************************************************************************/
@@ -67,22 +67,7 @@ console.log("-------------------------------------------------------------\n"
 /*****************************************************************************
  ***  set up webSocket                                                       *
  *****************************************************************************/
-var io = socket(server);
-io.on('connection', function (socket) {
-    console.log('made socket connection', socket.id);
-    //--- Handle lock event -----------------------------------------------------
-    socket.on('lock', function (user) {
-        socket.broadcast.emit('lock', user);
-    });
-    //--- Handle update event ---------------------------------------------------
-    socket.on('update', function () {
-        socket.broadcast.emit('update');
-    });
-    //--- Handle disconnect event -----------------------------------------------
-    socket.on('disconnect', function () {
-        socket.broadcast.emit('update');
-    });
-});
+gameServer.run(server);
 /*****************************************************************************
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
