@@ -7,6 +7,7 @@ import { IngameComponent } from './ingame/ingame.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
+import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { UserComponent } from './user/user.component';
     IngameComponent,
     LoginComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    PlayerComponent
   ],
   imports: [
     BrowserModule,

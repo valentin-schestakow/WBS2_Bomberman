@@ -109,6 +109,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 /* harmony import */ var _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./admin/admin.component */ "./src/app/admin/admin.component.ts");
+/* harmony import */ var _player_player_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./player/player.component */ "./src/app/player/player.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -121,11 +122,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var routes = [
     { path: 'play', component: _ingame_ingame_component__WEBPACK_IMPORTED_MODULE_2__["IngameComponent"] },
     { path: 'user', component: _user_user_component__WEBPACK_IMPORTED_MODULE_3__["UserComponent"] },
     { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] },
     { path: 'admin', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
+    { path: 'gamer', component: _player_player_component__WEBPACK_IMPORTED_MODULE_6__["PlayerComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -150,7 +153,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Welcome to {{ title }}!</h1>\n\n\n<router-outlet></router-outlet>\n"
+module.exports = "<!--\n<h1>Welcome to {{ title }}!</h1>\n-->\n\n<router-outlet></router-outlet>\n\n\n"
 
 /***/ }),
 
@@ -194,8 +197,27 @@ var AppComponent = /** @class */ (function () {
         this.title = 'bomberman';
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.playerService.getUsers();
-        this.playerService.logIn();
+        /*
+        this.playerService.checkLogin()
+          .then(() => {
+            this.playerService.login("test@test.de", "test")
+          })
+          .then(() => {
+            this.playerService.checkLogin()
+          })
+          .then(() => {
+            this.playerService.createPlayer("new@test.de", "pw", "name")
+          })
+          .then(() => {
+            this.playerService.getPlayer("new@test.de")
+          })
+          .then(() => {
+            this.playerService.getAllPlayers()
+          })
+          .catch((err: HttpErrorResponse) => {
+            console.log(err)
+          });
+          */
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -231,12 +253,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 /* harmony import */ var _admin_admin_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./admin/admin.component */ "./src/app/admin/admin.component.ts");
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
+/* harmony import */ var _player_player_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./player/player.component */ "./src/app/player/player.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -256,7 +280,8 @@ var AppModule = /** @class */ (function () {
                 _ingame_ingame_component__WEBPACK_IMPORTED_MODULE_5__["IngameComponent"],
                 _login_login_component__WEBPACK_IMPORTED_MODULE_6__["LoginComponent"],
                 _admin_admin_component__WEBPACK_IMPORTED_MODULE_7__["AdminComponent"],
-                _user_user_component__WEBPACK_IMPORTED_MODULE_8__["UserComponent"]
+                _user_user_component__WEBPACK_IMPORTED_MODULE_8__["UserComponent"],
+                _player_player_component__WEBPACK_IMPORTED_MODULE_9__["PlayerComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -816,6 +841,77 @@ var LoginComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/player/player.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/player/player.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--\n<div class=\"card m-3\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\n    <p class=\"card-text\">{{player.stats.kills}}</p>\n    <p class=\"card-text\">{{player.stats.points}}</p>\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\n  </div>\n</div>\n-->\n<div class=\"container\">\n  <div class=\"row\">\n\n    <div class=\"\" >\n\n\n      <div class=\"panel panel-info\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Player Info</h3>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n\n            <div class=\" col-md-9 col-lg-9 \">\n              <table class=\"table table-user-information\">\n                <tbody>\n\n                <tr>\n                  <td>Username: </td>\n                  <td>{{player.username}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Email: </td>\n                  <td>{{player.email}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Game Count: </td>\n                  <td>{{player.stats.gameCount}}</td>\n                </tr>\n                <tr>\n                  <td>Points: </td>\n                  <td>{{player.stats.points}}</td>\n                </tr>\n                <tr>\n                  <td>Kills: </td>\n                  <td>{{player.stats.kills}}</td>\n                </tr>\n                <tr>\n                  <td>Deaths: </td>\n                  <td>{{player.stats.deaths}}</td>\n                </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/player/player.component.scss":
+/*!**********************************************!*\
+  !*** ./src/app/player/player.component.scss ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3BsYXllci9wbGF5ZXIuY29tcG9uZW50LnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/player/player.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/player/player.component.ts ***!
+  \********************************************/
+/*! exports provided: PlayerComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerComponent", function() { return PlayerComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var PlayerComponent = /** @class */ (function () {
+    function PlayerComponent(playerServie) {
+        this.playerServie = playerServie;
+    }
+    PlayerComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.playerServie.login("new@test.de", "pw")
+            .then(function () {
+            _this.player = _this.playerServie.currentPlayer;
+        });
+    };
+    PlayerComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-player',
+            template: __webpack_require__(/*! ./player.component.html */ "./src/app/player/player.component.html"),
+            styles: [__webpack_require__(/*! ./player.component.scss */ "./src/app/player/player.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
+    ], PlayerComponent);
+    return PlayerComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/player.service.ts":
 /*!********************************************!*\
   !*** ./src/app/services/player.service.ts ***!
@@ -847,8 +943,19 @@ var PlayerService = /** @class */ (function () {
         this.http = http;
         this.isLoggedIn = false;
     }
-    PlayerService.prototype.getUsers = function () {
-        this.http.get('https://localhost:8080/players')
+    PlayerService.prototype.checkLogin = function () {
+        var _this = this;
+        return this.http.get('https://localhost:8080/login/check')
+            .toPromise()
+            .then(function (data) {
+            console.log(data.message);
+        }).catch(function (err) {
+            console.log(err);
+            _this.isLoggedIn = false;
+        });
+    };
+    PlayerService.prototype.getAllPlayers = function () {
+        return this.http.get('https://localhost:8080/players')
             .toPromise()
             .then(function (data) {
             console.log(data.players);
@@ -856,21 +963,64 @@ var PlayerService = /** @class */ (function () {
             console.log(err);
         });
     };
-    PlayerService.prototype.logIn = function () {
+    PlayerService.prototype.login = function (email, password) {
         var _this = this;
-        return this.http.post('https://localhost:8080/login/player', { email: "test@test.de", password: "test" }, httpOptions)
+        return this.http.post('https://localhost:8080/login/player', { email: email, password: password }, httpOptions)
             .toPromise()
             .then(function (res) {
             _this.isLoggedIn = true;
+            _this.currentPlayer = res.player;
             console.log(res.message);
         })
             .catch(function (err) {
             console.log(err.message);
         });
     };
+    PlayerService.prototype.logout = function (email) {
+        var _this = this;
+        return this.http.post('https://localhost:8080/logout/player', { email: email }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            _this.isLoggedIn = false;
+            console.log(res.message);
+        })
+            .catch(function (err) {
+            console.log(err.message);
+        });
+    };
+    PlayerService.prototype.createPlayer = function (email, password, username) {
+        return this.http.post('https://localhost:8080/create/player', { email: email, password: password, username: username }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            //this.isLoggedIn = true;
+            console.log(res.message);
+        })
+            .catch(function (err) {
+            console.log(err.message);
+        });
+    };
+    PlayerService.prototype.getPlayer = function (email) {
+        return this.http.get('https://localhost:8080/player/' + email)
+            .toPromise()
+            .then(function (data) {
+            console.log(data.player);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    };
+    PlayerService.prototype.updateUser = function (email, username, password) {
+        return this.http.put('http://localhost:8080/user/' + email, {
+            username: username,
+            password: password
+        })
+            .toPromise()
+            .then(function (data) {
+            console.log(data.message);
+        }).catch(function (err) {
+            console.log(err.message);
+        });
+    };
     PlayerService.prototype.ngOnInit = function () {
-        this.getUsers();
-        this.logIn();
     };
     PlayerService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
