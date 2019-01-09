@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user\">\r\n\r\n  <aside id=\"left-panel\" class=\"left-panel\">\r\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\r\n\r\n      <div class=\"navbar-header\">\r\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n          <i class=\"fa fa-bars\"></i>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\r\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\r\n      </div>\r\n\r\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li>\r\n            <a routerLink=\"/dashboard\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\r\n          </li>\r\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\r\n          <li class=\"menu-item-has-children active dropdown\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>User</a>\r\n            <ul class=\"sub-menu children dropdown-menu\">\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/userspage\">User List</a></li>\r\n              <li><i class=\"fa fa-plus\"></i><a href=\"#\" routerLink=\"/addpage\">Add User</a></li>\r\n\r\n            </ul>\r\n          </li>\r\n\r\n\r\n\r\n        </ul>\r\n      </div><!-- /.navbar-collapse -->\r\n    </nav>\r\n  </aside><!-- /#left-panel -->\r\n\r\n  <!-- Left Panel -->\r\n\r\n  <!-- Right Panel -->\r\n\r\n  <div id=\"right-panel\" class=\"right-panel\">\r\n\r\n    <!-- Header-->\r\n    <header id=\"header\" class=\"header\">\r\n\r\n      <div class=\"header-menu\">\r\n\r\n        <div class=\"col-sm-7\">\r\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\r\n          <div class=\"header-left\">\r\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\r\n            <div class=\"form-inline\">\r\n              <form class=\"search-form\">\r\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\r\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"dropdown for-notification\">\r\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                <i class=\"fa fa-bell\"></i>\r\n              </button>\r\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\r\n                <!--<app-alerts></app-alerts>-->\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-sm-5\">\r\n          <div class=\"user-area dropdown float-right\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n              <img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\r\n            </a>\r\n\r\n            <div class=\"user-menu dropdown-menu\">\r\n\r\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\r\n            </div>\r\n          </div>\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </header><!-- /header -->\r\n    <!-- Header-->\r\n\r\n    <div class=\"breadcrumbs\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"page-header float-left\">\r\n          <div class=\"page-title\">\r\n            <h1>Dashboard</h1>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n        <div class=\"page-header float-right\">\r\n          <div class=\"page-title\">\r\n            <ol class=\"breadcrumb text-right\">\r\n              <li><a href=\"#\">Dashboard</a></li>\r\n              <li class=\"active\">{{this.path}}</li>\r\n            </ol>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"content mt-3\">\r\n      <div class=\"animated fadeIn\">\r\n\r\n\r\n        <router-outlet></router-outlet>\r\n\r\n\r\n\r\n      </div><!-- .animated -->\r\n    </div><!-- .content -->\r\n\r\n\r\n  </div><!-- /#right-panel -->\r\n\r\n</div>\r\n<div *ngIf=\"!user\" class=\"container\">\r\n  <div class=\"row justify-content-md-center\">\r\n    <div class=\"col-md-4\">\r\n      <h2>Please log in!</h2>\r\n      <form>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputEmail1\">Email address</label>\r\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\r\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputPassword1\">Password</label>\r\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\r\n        </div>\r\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div *ngIf=\"user\">\n\n  <aside id=\"left-panel\" class=\"left-panel\">\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\n\n      <div class=\"navbar-header\">\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n          <i class=\"fa fa-bars\"></i>\n        </button>\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\n      </div>\n\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\n        <ul class=\"nav navbar-nav\">\n          <li>\n            <a routerLink=\"/dashboard\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\n          </li>\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\n          <li class=\"menu-item-has-children active dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>User</a>\n            <ul class=\"sub-menu children dropdown-menu\">\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/userspage\">User List</a></li>\n              <li><i class=\"fa fa-plus\"></i><a href=\"#\" routerLink=\"/addpage\">Add User</a></li>\n\n            </ul>\n          </li>\n\n\n\n        </ul>\n      </div><!-- /.navbar-collapse -->\n    </nav>\n  </aside><!-- /#left-panel -->\n\n  <!-- Left Panel -->\n\n  <!-- Right Panel -->\n\n  <div id=\"right-panel\" class=\"right-panel\">\n\n    <!-- Header-->\n    <header id=\"header\" class=\"header\">\n\n      <div class=\"header-menu\">\n\n        <div class=\"col-sm-7\">\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\n          <div class=\"header-left\">\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\n            <div class=\"form-inline\">\n              <form class=\"search-form\">\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\n              </form>\n            </div>\n\n            <div class=\"dropdown for-notification\">\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n                <i class=\"fa fa-bell\"></i>\n              </button>\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\n                <!--<app-alerts></app-alerts>-->\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n        <div class=\"col-sm-5\">\n          <div class=\"user-area dropdown float-right\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n              <img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\n            </a>\n\n            <div class=\"user-menu dropdown-menu\">\n\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\n            </div>\n          </div>\n\n\n\n        </div>\n      </div>\n\n    </header><!-- /header -->\n    <!-- Header-->\n\n    <div class=\"breadcrumbs\">\n      <div class=\"col-sm-4\">\n        <div class=\"page-header float-left\">\n          <div class=\"page-title\">\n            <h1>Dashboard</h1>\n          </div>\n        </div>\n      </div>\n      <div class=\"col-sm-8\">\n        <div class=\"page-header float-right\">\n          <div class=\"page-title\">\n            <ol class=\"breadcrumb text-right\">\n              <li><a href=\"#\">Dashboard</a></li>\n              <li class=\"active\">{{this.path}}</li>\n            </ol>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"content mt-3\">\n      <div class=\"animated fadeIn\">\n\n\n        <router-outlet></router-outlet>\n\n\n\n      </div><!-- .animated -->\n    </div><!-- .content -->\n\n\n  </div><!-- /#right-panel -->\n\n</div>\n<div *ngIf=\"!user\" class=\"container\">\n  <div class=\"row justify-content-md-center\">\n    <div class=\"col-md-4\">\n      <h2>Please log in!</h2>\n      <form>\n        <div class=\"form-group\">\n          <label for=\"exampleInputEmail1\">Email address</label>\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"exampleInputPassword1\">Password</label>\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\n        </div>\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -57,6 +57,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminComponent", function() { return AdminComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/auth.service */ "./src/app/services/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -118,6 +119,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 /* harmony import */ var _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./admin/admin.component */ "./src/app/admin/admin.component.ts");
+/* harmony import */ var _player_player_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./player/player.component */ "./src/app/player/player.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -130,11 +132,13 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var routes = [
     { path: 'play', component: _ingame_ingame_component__WEBPACK_IMPORTED_MODULE_2__["IngameComponent"] },
     { path: 'user', component: _user_user_component__WEBPACK_IMPORTED_MODULE_3__["UserComponent"] },
     { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] },
     { path: 'admin', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
+    { path: 'gamer', component: _player_player_component__WEBPACK_IMPORTED_MODULE_6__["PlayerComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -159,7 +163,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Welcome to {{ title }}!</h1>\n\n\n<router-outlet></router-outlet>\n"
+module.exports = "<!--\n<h1>Welcome to {{ title }}!</h1>\n-->\n\n<router-outlet></router-outlet>\n\n\n"
 
 /***/ }),
 
@@ -203,8 +207,27 @@ var AppComponent = /** @class */ (function () {
         this.title = 'bomberman';
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.playerService.getUsers();
-        this.playerService.logIn();
+        /*
+        this.playerService.checkLogin()
+          .then(() => {
+            this.playerService.login("test@test.de", "test")
+          })
+          .then(() => {
+            this.playerService.checkLogin()
+          })
+          .then(() => {
+            this.playerService.createPlayer("new@test.de", "pw", "name")
+          })
+          .then(() => {
+            this.playerService.getPlayer("new@test.de")
+          })
+          .then(() => {
+            this.playerService.getAllPlayers()
+          })
+          .catch((err: HttpErrorResponse) => {
+            console.log(err)
+          });
+          */
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -240,12 +263,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 /* harmony import */ var _admin_admin_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./admin/admin.component */ "./src/app/admin/admin.component.ts");
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _player_player_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./player/player.component */ "./src/app/player/player.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -265,14 +294,19 @@ var AppModule = /** @class */ (function () {
                 _ingame_ingame_component__WEBPACK_IMPORTED_MODULE_5__["IngameComponent"],
                 _login_login_component__WEBPACK_IMPORTED_MODULE_6__["LoginComponent"],
                 _admin_admin_component__WEBPACK_IMPORTED_MODULE_7__["AdminComponent"],
-                _user_user_component__WEBPACK_IMPORTED_MODULE_8__["UserComponent"]
+                _user_user_component__WEBPACK_IMPORTED_MODULE_8__["UserComponent"],
+                _player_player_component__WEBPACK_IMPORTED_MODULE_11__["PlayerComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"]
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
             ],
-            providers: [],
+            providers: [
+                _services_auth_service__WEBPACK_IMPORTED_MODULE_10__["AuthService"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+            ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
     ], AppModule);
@@ -430,6 +464,7 @@ var Player = /** @class */ (function (_super) {
     function Player(posX, posY, name) {
         var _this = _super.call(this, posX, posY) || this;
         _this.type = "Player";
+        _this.bombPlanted = 0;
         _this.lives = 3;
         _this.kills = 0;
         _this.bombs = 1;
@@ -491,8 +526,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Bomb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bomb */ "./src/app/ingame/Bomb.ts");
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 /* harmony import */ var _Block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Block */ "./src/app/ingame/Block.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -502,7 +536,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -519,9 +552,11 @@ var IngameComponent = /** @class */ (function () {
         this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
         var width = 800;
-        this.playground.nativeElement.setAttribute('width', '800');
-        this.playground.nativeElement.setAttribute('height', '600');
-        //this.context.scale(0.5,0.5);
+        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
+        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '600');
+        this.playground.nativeElement.setAttribute('width', '3200');
+        this.playground.nativeElement.setAttribute('height', '2400');
+        this.context.scale(4, 4);
         this.draw();
     };
     IngameComponent.prototype.ngAfterViewInit = function () {
@@ -584,10 +619,19 @@ var IngameComponent = /** @class */ (function () {
                 else if (this.playField[i][j].getType() == 'Bomb') {
                     this.context.fillStyle = 'orange';
                 }
+                else if (this.playField[i][j].getType() == 'Fire') {
+                    this.context.fillStyle = 'red';
+                }
                 this.context.fillRect(this.playField[i][j].posX, this.playField[i][j].posY, 25, 25);
             }
         }
         this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX, this.myPlayer.posY, 25, 25);
+        this.printPlayer();
+    };
+    IngameComponent.prototype.printPlayer = function () {
+        this.context.font = "5px";
+        this.context.fillStyle = "black";
+        this.context.fillText(this.myPlayer.name, this.myPlayer.posX + 25, this.myPlayer.posY + 25);
     };
     IngameComponent.prototype.playerAction = function (action) {
         var _this = this;
@@ -624,28 +668,29 @@ var IngameComponent = /** @class */ (function () {
             }
         }
         if (action === 'plantBomb') {
-            console.log("Plant Bomb at x:" + this.convertAbsolutePosToRelativePos(this.myPlayer.posX) + " y: " + this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
-            this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
-                new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
-            this.myBomb = new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
-            this.context.fillStyle = 'orange';
-            this.context.fillRect(this.myPlayer.posX, this.myPlayer.posY, 25, 25);
-            this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX, this.myPlayer.posY, 25, 25);
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["timer"])(500);
-            /*Tiemr*/
-            //let timeLeft =3;
-            var interval_1 = setInterval(function () {
-                if (_this.myBomb.timeLeft > 0) {
-                    _this.myBomb.timeLeft--;
-                }
-                else {
-                    _this.bombExplode(_this.convertAbsolutePosToRelativePos(_this.myBomb.posY), _this.convertAbsolutePosToRelativePos(_this.myBomb.posX));
-                    clearInterval(interval_1);
-                }
-            }, 1000);
+            if (this.myPlayer.bombPlanted < 1) {
+                this.myPlayer.bombPlanted++;
+                console.log("Plant Bomb at x:" + this.convertAbsolutePosToRelativePos(this.myPlayer.posX) + " y: " + this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+                this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
+                    new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
+                this.myBomb = new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
+                this.reprintCanvas();
+                //timer(500);
+                /*Tiemr*/
+                //let timeLeft =3;
+                var interval_1 = setInterval(function () {
+                    if (_this.myBomb.timeLeft > 0) {
+                        _this.myBomb.timeLeft--;
+                    }
+                    else {
+                        _this.bombExplode(_this.convertAbsolutePosToRelativePos(_this.myBomb.posY), _this.convertAbsolutePosToRelativePos(_this.myBomb.posX));
+                        clearInterval(interval_1);
+                    }
+                }, 1000);
+            }
         }
         else if (action === 'printDebug') {
-            var row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9\n";
+            var row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9|\n";
             for (var i = 0; i < this.playField.length; i++) {
                 row = row.concat(i + ":\t");
                 for (var j = 0; j < 20; j++) {
@@ -653,7 +698,7 @@ var IngameComponent = /** @class */ (function () {
                 }
                 row = row.concat("\n");
             }
-            console.log(row);
+            console.log("%c" + row, "color:orange");
         }
         else if (action === 'reprintField') {
             this.reprintCanvas();
@@ -697,38 +742,62 @@ var IngameComponent = /** @class */ (function () {
     }*/
     IngameComponent.prototype.bombExplode = function (posY, posX) {
         var _this = this;
-        if (posY > 0) {
-            this.context.fillStyle = 'red';
-            this.context.fillRect(this.playField[posY - 1][posX].posX, this.playField[posY - 1][posX].posY, 25, 25);
-            this.playField[posY - 1][posX] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY - 1][posX].posX, this.playField[posY - 1][posX].posY);
-        }
-        if (posY < 13) {
-            this.context.fillStyle = 'red';
-            this.context.fillRect(this.playField[posY + 1][posX].posX, this.playField[posY + 1][posX].posY, 25, 25);
-            this.playField[posY + 1][posX] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY + 1][posX].posX, this.playField[posY + 1][posX].posY);
-        }
-        if (posX > 0) {
-            this.context.fillStyle = 'red';
-            this.context.fillRect(this.playField[posY][posX - 1].posX, this.playField[posY][posX - 1].posY, 25, 25);
-            this.playField[posY][posX - 1] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY][posX - 1].posX, this.playField[posY][posX - 1].posY);
-        }
-        if (posX < 19) {
-            this.context.fillStyle = 'red';
-            this.context.fillRect(this.playField[posY][posX + 1].posX, this.playField[posY][posX + 1].posY, 25, 25);
-            this.playField[posY][posX + 1] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY][posX + 1].posX, this.playField[posY][posX + 1].posY);
-        }
-        this.playField[posY][posX] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](this.playField[posY][posX].posX, this.playField[posY][posX].posY);
-        //this.reprintCanvas();
+        /*
+            if(posY > 0){
+              this.context.fillStyle = 'red';
+              this.context.fillRect(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY, 25, 25);
+    
+              this.playField[posY-1][posX] = new Field(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY);
+            }
+            if(posY < 13){
+              this.context.fillStyle = 'red';
+              this.context.fillRect(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY, 25, 25);
+    
+              this.playField[posY+1][posX] = new Field(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY);
+            }
+            if(posX > 0){
+              this.context.fillStyle = 'red';
+              this.context.fillRect(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY, 25, 25);
+    
+              this.playField[posY][posX-1] = new Field(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY);
+            }
+            if(posX < 19){
+              this.context.fillStyle = 'red';
+              this.context.fillRect(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY, 25, 25);
+    
+              this.playField[posY][posX+1] = new Field(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY);
+            }
+            this.playField[posY][posX] = new Field(this.playField[posY][posX].posX,this.playField[posY][posX].posY);
+            */
+        this.explosionHelper(posY, posX, "Fire");
+        this.reprintCanvas();
         var timeleft = 1;
         var interval = setInterval(function () {
             if (timeleft > 0) {
                 timeleft--;
             }
             else {
+                _this.explosionHelper(posY, posX, "Field");
+                _this.myPlayer.bombPlanted--;
                 _this.reprintCanvas();
                 clearInterval(interval);
             }
         }, 1000);
+    };
+    IngameComponent.prototype.explosionHelper = function (posY, posX, type) {
+        if (posY > 0) {
+            this.playField[posY - 1][posX].type = type;
+        }
+        if (posY < 13) {
+            this.playField[posY + 1][posX].type = type;
+        }
+        if (posX > 0) {
+            this.playField[posY][posX - 1].type = type;
+        }
+        if (posX < 19) {
+            this.playField[posY][posX + 1].type = type;
+        }
+        this.playField[posY][posX].type = type;
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('playground'),
@@ -753,7 +822,7 @@ var IngameComponent = /** @class */ (function () {
         //liste von fiels field kann player oder leer oder
         //field of 20x15 objects -> max300 objects
         ,
-        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_6__["PlayerService"]])
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_5__["PlayerService"]])
     ], IngameComponent);
     return IngameComponent;
 }());
@@ -825,6 +894,184 @@ var LoginComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/player/player.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/player/player.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--\n<div class=\"card m-3\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\n    <p class=\"card-text\">{{player.stats.kills}}</p>\n    <p class=\"card-text\">{{player.stats.points}}</p>\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\n  </div>\n</div>\n-->\n<div class=\"container\">\n  <div class=\"row\">\n\n    <div class=\"\" >\n\n\n      <div class=\"panel panel-info\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Player Info</h3>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n\n            <div class=\" col-md-9 col-lg-9 \">\n              <table class=\"table table-user-information\">\n                <tbody>\n\n                <tr>\n                  <td>Username: </td>\n                  <td>{{player.username}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Email: </td>\n                  <td>{{player.email}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Game Count: </td>\n                  <td>{{player.stats.gameCount}}</td>\n                </tr>\n                <tr>\n                  <td>Points: </td>\n                  <td>{{player.stats.points}}</td>\n                </tr>\n                <tr>\n                  <td>Kills: </td>\n                  <td>{{player.stats.kills}}</td>\n                </tr>\n                <tr>\n                  <td>Deaths: </td>\n                  <td>{{player.stats.deaths}}</td>\n                </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/player/player.component.scss":
+/*!**********************************************!*\
+  !*** ./src/app/player/player.component.scss ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3BsYXllci9wbGF5ZXIuY29tcG9uZW50LnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/player/player.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/player/player.component.ts ***!
+  \********************************************/
+/*! exports provided: PlayerComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerComponent", function() { return PlayerComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var PlayerComponent = /** @class */ (function () {
+    function PlayerComponent(playerServie) {
+        this.playerServie = playerServie;
+    }
+    PlayerComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.playerServie.login("new@test.de", "pw")
+            .then(function () {
+            _this.player = _this.playerServie.currentPlayer;
+        });
+    };
+    PlayerComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-player',
+            template: __webpack_require__(/*! ./player.component.html */ "./src/app/player/player.component.html"),
+            styles: [__webpack_require__(/*! ./player.component.scss */ "./src/app/player/player.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
+    ], PlayerComponent);
+    return PlayerComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/auth.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/services/auth.service.ts ***!
+  \******************************************/
+/*! exports provided: AuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var httpOptions = {
+    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' }),
+    crossDomain: true,
+    xhrFields: { withCredentials: true }
+};
+var AuthService = /** @class */ (function () {
+    function AuthService(router, http) {
+        this.router = router;
+        this.http = http;
+    }
+    AuthService.prototype.checkLogin = function () {
+        var _this = this;
+        this.http.get('http://localhost:8080/login/check')
+            .toPromise()
+            .then(function (data) {
+            console.log(data.message);
+            _this.isLoggedIn = true;
+        }).catch(function (err) {
+            console.log(err.message);
+            _this.isLoggedIn = false;
+        });
+    };
+    AuthService.prototype.login = function (email, password) {
+        var _this = this;
+        this.http.post('http://localhost:8080/login', {
+            email: email,
+            password: password
+        })
+            .toPromise()
+            .then(function (data) {
+            _this.isLoggedIn = true;
+            _this.email = email;
+            //console.log(data.message);
+        }).catch(function (err) {
+            _this.isLoggedIn = false;
+        });
+    };
+    AuthService.prototype.userLogin = function (email, password) {
+        var _this = this;
+        return this.http.post('http://localhost:8080/userLogin', { email: email, password: password }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            _this.isLoggedIn = true;
+            _this.role = res.role;
+            console.log(email + " angemeldet!");
+        })
+            .catch(function (err) {
+            _this.isLoggedIn = false;
+            console.log(email + " NICHT angemeldet!");
+        });
+    };
+    AuthService.prototype.logout = function () {
+        var _this = this;
+        this.http.post('http://localhost:8080/logout', {
+            username: this.email
+        })
+            .toPromise()
+            .then(function (data) {
+            _this.isLoggedIn = false;
+            _this.router.navigate(['']);
+            //console.log(data.message);
+        }).catch(function (err) {
+            //this.isLoggedIn = false;
+            console.log(err.message);
+        });
+    };
+    AuthService.prototype.ngOnInit = function () {
+        this.checkLogin();
+    };
+    AuthService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], AuthService);
+    return AuthService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/player.service.ts":
 /*!********************************************!*\
   !*** ./src/app/services/player.service.ts ***!
@@ -856,8 +1103,19 @@ var PlayerService = /** @class */ (function () {
         this.http = http;
         this.isLoggedIn = false;
     }
-    PlayerService.prototype.getUsers = function () {
-        this.http.get('https://localhost:8080/players')
+    PlayerService.prototype.checkLogin = function () {
+        var _this = this;
+        return this.http.get('https://localhost:8080/login/check')
+            .toPromise()
+            .then(function (data) {
+            console.log(data.message);
+        }).catch(function (err) {
+            console.log(err);
+            _this.isLoggedIn = false;
+        });
+    };
+    PlayerService.prototype.getAllPlayers = function () {
+        return this.http.get('https://localhost:8080/players')
             .toPromise()
             .then(function (data) {
             console.log(data.players);
@@ -865,21 +1123,64 @@ var PlayerService = /** @class */ (function () {
             console.log(err);
         });
     };
-    PlayerService.prototype.logIn = function () {
+    PlayerService.prototype.login = function (email, password) {
         var _this = this;
-        return this.http.post('https://localhost:8080/login/player', { email: "test@test.de", password: "test" }, httpOptions)
+        return this.http.post('https://localhost:8080/login/player', { email: email, password: password }, httpOptions)
             .toPromise()
             .then(function (res) {
             _this.isLoggedIn = true;
+            _this.currentPlayer = res.player;
             console.log(res.message);
         })
             .catch(function (err) {
             console.log(err.message);
         });
     };
+    PlayerService.prototype.logout = function (email) {
+        var _this = this;
+        return this.http.post('https://localhost:8080/logout/player', { email: email }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            _this.isLoggedIn = false;
+            console.log(res.message);
+        })
+            .catch(function (err) {
+            console.log(err.message);
+        });
+    };
+    PlayerService.prototype.createPlayer = function (email, password, username) {
+        return this.http.post('https://localhost:8080/create/player', { email: email, password: password, username: username }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            //this.isLoggedIn = true;
+            console.log(res.message);
+        })
+            .catch(function (err) {
+            console.log(err.message);
+        });
+    };
+    PlayerService.prototype.getPlayer = function (email) {
+        return this.http.get('https://localhost:8080/player/' + email)
+            .toPromise()
+            .then(function (data) {
+            console.log(data.player);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    };
+    PlayerService.prototype.updateUser = function (email, username, password) {
+        return this.http.put('http://localhost:8080/user/' + email, {
+            username: username,
+            password: password
+        })
+            .toPromise()
+            .then(function (data) {
+            console.log(data.message);
+        }).catch(function (err) {
+            console.log(err.message);
+        });
+    };
     PlayerService.prototype.ngOnInit = function () {
-        this.getUsers();
-        this.logIn();
     };
     PlayerService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
