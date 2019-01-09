@@ -434,16 +434,16 @@ var Field = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/ingame/Player.ts":
-/*!**********************************!*\
-  !*** ./src/app/ingame/Player.ts ***!
-  \**********************************/
-/*! exports provided: Player */
+/***/ "./src/app/ingame/Gamer.ts":
+/*!*********************************!*\
+  !*** ./src/app/ingame/Gamer.ts ***!
+  \*********************************/
+/*! exports provided: Gamer */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Gamer", function() { return Gamer; });
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -459,11 +459,11 @@ var __extends = (undefined && undefined.__extends) || (function () {
     };
 })();
 
-var Player = /** @class */ (function (_super) {
-    __extends(Player, _super);
-    function Player(posX, posY, name) {
+var Gamer = /** @class */ (function (_super) {
+    __extends(Gamer, _super);
+    function Gamer(posX, posY, name) {
         var _this = _super.call(this, posX, posY) || this;
-        _this.type = "Player";
+        _this.type = "Gamer";
         _this.bombPlanted = 0;
         _this.lives = 3;
         _this.kills = 0;
@@ -474,7 +474,7 @@ var Player = /** @class */ (function (_super) {
         _this.posY = posY;
         return _this;
     }
-    Player.prototype.getRandomColor = function () {
+    Gamer.prototype.getRandomColor = function () {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
@@ -482,7 +482,7 @@ var Player = /** @class */ (function (_super) {
         }
         return color;
     };
-    return Player;
+    return Gamer;
 }(_Field__WEBPACK_IMPORTED_MODULE_0__["Field"]));
 
 
@@ -522,7 +522,7 @@ module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*#
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IngameComponent", function() { return IngameComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ "./src/app/ingame/Player.ts");
+/* harmony import */ var _Gamer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gamer */ "./src/app/ingame/Gamer.ts");
 /* harmony import */ var _Bomb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bomb */ "./src/app/ingame/Bomb.ts");
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 /* harmony import */ var _Block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Block */ "./src/app/ingame/Block.ts");
@@ -546,44 +546,53 @@ var IngameComponent = /** @class */ (function () {
     //ctx: CanvasRenderingContext2D;
     function IngameComponent(playerService) {
         this.playerService = playerService;
+        this.playerService.receiveMove()
+            .subscribe(function (data) { return console.log(data); });
     }
+    IngameComponent.prototype.broadcastMove = function (move, gamer) {
+        this.playerService.emitMove({ gamer: gamer, move: move });
+    };
     IngameComponent.prototype.ngOnInit = function () {
         this.size = 25;
-        this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
+        this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
         var width = 800;
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '600');
         this.playground.nativeElement.setAttribute('width', '3200');
         this.playground.nativeElement.setAttribute('height', '2400');
         this.context.scale(4, 4);
         this.draw();
+        /*socket.on('getField', function(field){
+          this.playField = field;
+          console.log("socket works"+field);
+          //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
+        });*/
+    };
+    IngameComponent.prototype.ngDoCheck = function () {
+        /*
+        socket.on('getField', function(field){
+          this.playField = field;
+          console.log("socket works"+field);
+          //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
+        });
+        */
+        //socket.emit( 'getField', this.playField);
+        this.reprintCanvas();
     };
     IngameComponent.prototype.ngAfterViewInit = function () {
         this.spawnPlayer(this.myPlayer);
     };
     IngameComponent.prototype.draw = function () {
         var size = 25;
-        var box = new Image();
-        box.src = '../../assets/images/box.JPG';
-        console.log(box.height);
         this.playField = [];
         for (var i = 0; i < 14; i++) {
             this.playField[i] = [];
             for (var j = 0; j < 20; j++) {
-                this.context.beginPath();
-                this.context.fillStyle = ['#eee', '#eee'][(i + j) % 2];
-                this.context.fillRect(j * size, i * size, size, size);
                 this.playField[i][j] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](j * size, i * size);
                 if (i > 0 && Math.random() * 100 > 40 && i < 14) {
-                    this.context.fillStyle = ['green', 'green'][(i + j) % 2];
-                    this.context.fillRect(j * size, i * size, size, size);
                     this.playField[i][j] = new _Block__WEBPACK_IMPORTED_MODULE_4__["Block"](j * size, i * size);
                 }
-                this.context.closePath();
             }
         }
-        // SET PLAYER ON MAP
     };
     IngameComponent.prototype.spawnPlayer = function (player) {
         this.context.drawImage(this.spaceshipAlly.nativeElement, player.posX * this.size, player.posY * this.size, this.size, this.size);
@@ -591,7 +600,7 @@ var IngameComponent = /** @class */ (function () {
     IngameComponent.prototype.movePlayer = function (oldX, oldY, newX, newY) {
         //array
         // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Player(newX,newY, "Slyaer");
+        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
         //drawing
         //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
         /*if(this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Field"){
@@ -635,6 +644,7 @@ var IngameComponent = /** @class */ (function () {
     };
     IngameComponent.prototype.playerAction = function (action) {
         var _this = this;
+        //socket.emit( 'getField', this.playField);
         if (action === 'moveUp') {
             if (this.myPlayer.posY > 0) {
                 if (this.playField[this.myPlayer.posY / 25 - 1][this.myPlayer.posX / 25].getType() !== 'Block') {
@@ -716,18 +726,23 @@ var IngameComponent = /** @class */ (function () {
         //console.log(event.code);
         //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
         if (event.code === 'KeyW') {
+            this.broadcastMove('moveUp', this.myPlayer);
             this.playerAction('moveUp');
         }
         if (event.code === 'KeyS') {
+            this.broadcastMove('moveDown', this.myPlayer);
             this.playerAction('moveDown');
         }
         if (event.code === 'KeyA') {
+            this.broadcastMove('moveLeft', this.myPlayer);
             this.playerAction('moveLeft');
         }
         if (event.code === 'KeyD') {
+            this.broadcastMove('moveRight', this.myPlayer);
             this.playerAction('moveRight');
         }
         if (event.code === 'KeyB') {
+            this.broadcastMove('plantBomb', this.myPlayer);
             this.playerAction('plantBomb');
         }
         if (event.code === 'KeyP') {
@@ -808,7 +823,7 @@ var IngameComponent = /** @class */ (function () {
         __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
     ], IngameComponent.prototype, "spaceshipAlly", void 0);
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:keyup', ['$event']),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:keydown', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [KeyboardEvent]),
         __metadata("design:returntype", void 0)
@@ -817,6 +832,7 @@ var IngameComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-ingame',
             template: __webpack_require__(/*! ./ingame.component.html */ "./src/app/ingame/ingame.component.html"),
+            providers: [_services_player_service__WEBPACK_IMPORTED_MODULE_5__["PlayerService"]],
             styles: [__webpack_require__(/*! ./ingame.component.scss */ "./src/app/ingame/ingame.component.scss")]
         })
         //liste von fiels field kann player oder leer oder
@@ -1084,6 +1100,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerService", function() { return PlayerService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm5/Observable.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1095,14 +1114,30 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var httpOptions = {
     headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' })
 };
 var PlayerService = /** @class */ (function () {
     function PlayerService(http) {
         this.http = http;
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2__["connect"](window.location.protocol + '//' + window.location.host);
         this.isLoggedIn = false;
     }
+    PlayerService.prototype.emitMove = function (data) {
+        this.socket.emit('move', data);
+    };
+    PlayerService.prototype.receiveMove = function () {
+        var _this = this;
+        var obbservable = new rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"](function (observer) {
+            _this.socket.on('move', function (data) {
+                observer.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return obbservable;
+    };
     PlayerService.prototype.checkLogin = function () {
         var _this = this;
         return this.http.get('https://localhost:8080/login/check')
@@ -1321,6 +1356,17 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 
 module.exports = __webpack_require__(/*! /home/valentin/Desktop/THM/semester_4/wbs2-bomberman/client/src/main.ts */"./src/main.ts");
 
+
+/***/ }),
+
+/***/ 1:
+/*!********************!*\
+  !*** ws (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 

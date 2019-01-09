@@ -14,6 +14,11 @@ export function run(server){
 
     io.on('connection', function (socket) {
         console.log('made socket connection', socket.id);
+
+        socket.on('move', function (data) {
+            console.log('made socket connection', data);
+            socket.broadcast.emit('move', data);
+        });
         //--- Handle lock event -----------------------------------------------------
         socket.on('lock', function (user) {
             socket.broadcast.emit('lock', user);

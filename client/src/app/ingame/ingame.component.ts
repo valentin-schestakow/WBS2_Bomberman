@@ -34,12 +34,16 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService) {
+    this.playerService.receiveMove()
+      .subscribe(data => console.log(data));
+  }
+
+  broadcastMove(move: string, gamer: Gamer){
+    this.playerService.emitMove({gamer,move});
+  }
 
   ngOnInit() {
-
-
-
 
     this.size = 25;
     this.myPlayer =  new Gamer(0, 0, 'xXSlyerXx');
@@ -51,7 +55,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '2400');
     this.context.scale(4,4);
 
-    //this.draw();
+    this.draw();
     /*socket.on('getField', function(field){
       this.playField = field;
       console.log("socket works"+field);
@@ -236,18 +240,23 @@ export class IngameComponent implements OnInit, AfterViewInit {
     //console.log(event.code);
     //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
     if (event.code === 'KeyW') {
+      this.broadcastMove('moveUp', this.myPlayer);
       this.playerAction('moveUp');
     }
     if (event.code === 'KeyS') {
+      this.broadcastMove('moveDown', this.myPlayer);
       this.playerAction('moveDown');
     }
     if (event.code === 'KeyA') {
+      this.broadcastMove('moveLeft', this.myPlayer);
       this.playerAction('moveLeft');
     }
     if (event.code === 'KeyD') {
+      this.broadcastMove('moveRight', this.myPlayer);
       this.playerAction('moveRight');
     }
     if (event.code === 'KeyB') {
+      this.broadcastMove('plantBomb', this.myPlayer);
       this.playerAction('plantBomb');
     }
     if (event.code === 'KeyP') {

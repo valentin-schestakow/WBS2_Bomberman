@@ -2,6 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Player} from '../player/Player';
 import * as io from 'socket.io-client';
+import { Observable } from 'rxjs/Observable';
 
 
 
@@ -15,6 +16,23 @@ const httpOptions = {
 export class PlayerService implements OnInit{
 
   private socket = io.connect(window.location.protocol + '//' + window.location.host);
+
+  emitMove(data:any){
+    this.socket.emit('move',data);
+  }
+
+  receiveMove(){
+    let obbservable = new Observable<{move: string}>(observer => {
+      this.socket.on('move', (data:any) => {
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect();}
+    });
+    return obbservable
+  }
+
+
+
 
   public currentPlayer: Player;
   public isLoggedIn = false;
