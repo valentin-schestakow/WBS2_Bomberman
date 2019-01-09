@@ -1,7 +1,14 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {UserService} from './user.service';
 import {Router} from '@angular/router';
+
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  crossDomain: true,
+  xhrFields: { withCredentials: true }
+};
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +16,8 @@ import {Router} from '@angular/router';
 export class AuthService implements OnInit{
   isLoggedIn: boolean;
   email: string;
+  role: string;
+
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -40,8 +49,22 @@ export class AuthService implements OnInit{
         });
     }
 
+  userLogin(email: string, password: string): Promise<void> {
+   return this.http.post('http://localhost:8080/userLogin', {email: email, password: password}, httpOptions)
+      .toPromise()
+      .then((res: any) => {
+        this.isLoggedIn = true;
+        this.role = res.role;
+        console.log(email+" angemeldet!");
+      })
+      .catch((err) => {
+        this.isLoggedIn = false;
+        console.log(email+" NICHT angemeldet!");
+      });
+  }
 
-    logout(){
+
+  logout(){
         this.http.post('http://localhost:8080/logout', {
             username: this.email
         })
