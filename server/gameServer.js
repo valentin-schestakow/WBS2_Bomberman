@@ -14,9 +14,11 @@ var socket = require("socket.io");
 var size = 25;
 var playField;
 function run(server) {
-    //generateField();
+    generateField();
     console.log("Start GameServer");
     var io = socket(server);
+    console.log("Generated Field: ");
+    printField();
     io.on('connection', function (socket) {
         console.log('made socket connection', socket.id);
         //--- Handle lock event -----------------------------------------------------
@@ -35,8 +37,9 @@ function run(server) {
             socket.broadcast.emit('bombplace', Field);
         });
         socket.on('getField', function (field) {
-            socket.broadcast.emit('getField', field);
-            playField = field;
+            field = this.playField;
+            socket.broadcast.emit('getField', this.playField);
+            //playField = field;
             //console.log(field);
             printField();
         });

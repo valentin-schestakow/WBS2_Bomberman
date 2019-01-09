@@ -537,11 +537,15 @@ var IngameComponent = /** @class */ (function () {
         this.playground.nativeElement.setAttribute('height', '2400');
         this.context.scale(4, 4);
         this.draw();
-        socket.emit('getField', this.playField);
+    };
+    IngameComponent.prototype.ngDoCheck = function () {
         socket.on('getField', function (field) {
             this.playField = field;
+            console.log("socket works");
             //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
         });
+        //socket.emit( 'getField', this.playField);
+        this.reprintCanvas();
     };
     IngameComponent.prototype.ngAfterViewInit = function () {
         this.spawnPlayer(this.myPlayer);
@@ -619,6 +623,7 @@ var IngameComponent = /** @class */ (function () {
     };
     IngameComponent.prototype.playerAction = function (action) {
         var _this = this;
+        socket.emit('getField', this.playField);
         if (action === 'moveUp') {
             if (this.myPlayer.posY > 0) {
                 if (this.playField[this.myPlayer.posY / 25 - 1][this.myPlayer.posX / 25].getType() !== 'Block') {

@@ -55,12 +55,17 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.context.scale(4,4);
 
     this.draw();
-    socket.emit( 'getField', this.playField);
+
+  }
+
+  ngDoCheck() {
     socket.on('getField', function(field){
       this.playField = field;
+      console.log("socket works");
       //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
     });
-
+    //socket.emit( 'getField', this.playField);
+    this.reprintCanvas();
   }
 
   ngAfterViewInit() {
@@ -157,7 +162,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
   playerAction(action: string) {
 
-
+    socket.emit( 'getField', this.playField);
     if (action === 'moveUp') {
       if(this.myPlayer.posY > 0) {
         if(this.playField[this.myPlayer.posY/25 - 1][this.myPlayer.posX/25].getType() !== 'Block') {
