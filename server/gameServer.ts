@@ -64,7 +64,7 @@ function printField(){
 
 function generateField(){
     playField = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 15; i++) {
         playField[i] = [];
         for (let j = 0; j < 20; j++) {
             playField[i][j] = new Field(j * size, i * size);
@@ -113,7 +113,7 @@ function checkGamerAction(action: string, gamer: Gamer) {
             gamer.posY -= 25;
         }
     } else if (action === 'moveDown') {
-        if (gamer.posY / 25 < 13 && playField[gamer.posY / 25 + 1][gamer.posX / 25].type !== 'Block') {
+        if (gamer.posY / 25 < 14 && playField[gamer.posY / 25 + 1][gamer.posX / 25].type !== 'Block') {
             gamer.posY +=25;
         }
     } else if (action === 'moveLeft') {
