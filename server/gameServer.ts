@@ -1,8 +1,12 @@
 import * as socket     from "socket.io";
+import {Gamer} from "./Gamer";
 
 
 let size: number = 25;
 let playField: Field[][];
+let activeBombs: Bomb[];
+let activeBomb: Bomb;
+let gamer: Gamer;
 
 export function run(server){
     generateField();
@@ -16,30 +20,25 @@ export function run(server){
         console.log('made socket connection', socket.id);
 
         socket.on('move', function (data) {
-            console.log('made socket connection', data);
-            socket.broadcast.emit('move', data);
-        });
-        //--- Handle lock event -----------------------------------------------------
-        socket.on('lock', function (user) {
-            socket.broadcast.emit('lock', user);
-        });
-        //--- Handle update event ---------------------------------------------------
-        socket.on('update', function () {
-            socket.broadcast.emit('update');
-        });
-        //--- Handle disconnect event -----------------------------------------------
-        socket.on('disconnect', function () {
-            socket.broadcast.emit('update');
+            //console.log('made socket connection', data);
+            gamer = checkGamerAction(data.move,data.gamer);
+            console.log(data.move+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
+            socket.emit('getField', playField);
+            socket.emit( 'gamer', gamer);
+            //socket.emit('move', data);
         });
         socket.on('bombplace', function (Field) {
             socket.broadcast.emit('bombplace', Field);
         });
+        socket.on('gamer', function (gamer) {
+            //console.log(gamer);
+            //socket.emit('gamer',gamer);
+        });
         socket.on( 'getField', function (field) {
-            playField = field;
-            socket.broadcast.emit('getField', playField);
+            socket.emit('getField', playField);
             //playField = field;
             //console.log(field);
-            printField();
+            //printField();
         })
     });
 }
@@ -70,18 +69,14 @@ function generateField(){
     }
 }
 
-class Field {
+export class Field {
     public posX: number;
     public posY: number;
     public type: String;
     constructor(posX:number, posY: number){
-        //this.type = type;
         this.type = "Field";
         this.posX = posX;
         this.posY = posY;
-    }
-    getType(){
-        return this.type;
     }
 }
 
@@ -93,3 +88,89 @@ export class Block extends Field {
         this.posY = posY;
     }
 }
+
+export class Bomb extends Field {
+    public timeLeft: number;
+    public range:number = 1;
+    constructor(posX:number, posY: number, timeLeft: number ){
+        super(posX, posY);
+        this.timeLeft = timeLeft;
+        this.type = "Bomb";
+        this.posX = posX;
+        this.posY = posY;
+    }
+}
+
+function checkGamerAction(action: string, gamer: Gamer) {
+    if (action === 'moveUp') {
+        if (gamer.posY > 0 && playField[gamer.posY / 25 - 1][gamer.posX / 25].type !== 'Block') {
+            gamer.posY -= 25;
+        }
+    } else if (action === 'moveDown') {
+        if (gamer.posY / 25 < 13 && playField[gamer.posY / 25 + 1][gamer.posX / 25].type !== 'Block') {
+            gamer.posY +=25;
+        }
+    } else if (action === 'moveLeft') {
+        if (gamer.posX > 0 && playField[gamer.posY / 25][gamer.posX / 25 - 1].type !== 'Block') {
+            gamer.posX -= 25;
+        }
+    } else if (action === 'moveRight') {
+        if (gamer.posX / 25 < 19 && playField[gamer.posY / 25][gamer.posX / 25 + 1].type !== 'Block') {
+            gamer.posX += 25;
+        }
+    }
+    if (action === 'plantBomb') {
+        if (gamer.bombPlanted < 1) {
+            gamer.bombPlanted++;
+
+            console.log("Plant Bomb at x:" + gamer.posX/25 + " y: " + gamer.posY/25);
+            playField[gamer.posY/25][gamer.posX/25] = new Bomb(gamer.posX, gamer.posY, 2);
+            activeBomb = (new Bomb(gamer.posX, gamer.posY, 2));
+            let interval = setInterval(() => {
+                if (activeBomb.timeLeft > 0) {
+                    activeBomb.timeLeft--;
+                } else {
+                    bombExplode(activeBomb.posY/25, activeBomb.posX/25, gamer);
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+    }
+    return gamer;
+}
+
+function bombExplode(posY:number,posX:number, gamer: Gamer){
+    explosionHelper(posY,posX,"Fire");
+    //eprintCanvas(); socketEMIT!
+    var timeleft = 1;
+    let interval = setInterval(() => {
+        if(timeleft > 0) {
+            timeleft--;
+        } else {
+            explosionHelper(posY,posX,"Field");
+            gamer.bombPlanted--;
+            //socket emit
+            //socket.emit('getField', playField);
+            clearInterval(interval);
+        }
+    },1000);
+}
+
+function explosionHelper(posY:number,posX:number, type:String){
+    if(posY > 0){
+        playField[posY-1][posX].type = type;
+    }
+    if(posY < 13){
+        playField[posY+1][posX].type = type;
+    }
+    if(posX > 0){
+        playField[posY][posX-1].type = type;
+    }
+    if(posX < 19){
+        playField[posY][posX+1].type = type;
+    }
+    playField[posY][posX].type = type;
+}
+
+
+

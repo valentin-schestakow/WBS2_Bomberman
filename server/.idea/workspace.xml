@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd6389b3-6701-4ee8-bb86-e257805e6191" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Gamer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/vendor.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/vendor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/vendor.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/vendor.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/styles.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/styles.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/ingame/Bomb.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/ingame/Bomb.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -102,14 +103,40 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-534722169">
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="js" value="8" />
+          <entry key="ts" value="773" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JavaScript" value="8" />
+          <entry key="TypeScript" value="773" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="js" value="1" />
+          <entry key="ts" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JavaScript" value="1" />
+          <entry key="TypeScript" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1155">
-              <caret line="98" column="23" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
+            <state relative-caret-position="289">
+              <caret line="98" column="21" selection-start-line="98" selection-start-column="15" selection-end-line="98" selection-end-column="21" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -120,8 +147,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gameServer.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="30" column="38" lean-forward="true" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+            <state relative-caret-position="272">
+              <caret line="58" column="25" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -138,6 +168,7 @@
       <find>http</find>
       <find>router.use</find>
       <find>admin</find>
+      <find>this</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -148,6 +179,8 @@
       <list>
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/server.ts" />
+        <option value="$PROJECT_DIR$/Gamer.ts" />
+        <option value="$PROJECT_DIR$/gameServer.js" />
         <option value="$PROJECT_DIR$/gameServer.ts" />
       </list>
     </option>
@@ -178,7 +211,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -195,6 +227,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -204,6 +237,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\dkrion\Documents\_Studium\WBS2\wbs2-bomberman\server" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -247,18 +285,18 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14655000" />
+    <option name="totallyTimeSpent" value="26983000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="993" y="25" width="927" height="1055" extended-state="4" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21017699" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15226555" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26594594" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32719395" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -278,6 +316,7 @@
     <option name="exactExcludedFiles">
       <list>
         <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/Gamer.js" />
       </list>
     </option>
   </component>
@@ -294,10 +333,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1155">
-          <caret line="98" column="23" selection-start-line="98" selection-start-column="23" selection-end-line="98" selection-end-column="23" />
+        <state relative-caret-position="289">
+          <caret line="98" column="21" selection-start-line="98" selection-start-column="15" selection-end-line="98" selection-end-column="21" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gamer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="33" selection-start-column="33" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gameServer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-705">
+          <caret line="109" column="30" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gameServer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="58" column="25" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>

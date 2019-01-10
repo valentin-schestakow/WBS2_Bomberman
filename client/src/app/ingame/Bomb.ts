@@ -5,7 +5,6 @@ export class Bomb extends Field {
   public timeLeft: number;
   public range:number = 1;
 
-
   constructor(posX:number, posY: number, timeLeft: number ){
     super(posX, posY);
 

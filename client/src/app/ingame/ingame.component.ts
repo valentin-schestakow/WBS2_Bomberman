@@ -35,55 +35,52 @@ export class IngameComponent implements OnInit, AfterViewInit {
 
 
   constructor(private playerService: PlayerService) {
-    this.playerService.receiveMove()
-      .subscribe(data => console.log(data));
+    this.playerService.receiveMove().subscribe(data => {
+      //console.log(data)
+    });
+    this.playerService.receiveField().subscribe( data => {
+      //console.log(data);
+      this.playField = data;
+      this.reprintCanvas();
+    });
+    this.playerService.receiveGamer().subscribe( data => {
+      //console.log(data);
+      this.myPlayer = data;
+      console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+      console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
+      this.reprintCanvas();
+    });
   }
 
   broadcastMove(move: string, gamer: Gamer){
-    this.playerService.emitMove({gamer,move});
+    this.playerService.emitMove({move,gamer});
+  }
+  broadcastField(){
+    this.playerService.emitField(this.playField);
+  }
+  broadcastPlayer(){
+    this.playerService.emitGamer(this.myPlayer);
   }
 
   ngOnInit() {
-
+    this.broadcastField();
     this.size = 25;
     this.myPlayer =  new Gamer(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
-    let width = 800;
-
-
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '3200');
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '2400');
     this.context.scale(4,4);
 
-    this.draw();
-    /*socket.on('getField', function(field){
-      this.playField = field;
-      console.log("socket works"+field);
-      //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
-    });*/
-  }
-
-  ngDoCheck() {
-    /*
-    socket.on('getField', function(field){
-      this.playField = field;
-      console.log("socket works"+field);
-      //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
-    });
-    */
-    //socket.emit( 'getField', this.playField);
-    this.reprintCanvas();
+    this.generatePlayField();
   }
 
   ngAfterViewInit() {
-    this.spawnPlayer(this.myPlayer);
+    this.reprintCanvas();
 
   }
 
 
-
-
-  private draw() {
+  private generatePlayField() {
     const size = 25;
     this.playField = [];
     for (let i = 0; i < 14; i++) {
@@ -102,88 +99,64 @@ export class IngameComponent implements OnInit, AfterViewInit {
   }
 
   movePlayer(oldX: number, oldY: number, newX:number, newY:number){
-    //array
-   // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-    //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
-
-    //drawing
-    //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
-    /*if(this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Field"){
-      this.context.fillStyle = '#eee';
-    } else if (this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Block") {
-      this.context.fillStyle = 'green';
-    } else if (this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Bomb") {
-      this.context.fillStyle = 'orange';
-    }*/
-    //this.context.fillRect(oldX, oldY, 25, 25);
-
 
     this.myPlayer.posX = newX;
     this.myPlayer.posY = newY;
     this.reprintCanvas();
-    //this.context.drawImage(this.spaceshipAlly.nativeElement, newX, newY , 25, 25);
-
   }
 
   reprintCanvas(){
     for (let i = 0; i < this.playField.length; i++ ){
       for (let j = 0; j < 20; j++ ){
-        if(this.playField[i][j].getType() == 'Field'){
+        if(this.playField[i][j].type == 'Field'){
           this.context.fillStyle = '#eee';
-        } else if (this.playField[i][j].getType() == 'Block') {
+        } else if (this.playField[i][j].type == 'Block') {
           this.context.fillStyle = 'green';
-        }else if (this.playField[i][j].getType() == 'Bomb') {
+        } else if (this.playField[i][j].type == 'Bomb') {
           this.context.fillStyle = 'orange';
-        } else if (this.playField[i][j].getType() == 'Fire') {
+        } else if (this.playField[i][j].type == 'Fire') {
           this.context.fillStyle = 'red';
         }
         this.context.fillRect(this.playField[i][j].posX,this.playField[i][j].posY, 25, 25);
       }
     }
-    this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX,  this.myPlayer.posY , 25, 25);
-    this.printPlayer();
+    this.printPlayer(this.myPlayer);
+    this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX * this.size, this.myPlayer.posY * this.size, this.size, this.size);
   }
 
-  printPlayer(){
+  printPlayer(gamer: Gamer){
+    this.context.drawImage(this.spaceshipAlly.nativeElement, gamer.posX * this.size, gamer.posY * this.size, this.size, this.size);
     this.context.font = "5px";
     this.context.fillStyle = "black";
-    this.context.fillText(this.myPlayer.name, this.myPlayer.posX+25,  this.myPlayer.posY+25);
+    this.context.fillText(gamer.name, gamer.posX+25,  gamer.posY+25);
   }
 
   playerAction(action: string) {
-
-    //socket.emit( 'getField', this.playField);
+    this.broadcastMove(action, this.myPlayer);
+    /*
     if (action === 'moveUp') {
-      if(this.myPlayer.posY > 0) {
-        if(this.playField[this.myPlayer.posY/25 - 1][this.myPlayer.posX/25].getType() !== 'Block') {
-          this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY - 25);
-          //this.myPlayer.posY -= this.size;
-        }
+      if (this.myPlayer.posY > 0 && this.playField[this.myPlayer.posY / 25 - 1][this.myPlayer.posX / 25].type !== 'Block') {
+        this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY - 25);
+        //this.myPlayer.posY -= this.size;
       }
-
     } else if (action === 'moveDown') {
-      if(this.myPlayer.posY/25 < 13) {
-        if(this.playField[this.myPlayer.posY/25 + 1][this.myPlayer.posX/25].getType() !== 'Block') {
-          this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY + 25);
-          //this.myPlayer.posY += this.size;
-        }
+      if (this.myPlayer.posY / 25 < 13 && this.playField[this.myPlayer.posY / 25 + 1][this.myPlayer.posX / 25].type !== 'Block') {
+        this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY + 25);
+        //this.myPlayer.posY += this.size;
       }
     } else if (action === 'moveLeft') {
-      if(this.myPlayer.posX > 0) {
-        if(this.playField[this.myPlayer.posY/25][this.myPlayer.posX/25 - 1 ].getType() !== 'Block') {
-          this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX - 25, this.myPlayer.posY);
-          //this.myPlayer.posX -= this.size;
-        }
+      if (this.myPlayer.posX > 0 && this.playField[this.myPlayer.posY / 25][this.myPlayer.posX / 25 - 1].type !== 'Block') {
+        this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX - 25, this.myPlayer.posY);
+        //this.myPlayer.posX -= this.size;
       }
-
     } else if (action === 'moveRight') {
-      if(this.myPlayer.posX/25 < 19) {
-        if(this.playField[this.myPlayer.posY/25][this.myPlayer.posX/25 + 1 ].getType() !== 'Block') {
-          this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX + 25, this.myPlayer.posY);
-          //this.myPlayer.posX += this.size;
-        }
+      if (this.myPlayer.posX / 25 < 19 && this.playField[this.myPlayer.posY / 25][this.myPlayer.posX / 25 + 1].type !== 'Block') {
+        this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX + 25, this.myPlayer.posY);
+        //this.myPlayer.posX += this.size;
       }
     }
+*/
+
 
     if (action === 'plantBomb') {
       if (this.myPlayer.bombPlanted < 1) {
@@ -197,7 +170,6 @@ export class IngameComponent implements OnInit, AfterViewInit {
         //timer(500);
 
 
-        /*Tiemr*/
         //let timeLeft =3;
         let interval = setInterval(() => {
           if (this.myBomb.timeLeft > 0) {
@@ -208,12 +180,16 @@ export class IngameComponent implements OnInit, AfterViewInit {
           }
         }, 1000);
       }
-    } else if (action === 'printDebug'){
+    }
+
+
+
+    else if (action === 'printDebug'){
       let row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9|\n";
       for (let i = 0; i < this.playField.length; i++ ){
         row = row.concat(i+":\t");
         for (let j = 0; j < 20; j++ ){
-            row = row.concat(this.playField[i][j].getType().charAt(0)+"|");
+            row = row.concat(this.playField[i][j].type.charAt(0)+"|");
         }
         row = row.concat("\n");
       }
@@ -222,8 +198,9 @@ export class IngameComponent implements OnInit, AfterViewInit {
     } else if (action === 'reprintField'){
       this.reprintCanvas();
     }
-    //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
-    //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+    //this.broadcastPlayer();
+
+
   }
 
   convertAbsolutePosToRelativePos(absolutePos: number){
@@ -239,66 +216,35 @@ export class IngameComponent implements OnInit, AfterViewInit {
   keyEvent(event: KeyboardEvent) {
     //console.log(event.code);
     //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
+
     if (event.code === 'KeyW') {
-      this.broadcastMove('moveUp', this.myPlayer);
       this.playerAction('moveUp');
     }
     if (event.code === 'KeyS') {
-      this.broadcastMove('moveDown', this.myPlayer);
       this.playerAction('moveDown');
     }
     if (event.code === 'KeyA') {
-      this.broadcastMove('moveLeft', this.myPlayer);
       this.playerAction('moveLeft');
     }
     if (event.code === 'KeyD') {
-      this.broadcastMove('moveRight', this.myPlayer);
       this.playerAction('moveRight');
     }
     if (event.code === 'KeyB') {
-      this.broadcastMove('plantBomb', this.myPlayer);
       this.playerAction('plantBomb');
     }
     if (event.code === 'KeyP') {
       this.playerAction('printDebug');
     }
     if (event.code === 'KeyR') {
+      this.broadcastField();
       this.playerAction('reprintField');
     }
     }
 
-  /*private delay(ms: number){
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }*/
+
 
   bombExplode(posY:number,posX:number){
-    /*
-        if(posY > 0){
-          this.context.fillStyle = 'red';
-          this.context.fillRect(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY, 25, 25);
 
-          this.playField[posY-1][posX] = new Field(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY);
-        }
-        if(posY < 13){
-          this.context.fillStyle = 'red';
-          this.context.fillRect(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY, 25, 25);
-
-          this.playField[posY+1][posX] = new Field(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY);
-        }
-        if(posX > 0){
-          this.context.fillStyle = 'red';
-          this.context.fillRect(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY, 25, 25);
-
-          this.playField[posY][posX-1] = new Field(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY);
-        }
-        if(posX < 19){
-          this.context.fillStyle = 'red';
-          this.context.fillRect(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY, 25, 25);
-
-          this.playField[posY][posX+1] = new Field(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY);
-        }
-        this.playField[posY][posX] = new Field(this.playField[posY][posX].posX,this.playField[posY][posX].posY);
-        */
     this.explosionHelper(posY,posX,"Fire");
     this.reprintCanvas();
     var timeleft = 1;
