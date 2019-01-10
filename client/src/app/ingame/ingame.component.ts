@@ -47,7 +47,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
       //console.log(data);
       this.myPlayer = data;
       //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
-      console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
+      //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
       this.reprintCanvas();
     });
   }

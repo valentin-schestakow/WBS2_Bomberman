@@ -4,9 +4,7 @@
     <list default="true" id="dd6389b3-6701-4ee8-bb86-e257805e6191" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gameServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gameServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -137,7 +135,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gameServer.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
+            <state relative-caret-position="748">
               <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
@@ -275,7 +273,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31626000" />
+    <option name="totallyTimeSpent" value="32213000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -347,7 +345,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gameServer.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
+        <state relative-caret-position="748">
           <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
