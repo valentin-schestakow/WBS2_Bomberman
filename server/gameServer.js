@@ -26,21 +26,26 @@ function run(server) {
         console.log('made socket connection', socket.id);
         socket.on('move', function (data) {
             //console.log('made socket connection', data);
+            //console.log(data.move+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
             gamer = checkGamerAction(data.move, data.gamer);
-            console.log(data.move + "\t pos x " + data.gamer.posX / 25 + " y " + data.gamer.posY / 25);
+            //console.log("\t\t"+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
             socket.emit('getField', playField);
+            socket.broadcast.emit('getField', playField);
             socket.emit('gamer', gamer);
+            socket.broadcast.emit('gamer', gamer);
             //socket.emit('move', data);
         });
         socket.on('bombplace', function (Field) {
+            socket.emit('bombplace', Field);
             socket.broadcast.emit('bombplace', Field);
         });
         socket.on('gamer', function (gamer) {
             //console.log(gamer);
-            //socket.emit('gamer',gamer);
+            //socket.emit(ww'gamer',gamer);
         });
         socket.on('getField', function (field) {
             socket.emit('getField', playField);
+            socket.broadcast.emit('getField', playField);
             //playField = field;
             //console.log(field);
             //printField();

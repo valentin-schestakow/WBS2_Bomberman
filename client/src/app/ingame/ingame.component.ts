@@ -46,7 +46,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.playerService.receiveGamer().subscribe( data => {
       //console.log(data);
       this.myPlayer = data;
-      console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+      //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
       console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
       this.reprintCanvas();
     });
@@ -121,11 +121,13 @@ export class IngameComponent implements OnInit, AfterViewInit {
       }
     }
     this.printPlayer(this.myPlayer);
-    this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX * this.size, this.myPlayer.posY * this.size, this.size, this.size);
+    //this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX * this.size, this.myPlayer.posY * this.size, this.size, this.size);
   }
 
   printPlayer(gamer: Gamer){
-    this.context.drawImage(this.spaceshipAlly.nativeElement, gamer.posX * this.size, gamer.posY * this.size, this.size, this.size);
+    this.context.fillStyle = 'blue';
+    this.context.fillRect(gamer.posX,gamer.posY, 25, 25);
+    //this.context.drawImage(this.spaceshipAlly.nativeElement, gamer.posX * this.size, gamer.posY * this.size, this.size, this.size);
     this.context.font = "5px";
     this.context.fillStyle = "black";
     this.context.fillText(gamer.name, gamer.posX+25,  gamer.posY+25);

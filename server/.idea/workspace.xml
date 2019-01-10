@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd6389b3-6701-4ee8-bb86-e257805e6191" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Gamer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/polyfills.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/styles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/styles.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/styles.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/app/ingame/Bomb.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/ingame/Bomb.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/services/player.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gameServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gameServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.ts" afterDir="false" />
@@ -107,13 +97,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="8" />
-          <entry key="ts" value="773" />
+          <entry key="ts" value="838" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="8" />
-          <entry key="TypeScript" value="773" />
+          <entry key="TypeScript" value="838" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -147,8 +137,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gameServer.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="58" column="25" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+            <state relative-caret-position="273">
+              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -285,7 +275,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26983000" />
+    <option name="totallyTimeSpent" value="31626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -357,8 +347,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gameServer.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="58" column="25" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+        <state relative-caret-position="273">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
