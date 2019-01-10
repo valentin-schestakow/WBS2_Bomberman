@@ -177,6 +177,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
           if (this.myBomb.timeLeft > 0) {
             this.myBomb.timeLeft--;
           } else {
+            this.broadcastField();
             this.bombExplode(this.convertAbsolutePosToRelativePos(this.myBomb.posY), this.convertAbsolutePosToRelativePos(this.myBomb.posX));
             clearInterval(interval);
           }
@@ -257,6 +258,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
         this.explosionHelper(posY,posX,"Field");
         this.myPlayer.bombPlanted--;
         this.reprintCanvas();
+        this.broadcastField();
         clearInterval(interval);
       }
     },1000);
