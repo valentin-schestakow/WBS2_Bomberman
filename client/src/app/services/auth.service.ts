@@ -49,17 +49,15 @@ export class AuthService implements OnInit{
         });
     }
 
-  userLogin(email: string, password: string): Promise<void> {
-   return this.http.post('http://localhost:8080/userLogin', {email: email, password: password}, httpOptions)
+  userLogin(email: string, pwd: string) : Promise<void> {
+    return this.http.post('https://localhost:8080/login/user', {email: email, password: pwd}, httpOptions)
       .toPromise()
       .then((res: any) => {
         this.isLoggedIn = true;
-        this.role = res.role;
-        console.log(email+" angemeldet!");
+        console.log(res.message);
       })
       .catch((err) => {
-        this.isLoggedIn = false;
-        console.log(email+" NICHT angemeldet!");
+        console.log(err.message);
       });
   }
 

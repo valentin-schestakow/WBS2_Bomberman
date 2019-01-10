@@ -28,11 +28,13 @@ import * as gameServer from '../server/gameServer';
  *****************************************************************************/
 let bombermanDB: Db;
 let playerlistCollection: Collection;
+let userlistCollection: Collection;
 //---- connect to database ----------------------------------------------------
 MongoClient.connect("mongodb://localhost:27017",{ useNewUrlParser: true })
     .then((dbClient: MongoClient) => {
         bombermanDB = dbClient.db("bomberman");
         playerlistCollection = bombermanDB.collection("player");
+        userlistCollection = bombermanDB.collection("user");
         return playerlistCollection.findOne({email: "test@test.de"})
     })
     .then<void>((res) => {
@@ -61,7 +63,19 @@ class Player {
         this.gamestats = null;
     }
 }
+class User {
+    _id: number;
+    email: string;
+    password: string;
+    role: string;
 
+    constructor(id: number, email: string, password: string, role: string){
+        this.email = email;
+        this._id = id;
+        this.password = password;
+        this.role = role;
+    }
+}
 class GameStats {
     _id: string;
     gameCount: number;
@@ -254,6 +268,47 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
         res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
     }
 });
+
+/**
+ * --- login with: post /login -----------------------------------------
+ */
+router.post   ("/login/user",       function (req: Request, res: Response) {
+    console.log(req.body.toString());
+    return res.status(200).json({message: req.body.email + " login successfull"});
+   /* let status   : number = 500;  // Initial HTTP response status
+    let message  : string = ""; // To be set
+    let email: string = req.body.email;
+    let password : string = req.body.password;
+*/
+    //---- ok -> check username/password in database and set Rights -------------
+ /*   if (password != "" && email != "") {
+        let query: Object = {email: email, password: cryptoJS.MD5(password).toString()};
+        playerlistCollection.findOne(query).then((player:Player) => {
+            if (player !== null) {
+                message = email + " logged in by email/password";
+                req.session.email = email;    // set session-variable email
+
+                req.session.rights = new Rights(true, false, false);
+                status = 200;
+            } else { // username and passwort does not match message = "Id " + id + " not found";
+                message = "Not Valid: user '" + email + "' does not match password";
+                status = 401;
+            }
+            res.status(status).json({message: message});
+        }).catch((error: MongoError) => { // database error
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({message: message});
+        });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
+        res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
+    }*/
+
+
+});
+
 
 /**
  * --- logout with: post /logout ---------------------------------------

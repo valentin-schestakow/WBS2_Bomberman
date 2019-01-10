@@ -1,4 +1,4 @@
-<div *ngIf="user">
+<div *ngIf="authService.isLoggedIn">
 
   <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
@@ -122,7 +122,7 @@
   </div><!-- /#right-panel -->
 
 </div>
-<div *ngIf="!user" class="container">
+<div *ngIf="!authService.isLoggedIn" class="container">
   <div class="row justify-content-md-center">
     <div class="col-md-4">
       <h2>Please log in!</h2>

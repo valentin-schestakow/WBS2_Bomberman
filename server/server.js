@@ -16,11 +16,13 @@ var gameServer = require("../server/gameServer");
  *****************************************************************************/
 var bombermanDB;
 var playerlistCollection;
+var userlistCollection;
 //---- connect to database ----------------------------------------------------
 mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true })
     .then(function (dbClient) {
     bombermanDB = dbClient.db("bomberman");
     playerlistCollection = bombermanDB.collection("player");
+    userlistCollection = bombermanDB.collection("user");
     return playerlistCollection.findOne({ email: "test@test.de" });
 })
     .then(function (res) {
@@ -31,7 +33,7 @@ mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: tr
 }).catch(function (err) {
     console.error("Error connecting to database ...\n" + err);
 });
-var Player = (function () {
+var Player = /** @class */ (function () {
     function Player(id, time, username, email, password) {
         this._id = id;
         this.time = time;
@@ -42,7 +44,16 @@ var Player = (function () {
     }
     return Player;
 }());
-var GameStats = (function () {
+var User = /** @class */ (function () {
+    function User(id, email, password, role) {
+        this.email = email;
+        this._id = id;
+        this.password = password;
+        this.role = role;
+    }
+    return User;
+}());
+var GameStats = /** @class */ (function () {
     function GameStats(id, gameCount, points, kills, deaths) {
         this._id = id;
         this.gameCount = gameCount;
@@ -73,7 +84,7 @@ gameServer.run(server);
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
 //--- Class that deals with Rights --------------------------------------------
-var Rights = (function () {
+var Rights = /** @class */ (function () {
     // can be extended here with other user-roles
     function Rights(player, admin, superadmin) {
         this.player = player;
@@ -91,6 +102,7 @@ function checkRights(req, res, rights) {
         res.json({ message: "No session: Please log in" }); // send HTTP-response
         return false;
     }
+    //--- check rights against the needed rights (provided as parameter) --------
     else {
         var rightsOK = true;
         var message = "unsufficient rights";
@@ -98,11 +110,11 @@ function checkRights(req, res, rights) {
             rightsOK = rightsOK && req.session.rights.player;
             message += ": not logged in";
         }
-        if (rights.admin) {
+        if (rights.admin) { // checks if "admin" is needed
             rightsOK = rightsOK && req.session.rights.admin;
             message += ": not Moderator";
         }
-        if (rights.superadmin) {
+        if (rights.superadmin) { // ckecks if "superadmin" is needed
             rightsOK = rightsOK && req.session.rights.superadmin;
             message += ", not admin";
         }
@@ -176,7 +188,7 @@ router.post("/login/player", function (req, res) {
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
             }
-            else {
+            else { // username and passwort does not match message = "Id " + id + " not found";
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
             }
@@ -187,9 +199,47 @@ router.post("/login/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
+});
+/**
+ * --- login with: post /login -----------------------------------------
+ */
+router.post("/login/user", function (req, res) {
+    console.log(req.body.toString());
+    return res.status(200).json({ message: req.body.email + " login successfull" });
+    /* let status   : number = 500;  // Initial HTTP response status
+     let message  : string = ""; // To be set
+     let email: string = req.body.email;
+     let password : string = req.body.password;
+ */
+    //---- ok -> check username/password in database and set Rights -------------
+    /*   if (password != "" && email != "") {
+           let query: Object = {email: email, password: cryptoJS.MD5(password).toString()};
+           playerlistCollection.findOne(query).then((player:Player) => {
+               if (player !== null) {
+                   message = email + " logged in by email/password";
+                   req.session.email = email;    // set session-variable email
+   
+                   req.session.rights = new Rights(true, false, false);
+                   status = 200;
+               } else { // username and passwort does not match message = "Id " + id + " not found";
+                   message = "Not Valid: user '" + email + "' does not match password";
+                   status = 401;
+               }
+               res.status(status).json({message: message});
+           }).catch((error: MongoError) => { // database error
+               message = "Database error: " + error.code;
+               status = 505;
+               res.status(status).json({message: message});
+           });
+       }
+       //--- nok -------------------------------------------------------------------
+       else { // either username or password not provided
+           res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
+       }*/
 });
 /**
  * --- logout with: post /logout ---------------------------------------
@@ -240,7 +290,8 @@ router.post("/create/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -295,10 +346,10 @@ router.put("/player/:email", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     query = { email: email };
-    if (password == "") {
+    if (password == "") { // no new password set
         updateData = { username: username };
     }
-    else {
+    else { // new password set
         updateData = { password: cryptoJS.MD5(password).toString(), username: username };
     }
     playerlistCollection.updateOne(query, { $set: updateData })
@@ -407,7 +458,7 @@ passport.deserializeUser(function (profile, done) {
     done(null, profile);
 });
 //kofnigurationsklasse welche die clientid und secret enthält
-var GoogleAuthConfig = (function () {
+var GoogleAuthConfig = /** @class */ (function () {
     function GoogleAuthConfig() {
         this.googleAuth = {
             clientID: '85564632151-r3mqfgrsrhk2kcdrdn0fe4hvsvcm7do6.apps.googleusercontent.com',
@@ -417,7 +468,7 @@ var GoogleAuthConfig = (function () {
     }
     return GoogleAuthConfig;
 }());
-var FacebookAuthConfig = (function () {
+var FacebookAuthConfig = /** @class */ (function () {
     function FacebookAuthConfig() {
         this.facebookAuth = {
             clientID: '286966021819558',

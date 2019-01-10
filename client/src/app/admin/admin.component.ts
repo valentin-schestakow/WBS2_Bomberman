@@ -22,12 +22,11 @@ export class AdminComponent implements OnInit {
     this.email ='';
     this.password='';
     this.user = null;
+
   }
 
   login(){
-    console.log(this.email+" :: "+this.password);
     this.authService.userLogin(this.email, this.password);
-
   }
   logout () {
   }
