@@ -67,8 +67,8 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.size = 25;
     this.myPlayer =  new Gamer(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
-    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '3200');
-    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '2400');
+    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '2000');//3200
+    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '1400');//2400
     this.context.scale(4,4);
 
     this.generatePlayField();
