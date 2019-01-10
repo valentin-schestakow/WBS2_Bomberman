@@ -68,7 +68,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.myPlayer =  new Gamer(0, 0, 'xXSlyerXx');
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '2000');//3200
-    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '1400');//2400
+    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '1500');//2400
     this.context.scale(4,4);
 
     this.generatePlayField();
@@ -220,19 +220,19 @@ export class IngameComponent implements OnInit, AfterViewInit {
     //console.log(event.code);
     //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
 
-    if (event.code === 'KeyW') {
-      this.playerAction('moveUp');
+    if (event.code === 'KeyW' || event.code === 'ArrowUp') {
+      this.playerAction('moveUp' );
     }
-    if (event.code === 'KeyS') {
+    if (event.code === 'KeyS' || event.code === 'ArrowDown') {
       this.playerAction('moveDown');
     }
-    if (event.code === 'KeyA') {
+    if (event.code === 'KeyA' || event.code === 'ArrowLeft') {
       this.playerAction('moveLeft');
     }
-    if (event.code === 'KeyD') {
+    if (event.code === 'KeyD' || event.code === 'ArrowRight') {
       this.playerAction('moveRight');
     }
-    if (event.code === 'KeyB') {
+    if (event.code === 'KeyB' || event.code === 'Space') {
       this.playerAction('plantBomb');
     }
     if (event.code === 'KeyP') {
