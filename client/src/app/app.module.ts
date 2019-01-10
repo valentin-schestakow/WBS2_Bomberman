@@ -9,6 +9,8 @@ import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
+import { PlayerListComponent } from './admin/player-list/player-list.component';
+import { UserListComponent } from './admin/user-list/user-list.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import {AuthService} from "./services/auth.service";
     IngameComponent,
     LoginComponent,
     AdminComponent,
-    UserComponent
+    UserComponent,
+    PlayerListComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

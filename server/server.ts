@@ -212,13 +212,6 @@ router.use( session( {
 
 
 /**
- * User Login
- */
-router.post('/userLogin', function (req, res) {
-    res.status(200).json({message: "success"});
-});
-
-/**
  * Check Login
  */
 router.get    ("/login/check", function (req: Request, res: Response) {
@@ -270,25 +263,89 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
 });
 
 /**
- * --- login with: post /login -----------------------------------------
+ * --- get all users with: get /user/getAll --------------------------------
  */
-router.post   ("/login/user",       function (req: Request, res: Response) {
-    console.log(req.body.toString());
-    return res.status(200).json({message: req.body.email + " login successfull"});
-   /* let status   : number = 500;  // Initial HTTP response status
+router.get('/user/getAll', function (req: Request, res: Response) {
+
+    let query: Object = {};
+    userlistCollection.find(query).toArray()
+        .then((users: User[]) => {
+            users = users.map((user) => {
+                user['password'] = undefined;
+                return user;
+            });
+            res.status(200).json({message: 'fetched users', users: users});
+        })
+        .catch((error: MongoError) => {
+            res.status(500).json({message: 'Database error' + error.code});
+        });
+});
+
+/**
+ * --- create new user with: post /user --------------------------------
+ */
+router.post   ("/user/create",        function (req: Request, res: Response) {
+    let email : string = (req.body.email ? req.body.email : "").trim();
+    let password : string = (req.body.password ? req.body.password : "").trim();
+    let role : string = (req.body.role ? req.body.role : "").trim();
+    let message  : string = "";
+    let status   : number = 500; // Initial HTTP response status
+
+    /*
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    */
+
+    //-- ok -> insert user-data into database -----------------------------------
+    if ((role != "") && (email != "") && (password != "")) {
+
+        let insertData = {
+            email: email,
+            role: role,
+            password : cryptoJS.MD5(password).toString(),
+
+        };
+        userlistCollection.insertOne(insertData)
+            .then((result: InsertOneWriteOpResult) => {
+                message = "Created: " + email;
+                status = 201;
+                res.status(status).json({message: message});
+            })
+            .catch((error : MongoError) => {
+                message = "Database error: " + error.code;
+                status = 505;
+                res.status(status).json({message: message});
+            });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
+        res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
+    }
+
+});
+
+/**
+ * --- login with: post /user/login -----------------------------------------
+ */
+router.post   ("/user/login",       function (req: Request, res: Response) {
+
+    let status   : number = 500;  // Initial HTTP response status
     let message  : string = ""; // To be set
     let email: string = req.body.email;
     let password : string = req.body.password;
-*/
+
     //---- ok -> check username/password in database and set Rights -------------
- /*   if (password != "" && email != "") {
+    if (password != "" && email != "") {
         let query: Object = {email: email, password: cryptoJS.MD5(password).toString()};
-        playerlistCollection.findOne(query).then((player:Player) => {
-            if (player !== null) {
+        userlistCollection.findOne(query).then((user:User) => {
+            if (user !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email;    // set session-variable email
+                if(user.role=='admin')req.session.rights = new Rights(false, false, true);
+                else req.session.rights = new Rights(false, true, false);
 
-                req.session.rights = new Rights(true, false, false);
                 status = 200;
             } else { // username and passwort does not match message = "Id " + id + " not found";
                 message = "Not Valid: user '" + email + "' does not match password";
@@ -304,7 +361,7 @@ router.post   ("/login/user",       function (req: Request, res: Response) {
     //--- nok -------------------------------------------------------------------
     else { // either username or password not provided
         res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
-    }*/
+    }
 
 
 });

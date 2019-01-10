@@ -50,10 +50,11 @@ export class AuthService implements OnInit{
     }
 
   userLogin(email: string, pwd: string) : Promise<void> {
-    return this.http.post('https://localhost:8080/login/user', {email: email, password: pwd}, httpOptions)
+    return this.http.post('https://localhost:8080/user/login', {email: email, password: pwd}, httpOptions)
       .toPromise()
       .then((res: any) => {
         this.isLoggedIn = true;
+        this.email = email;
         console.log(res.message);
       })
       .catch((err) => {

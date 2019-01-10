@@ -1,5 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Player} from "../ingame/Player";
 
 
 const httpOptions = {
@@ -12,17 +13,20 @@ const httpOptions = {
 export class PlayerService implements OnInit{
 
   private isLoggedIn = false;
+  public player: Player[];
 
   constructor(private http: HttpClient) { }
 
 
-  public getUsers(){
+  public getUsers(): Promise<Player[]>{
     this.http.get('https://localhost:8080/players')
       .toPromise()
-      .then((data: any) => {
-        console.log(data.players);
+      .then((player: Player[]) => {
+        this.player = player;
+        return player;
       }).catch((err: HttpErrorResponse) => {
       console.log(err);
+      return [];
     });
   }
 
