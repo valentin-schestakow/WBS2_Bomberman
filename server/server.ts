@@ -100,9 +100,9 @@ let privateKey = fs.readFileSync(__dirname + '/sslcert/server.key', 'utf8');
 let certificate = fs.readFileSync(__dirname + '/sslcert/server.crt', 'utf8');
 let credentials = {key: privateKey, cert: certificate};
 // instead of: router.listen(8080);
-let server = https.createServer(credentials, router).listen(8080);
+let server = https.createServer(credentials, router).listen(8443);
 console.log("-------------------------------------------------------------\n"
-    + "Aufruf: https://localhost:8080\n" +
+    + "Aufruf: https://localhost:8443\n" +
     "-------------------------------------------------------------\n");
 
 
