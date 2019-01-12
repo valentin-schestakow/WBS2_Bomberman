@@ -9,6 +9,10 @@ import {UserService} from "../services/user.service";
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
+
+/**
+ * Admin Dashboard
+ */
 export class AdminComponent implements OnInit {
   role: string;
   path: string;
@@ -27,7 +31,7 @@ export class AdminComponent implements OnInit {
     this.authService.checkLogin();
     this.userService.getUsers().then(
       (users: User[]) => {
-        console.log(users.length+ "user gefunden:")
+
 
         if(users.length==0){
           console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
@@ -41,6 +45,11 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  /**
+   * login user function
+   * @param
+   * @returns void
+   */
   login(){
     this.authService.userLogin(this.email, this.password).then().catch(
       (err) => {
@@ -48,6 +57,12 @@ export class AdminComponent implements OnInit {
       }
     );
   }
+
+  /**
+   * logout user
+   * @param ()
+   * @returns void
+   */
   logout () {
     this.authService.logout();
   }

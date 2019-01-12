@@ -261,7 +261,9 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
 });
 
 /**
- * --- update user with: put /user/:id ---------------------------------
+ * update user function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.put    ("/user/:id",    function (req: Request, res: Response) {
     let status      : number = 500; // Initial HTTP response status
@@ -306,7 +308,9 @@ router.put    ("/user/:id",    function (req: Request, res: Response) {
 });
 
 /**
- * --- delete user with /user/delete/:email --------------------------------------
+ * delete user function
+ * @param Request (user.email)
+ * @returns Response (Errorcode, message)
  */
 router.delete ("/user/delete/:email",    function (req: Request, res: Response) {
     let status    : number = 500; // Initial HTTP response status
@@ -344,7 +348,9 @@ router.delete ("/user/delete/:email",    function (req: Request, res: Response) 
 
 
 /**
- * --- get all users with: get /user/getAll --------------------------------
+ * get all users function
+ * @param Request ()
+ * @returns Response (Errorcode, message)
  */
 router.get('/user/getAll', function (req: Request, res: Response) {
 
@@ -363,7 +369,9 @@ router.get('/user/getAll', function (req: Request, res: Response) {
 });
 
 /**
- * --- create new user with: post /user --------------------------------
+ * create user function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.post   ("/user/create",        function (req: Request, res: Response) {
     let email : string = (req.body.email ? req.body.email : "").trim();
@@ -372,12 +380,11 @@ router.post   ("/user/create",        function (req: Request, res: Response) {
     let message  : string = "";
     let status   : number = 500; // Initial HTTP response status
 
-    /*
+
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
-    */
 
     //-- ok -> insert user-data into database -----------------------------------
     if ((role != "") && (email != "") && (password != "")) {
@@ -409,7 +416,9 @@ router.post   ("/user/create",        function (req: Request, res: Response) {
 
 
 /**
- * Check Login
+ * check if user is logged in function
+ * @param Request ()
+ * @returns Response (Errorcode, message)
  */
 router.get    ("/user/login/check", function (req: Request, res: Response) {
 
@@ -421,8 +430,12 @@ router.get    ("/user/login/check", function (req: Request, res: Response) {
     res.status(200).json({message: "user still logged in"});
 
 });
+
+
 /**
- * --- login with: post /user/login -----------------------------------------
+ * user login function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.post   ("/user/login",       function (req: Request, res: Response) {
 
@@ -462,7 +475,9 @@ router.post   ("/user/login",       function (req: Request, res: Response) {
 });
 
 /**
- * --- logout with: post /logout ---------------------------------------
+ * user logout function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.post   ("/user/logout",      function (req: Request, res: Response) {
 

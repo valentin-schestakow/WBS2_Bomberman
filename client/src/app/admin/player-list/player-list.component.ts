@@ -1,7 +1,6 @@
 import {Component, Inject, Injector, OnInit, PLATFORM_ID} from '@angular/core';
 import {PlayerService} from "../../services/player.service";
 import {Player} from "../../player/Player";
-import {User} from "../User";
 import {ActivatedRoute, Router} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -12,6 +11,10 @@ import {PlayerDetailComponent} from "./player-detail/player-detail.component";
   templateUrl: './player-list.component.html',
   styleUrls: ['./player-list.component.scss']
 })
+
+/**
+ * PlayerList Component
+ */
 export class PlayerListComponent implements OnInit {
 
   protected player: Player[];
@@ -31,6 +34,11 @@ export class PlayerListComponent implements OnInit {
       });
   }
 
+  /**
+   * edit player function
+   * @param (player)
+   * @returns  void
+   */
   editPlayer(player: Player) {
     const modalRef = this.modalService.open(PlayerDetailComponent);
     modalRef.result.then(
@@ -47,10 +55,15 @@ export class PlayerListComponent implements OnInit {
         //alert("ging");
       }
     ).catch((err) => this.router.navigateByUrl('/admin/userlist'));
-    modalRef.componentInstance.user = Object.assign(player);
+    modalRef.componentInstance.player = Object.assign(player);
     //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
   }
 
+  /**
+   * get all Players function
+   * @param ()
+   * @returns  Promise<void>
+   */
   getPlayers(): Promise<void> {
     return this.playerService.getAllPlayers().then((player) => {
         this.player = player;

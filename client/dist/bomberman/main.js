@@ -33,7 +33,15 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "User", function() { return User; });
+/**
+ * User Model
+ */
 var User = /** @class */ (function () {
+    /**
+     * creates user instance
+     * @param id: number, email: string, password: string, role: string
+     * @returns new User
+     */
     function User(id, email, password, role) {
         this.email = email;
         this._id = id;
@@ -54,7 +62,7 @@ var User = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"authService.isLoggedIn\">\r\n\r\n  <aside id=\"left-panel\" class=\"left-panel\">\r\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\r\n\r\n      <div class=\"navbar-header\">\r\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n          <i class=\"fa fa-bars\"></i>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\r\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\r\n      </div>\r\n\r\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li>\r\n            <a routerLink=\"/admin\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\r\n          </li>\r\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\r\n          <li class=\"menu-item-has-children active dropdown\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>Groups</a>\r\n            <ul class=\"sub-menu children dropdown-menu\">\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/userlist\">User List</a></li>\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/playerlist\">Player List</a></li>\r\n            </ul>\r\n          </li>\r\n\r\n\r\n\r\n        </ul>\r\n      </div><!-- /.navbar-collapse -->\r\n    </nav>\r\n  </aside><!-- /#left-panel -->\r\n\r\n  <!-- Left Panel -->\r\n\r\n  <!-- Right Panel -->\r\n\r\n  <div id=\"right-panel\" class=\"right-panel\">\r\n\r\n    <!-- Header-->\r\n    <header id=\"header\" class=\"header\">\r\n\r\n      <div class=\"header-menu\">\r\n\r\n        <div class=\"col-sm-7\">\r\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\r\n          <div class=\"header-left\">\r\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\r\n            <div class=\"form-inline\">\r\n              <form class=\"search-form\">\r\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\r\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"dropdown for-notification\">\r\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                <i class=\"fa fa-bell\"></i>\r\n              </button>\r\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\r\n                <!--<app-alerts></app-alerts>-->\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-sm-5\">\r\n          <div class=\"user-area dropdown float-right\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n              {{this.authService.email}}<img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\r\n            </a>\r\n\r\n            <div class=\"user-menu dropdown-menu\">\r\n\r\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\r\n            </div>\r\n          </div>\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </header><!-- /header -->\r\n    <!-- Header-->\r\n\r\n    <div class=\"breadcrumbs\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"page-header float-left\">\r\n          <div class=\"page-title\">\r\n            <h1>Dashboard</h1>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n        <div class=\"page-header float-right\">\r\n          <div class=\"page-title\">\r\n            <ol class=\"breadcrumb text-right\">\r\n              <li><a href=\"#\">Dashboard</a></li>\r\n              <li class=\"active\">{{this.path}}</li>\r\n            </ol>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"content mt-3\">\r\n      <div class=\"animated fadeIn\">\r\n\r\n\r\n        <div *ngIf=\"this.path=='/admin/playerlist'\" class=\"container\">\r\n          <app-player-list></app-player-list>\r\n        </div>\r\n\r\n        <div *ngIf=\"this.path.includes('/admin/userlist')\" class=\"container\">\r\n          <app-user-list></app-user-list>\r\n        </div>\r\n\r\n\r\n\r\n      </div><!-- .animated -->\r\n    </div><!-- .content -->\r\n\r\n\r\n  </div><!-- /#right-panel -->\r\n\r\n</div>\r\n<div *ngIf=\"!authService.isLoggedIn\" class=\"container\">\r\n  <div class=\"row justify-content-md-center\">\r\n    <div class=\"col-md-4\">\r\n      <h2>Please log in!</h2>\r\n      <form>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputEmail1\">Email address</label>\r\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\r\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputPassword1\">Password</label>\r\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\r\n        </div>\r\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div *ngIf=\"authService.isLoggedIn\">\r\n<!-- display dashboard template, if user is logged in -->\r\n  <aside id=\"left-panel\" class=\"left-panel\">\r\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\r\n\r\n      <div class=\"navbar-header\">\r\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n          <i class=\"fa fa-bars\"></i>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\r\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\r\n      </div>\r\n\r\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li>\r\n            <a routerLink=\"/admin\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\r\n          </li>\r\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\r\n          <li class=\"menu-item-has-children active dropdown\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>Groups</a>\r\n            <ul class=\"sub-menu children dropdown-menu\">\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/userlist\">User List</a></li>\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/playerlist\">Player List</a></li>\r\n            </ul>\r\n          </li>\r\n\r\n\r\n\r\n        </ul>\r\n      </div><!-- /.navbar-collapse -->\r\n    </nav>\r\n  </aside><!-- /#left-panel -->\r\n\r\n  <!-- Left Panel -->\r\n\r\n  <!-- Right Panel -->\r\n\r\n  <div id=\"right-panel\" class=\"right-panel\">\r\n\r\n    <!-- Header-->\r\n    <header id=\"header\" class=\"header\">\r\n\r\n      <div class=\"header-menu\">\r\n\r\n        <div class=\"col-sm-7\">\r\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\r\n          <div class=\"header-left\">\r\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\r\n            <div class=\"form-inline\">\r\n              <form class=\"search-form\">\r\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\r\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"dropdown for-notification\">\r\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                <i class=\"fa fa-bell\"></i>\r\n              </button>\r\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\r\n                <!--<app-alerts></app-alerts>-->\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-sm-5\">\r\n          <div class=\"user-area dropdown float-right\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n              {{this.authService.email}}<img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\r\n            </a>\r\n\r\n            <div class=\"user-menu dropdown-menu\">\r\n\r\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\r\n            </div>\r\n          </div>\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </header><!-- /header -->\r\n    <!-- Header-->\r\n\r\n    <div class=\"breadcrumbs\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"page-header float-left\">\r\n          <div class=\"page-title\">\r\n            <h1>Dashboard</h1>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n        <div class=\"page-header float-right\">\r\n          <div class=\"page-title\">\r\n            <ol class=\"breadcrumb text-right\">\r\n              <li><a href=\"#\">Dashboard</a></li>\r\n              <li class=\"active\">{{this.path}}</li>\r\n            </ol>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"content mt-3\">\r\n      <div class=\"animated fadeIn\">\r\n\r\n\r\n        <div *ngIf=\"this.path=='/admin/playerlist'\" class=\"container\">\r\n          <app-player-list></app-player-list>\r\n        </div>\r\n\r\n        <div *ngIf=\"this.path.includes('/admin/userlist')\" class=\"container\">\r\n          <app-user-list></app-user-list>\r\n        </div>\r\n\r\n\r\n\r\n      </div><!-- .animated -->\r\n    </div><!-- .content -->\r\n\r\n\r\n  </div><!-- /#right-panel -->\r\n\r\n</div>\r\n<div *ngIf=\"!authService.isLoggedIn\" class=\"container\">\r\n  <!-- display user login, if user is logged in -->\r\n  <div class=\"row justify-content-md-center\">\r\n    <div class=\"col-md-4\">\r\n      <h2>Please log in!</h2>\r\n      <form>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputEmail1\">Email address</label>\r\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\r\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputPassword1\">Password</label>\r\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\r\n        </div>\r\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -113,7 +121,6 @@ var AdminComponent = /** @class */ (function () {
         this.user = null;
         this.authService.checkLogin();
         this.userService.getUsers().then(function (users) {
-            console.log(users.length + "user gefunden:");
             if (users.length == 0) {
                 console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
                 _this.userService.addUser(new _User__WEBPACK_IMPORTED_MODULE_2__["User"](1, "mail@max-spies.de", "password", "admin"));
@@ -122,11 +129,21 @@ var AdminComponent = /** @class */ (function () {
             console.log("getUser fehlgeschlagen: " + err);
         });
     };
+    /**
+     * login user function
+     * @param
+     * @returns void
+     */
     AdminComponent.prototype.login = function () {
         this.authService.userLogin(this.email, this.password).then().catch(function (err) {
             alert("Login fehlgeschlagen: " + err);
         });
     };
+    /**
+     * logout user
+     * @param ()
+     * @returns void
+     */
     AdminComponent.prototype.logout = function () {
         this.authService.logout();
     };
@@ -135,7 +152,11 @@ var AdminComponent = /** @class */ (function () {
             selector: 'app-admin',
             template: __webpack_require__(/*! ./admin.component.html */ "./src/app/admin/admin.component.html"),
             styles: [__webpack_require__(/*! ./admin.component.scss */ "./src/app/admin/admin.component.scss")]
-        }),
+        })
+        /**
+         * Admin Dashboard
+         */
+        ,
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]])
     ], AdminComponent);
     return AdminComponent;
@@ -152,7 +173,7 @@ var AdminComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal-header\">\n  <h5 class=\"modal-title\">Edit: {{player.username}}</h5>\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <div class=\"form-group\">\n    <label for=\"InputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"player.email\" placeholder=\"Enter email\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputRole\">Playername</label>\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"player.username\" placeholder=\"mod\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\n  </div>\n</div>\n<div class=\"modal-footer\">\n  <p class=\"label-warning\">{{errormsg}}</p>\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">Close</button>\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\n</div>\n"
+module.exports = "<!-- Player Detail rendering -->\n<div class=\"modal-header\">\n  <h5 class=\"modal-title\">Edit: {{player.username}}</h5>\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <div class=\"form-group\">\n    <label for=\"InputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"player.email\" placeholder=\"Enter email\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputRole\">Playername</label>\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"player.username\" placeholder=\"mod\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\n  </div>\n</div>\n<div class=\"modal-footer\">\n  <p class=\"label-warning\">{{errormsg}}</p>\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">Close</button>\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\n</div>\n"
 
 /***/ }),
 
@@ -201,6 +222,11 @@ var PlayerDetailComponent = /** @class */ (function () {
     }
     PlayerDetailComponent.prototype.ngOnInit = function () {
     };
+    /**
+     * save player function
+     * @param ()
+     * @returns  void
+     */
     PlayerDetailComponent.prototype.save = function () {
         if (this.player.password == '' || this.player.password == undefined)
             this.errormsg = 'Please enter a password!';
@@ -218,7 +244,11 @@ var PlayerDetailComponent = /** @class */ (function () {
             selector: 'app-player-detail',
             template: __webpack_require__(/*! ./player-detail.component.html */ "./src/app/admin/player-list/player-detail/player-detail.component.html"),
             styles: [__webpack_require__(/*! ./player-detail.component.scss */ "./src/app/admin/player-list/player-detail/player-detail.component.scss")]
-        }),
+        })
+        /**
+         * PlayerDetail Component
+         */
+        ,
         __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], PlayerDetailComponent);
     return PlayerDetailComponent;
@@ -235,7 +265,7 @@ var PlayerDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"display-1\">{{this.playerAmount}} Players found</h1>\r\n\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.player\" class=\"list-group-item\">\r\n    {{u.username}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.email}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delPlayer(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editPlayer(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addPlayer()\">\r\n      <i class=\"fa fa-plus\"></i> Add Player\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<h1 class=\"display-1\">{{this.playerAmount}} Players found</h1>\r\n<!-- Player List rendering -->\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.player\" class=\"list-group-item\">\r\n    {{u.username}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.email}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delPlayer(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editPlayer(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addPlayer()\">\r\n      <i class=\"fa fa-plus\"></i> Add Player\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -303,6 +333,11 @@ var PlayerListComponent = /** @class */ (function () {
             _this.playerAmount = _this.player.length;
         });
     };
+    /**
+     * edit player function
+     * @param (player)
+     * @returns  void
+     */
     PlayerListComponent.prototype.editPlayer = function (player) {
         var _this = this;
         var modalRef = this.modalService.open(_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_5__["PlayerDetailComponent"]);
@@ -314,9 +349,14 @@ var PlayerListComponent = /** @class */ (function () {
             }).catch(function () { return console.log("ging nicht"); });
             //alert("ging");
         }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
-        modalRef.componentInstance.user = Object.assign(player);
+        modalRef.componentInstance.player = Object.assign(player);
         //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
     };
+    /**
+     * get all Players function
+     * @param ()
+     * @returns  Promise<void>
+     */
     PlayerListComponent.prototype.getPlayers = function () {
         var _this = this;
         return this.playerService.getAllPlayers().then(function (player) {
@@ -329,7 +369,11 @@ var PlayerListComponent = /** @class */ (function () {
             selector: 'app-player-list',
             template: __webpack_require__(/*! ./player-list.component.html */ "./src/app/admin/player-list/player-list.component.html"),
             styles: [__webpack_require__(/*! ./player-list.component.scss */ "./src/app/admin/player-list/player-list.component.scss")]
-        }),
+        })
+        /**
+         * PlayerList Component
+         */
+        ,
         __param(2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_core__WEBPACK_IMPORTED_MODULE_0__["PLATFORM_ID"])),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], _services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
     ], PlayerListComponent);
@@ -347,7 +391,7 @@ var PlayerListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{user.email}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">User role</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.role\" placeholder=\"mod\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n"
+module.exports = "<!-- User Detail rendering -->\r\n<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{user.email}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">User role</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.role\" placeholder=\"mod\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -396,6 +440,11 @@ var UserDetailComponent = /** @class */ (function () {
     }
     UserDetailComponent.prototype.ngOnInit = function () {
     };
+    /**
+     * save user function
+     * @param ()
+     * @returns  void
+     */
     UserDetailComponent.prototype.save = function () {
         if (this.user.password == '' || this.user.password == undefined)
             this.errormsg = 'Please enter a password!';
@@ -413,7 +462,11 @@ var UserDetailComponent = /** @class */ (function () {
             selector: 'app-user-detail',
             template: __webpack_require__(/*! ./user-detail.component.html */ "./src/app/admin/user-list/user-detail/user-detail.component.html"),
             styles: [__webpack_require__(/*! ./user-detail.component.scss */ "./src/app/admin/user-list/user-detail/user-detail.component.scss")]
-        }),
+        })
+        /**
+         * UserDetail Component
+         */
+        ,
         __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbActiveModal"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], UserDetailComponent);
     return UserDetailComponent;
@@ -430,7 +483,7 @@ var UserDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"display-1\">{{this.userAmount}} Users found</h1>\r\n\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.users\" class=\"list-group-item\">\r\n    {{u.email}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.role}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delUser(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editUser(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addUser()\">\r\n      <i class=\"fa fa-plus\"></i> Add User\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<h1 class=\"display-1\">{{this.userAmount}} Users found</h1>\r\n<!-- User List rendering -->\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.users\" class=\"list-group-item\">\r\n    {{u.email}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.role}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delUser(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editUser(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addUser()\">\r\n      <i class=\"fa fa-plus\"></i> Add User\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -504,6 +557,11 @@ var UserListComponent = /** @class */ (function () {
             });
         });
     };
+    /**
+     * get all users function
+     * @param ()
+     * @returns Promise<void>
+     */
     UserListComponent.prototype.getUsers = function () {
         var _this = this;
         return this.userService.getUsers().then(function (users) {
@@ -511,6 +569,11 @@ var UserListComponent = /** @class */ (function () {
             _this.userAmount = _this.users.length;
         });
     };
+    /**
+     * get all users function
+     * @param (user)
+     * @returns void
+     */
     UserListComponent.prototype.editUser = function (user) {
         var _this = this;
         var modalRef = this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
@@ -525,10 +588,20 @@ var UserListComponent = /** @class */ (function () {
         modalRef.componentInstance.user = Object.assign(user);
         //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
     };
+    /**
+     * delete user function
+     * @param (user)
+     * @returns void
+     */
     UserListComponent.prototype.delUser = function (user) {
         var _this = this;
         this.userService.deleteUser(user).then(function () { return _this.getUsers(); });
     };
+    /**
+     * add user function
+     * @param ()
+     * @returns void
+     */
     UserListComponent.prototype.addUser = function () {
         var _this = this;
         var modalRef = this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
@@ -543,7 +616,11 @@ var UserListComponent = /** @class */ (function () {
             selector: 'app-user-list',
             template: __webpack_require__(/*! ./user-list.component.html */ "./src/app/admin/user-list/user-list.component.html"),
             styles: [__webpack_require__(/*! ./user-list.component.scss */ "./src/app/admin/user-list/user-list.component.scss")]
-        }),
+        })
+        /**
+         * UserList Component
+         */
+        ,
         __param(3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_core__WEBPACK_IMPORTED_MODULE_0__["PLATFORM_ID"])),
         __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"]])
     ], UserListComponent);
@@ -584,6 +661,9 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+/**
+ * Routes for navigation
+ */
 var routes = [
     { path: 'play', component: _ingame_ingame_component__WEBPACK_IMPORTED_MODULE_2__["IngameComponent"] },
     { path: 'user', component: _user_user_component__WEBPACK_IMPORTED_MODULE_3__["UserComponent"] },
@@ -1348,7 +1428,15 @@ var LoginComponent = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
+/**
+ * Player Model
+ */
 var Player = /** @class */ (function () {
+    /**
+     * create new player instance
+     * @param id:number, time:string, username:string, email:string, password:string, stats: GameStats
+     * @returns new User
+     */
     function Player(id, time, username, email, password, stats) {
         this._id = id;
         //this.time     = time;
