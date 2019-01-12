@@ -81,13 +81,15 @@ export class PlayerService implements OnInit{
     });
   }
 
-  getAllPlayers() : Promise<void> {
+  getAllPlayers() : Promise<Player[]> {
     return this.http.get('https://localhost:8080/players')
       .toPromise()
-      .then((data: any) => {
-        console.log(data.players);
+      .then((player: Player[]) => {
+        //console.log(data.players);
+        return player;
       }).catch((err: HttpErrorResponse) => {
       console.log(err);
+      return [];
     });
   }
 

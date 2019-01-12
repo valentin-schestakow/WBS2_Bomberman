@@ -28,11 +28,13 @@ import * as gameServer from '../server/gameServer';
  *****************************************************************************/
 let bombermanDB: Db;
 let playerlistCollection: Collection;
+let userlistCollection: Collection;
 //---- connect to database ----------------------------------------------------
 MongoClient.connect("mongodb://localhost:27017",{ useNewUrlParser: true })
     .then((dbClient: MongoClient) => {
         bombermanDB = dbClient.db("bomberman");
         playerlistCollection = bombermanDB.collection("player");
+        userlistCollection = bombermanDB.collection("user");
         return playerlistCollection.findOne({email: "test@test.de"})
     })
     .then<void>((res) => {
@@ -61,7 +63,19 @@ class Player {
         this.gamestats = null;
     }
 }
+class User {
+    _id: number;
+    email: string;
+    password: string;
+    role: string;
 
+    constructor(id: number, email: string, password: string, role: string){
+        this.email = email;
+        this._id = id;
+        this.password = password;
+        this.role = role;
+    }
+}
 class GameStats {
     gameCount: number;
     points: number;
@@ -195,13 +209,6 @@ router.use( session( {
 
 
 /**
- * User Login
- */
-router.post('/userLogin', function (req, res) {
-    res.status(200).json({message: "success"});
-});
-
-/**
  * Check Login
  */
 router.get    ("/login/check", function (req: Request, res: Response) {
@@ -252,6 +259,225 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
         res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
     }
 });
+
+/**
+ * --- update user with: put /user/:id ---------------------------------
+ */
+router.put    ("/user/:id",    function (req: Request, res: Response) {
+    let status      : number = 500; // Initial HTTP response status
+    let message     : string = ""; // To be set
+    let updateData  : any = {}; // No type provided - depends on existence of password
+
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) { return; }
+
+    //--- check if parameters exists -> initialize each if not ------------------
+    let id       : string = (req.params.id ? req.params.id     : "");
+    let email : string = (req.body.email ? req.body.email : "").trim();
+    let password : string = (req.body.password ? req.body.password : "").trim();
+    let role : string = (req.body.role ? req.body.role : "").trim();
+
+    //--- ok -> update user with new attributes ---------------------------------
+    let query:Object = {_id: new ObjectID(id)};
+    if (password == "" || password== "$keepPassword") { // no new password set
+        updateData = {email: email, role: role};
+    } else { // new password set
+        updateData = { password: cryptoJS.MD5(password).toString(), email: email, role: role};
+    }
+
+    userlistCollection.updateOne(query, {$set: updateData})
+        .then((result: UpdateWriteOpResult) => {
+            if (result.matchedCount === 1) {
+                message = email + " successfully updated";
+                status = 201;
+                res.status(status).json({message: message});
+            } else {
+                message = "Not Valid: E-Mail " + email + " not valid";
+                status = 500;
+                res.status(status).json({message: message});
+            }
+        })
+        .catch((error: MongoError) => {
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({message: message});
+        });
+});
+
+/**
+ * --- delete user with /user/delete/:email --------------------------------------
+ */
+router.delete ("/user/delete/:email",    function (req: Request, res: Response) {
+    let status    : number = 500; // Initial HTTP response status
+    let message   : string = "";  // To be set
+    let email     : string = (req.body.email != "" ? req.params.email: -1);
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) {
+        return;
+    }
+
+    //--- ok -> delete user from database ---------------------------------------
+    let query = {email: email};
+
+    userlistCollection.findOne(query)
+        .then((res) => {
+                return userlistCollection.deleteOne(query)
+        })
+        .then((result: DeleteWriteOpResultObject) => {
+            if (result.deletedCount === 1) {
+                message = "E-Mail " + email + " successfully deleted";
+                status = 200;
+            } else {
+                message = "E-Mail " + email + " not found";
+                status = 404;
+            }
+            res.status(status).json({message: message});
+        }).catch((error: Error) => { // database error
+        message = "Database error: " + error;
+        status = 505;
+        res.status(status).json({message: message});
+    });
+});
+
+
+
+/**
+ * --- get all users with: get /user/getAll --------------------------------
+ */
+router.get('/user/getAll', function (req: Request, res: Response) {
+
+    let query: Object = {};
+    userlistCollection.find(query).toArray()
+        .then((users: User[]) => {
+            users = users.map((user) => {
+                user['password'] = '$keepPassword';
+                return user;
+            });
+            res.status(200).json({message: 'fetched users', users: users});
+        })
+        .catch((error: MongoError) => {
+            res.status(500).json({message: 'Database error' + error.code});
+        });
+});
+
+/**
+ * --- create new user with: post /user --------------------------------
+ */
+router.post   ("/user/create",        function (req: Request, res: Response) {
+    let email : string = (req.body.email ? req.body.email : "").trim();
+    let password : string = (req.body.password ? req.body.password : "").trim();
+    let role : string = (req.body.role ? req.body.role : "").trim();
+    let message  : string = "";
+    let status   : number = 500; // Initial HTTP response status
+
+    /*
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    */
+
+    //-- ok -> insert user-data into database -----------------------------------
+    if ((role != "") && (email != "") && (password != "")) {
+
+        let insertData = {
+            email: email,
+            role: role,
+            password : cryptoJS.MD5(password).toString(),
+
+        };
+        userlistCollection.insertOne(insertData)
+            .then((result: InsertOneWriteOpResult) => {
+                message = "Created: " + email;
+                status = 201;
+                res.status(status).json({message: message});
+            })
+            .catch((error : MongoError) => {
+                message = "Database error: " + error.code;
+                status = 505;
+                res.status(status).json({message: message});
+            });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
+        res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
+    }
+
+});
+
+
+/**
+ * Check Login
+ */
+router.get    ("/user/login/check", function (req: Request, res: Response) {
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) {
+        return;
+    }
+
+    res.status(200).json({message: "user still logged in"});
+
+});
+/**
+ * --- login with: post /user/login -----------------------------------------
+ */
+router.post   ("/user/login",       function (req: Request, res: Response) {
+
+    let status   : number = 500;  // Initial HTTP response status
+    let message  : string = ""; // To be set
+    let email: string = req.body.email;
+    let password : string = req.body.password;
+
+    //---- ok -> check username/password in database and set Rights -------------
+    if (password != "" && email != "") {
+        let query: Object = {email: email, password: cryptoJS.MD5(password).toString()};
+        userlistCollection.findOne(query).then((user:User) => {
+            if (user !== null) {
+                message = email + " logged in by email/password";
+                req.session.email = email;    // set session-variable email
+                if(user.role=='admin')req.session.rights = new Rights(true, true, true);
+                else req.session.rights = new Rights(true, true, false);
+
+                status = 200;
+            } else { // username and passwort does not match message = "Id " + id + " not found";
+                message = "Not Valid: user '" + email + "' does not match password";
+                status = 401;
+            }
+            res.status(status).json({message: message});
+        }).catch((error: MongoError) => { // database error
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({message: message});
+        });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
+        res.status(400).json({message: "Bad Request: not all mandatory parameters provided"});
+    }
+
+
+});
+
+/**
+ * --- logout with: post /logout ---------------------------------------
+ */
+router.post   ("/user/logout",      function (req: Request, res: Response) {
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) {
+        return;
+    }
+
+    //--- ok -> delete session-variable and reset Rights ------------------------
+    let email : string = req.session.email;
+    req.session.email = null; // delete session-variable
+    req.session.rights   = null; // reset all Rights
+    res.status(200).json({message: email + " logout successfull"})
+});
+
 
 /**
  * --- logout with: post /logout ---------------------------------------
