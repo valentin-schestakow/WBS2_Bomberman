@@ -34,10 +34,10 @@ mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: tr
 }).catch(function (err) {
     console.error("Error connecting to database ...\n" + err);
 });
-var Player = (function () {
-    function Player(id, time, username, email, password) {
+var Player = /** @class */ (function () {
+    function Player(id, time, username, email, password, stats) {
         this._id = id;
-        this.time = time;
+        //this.time     = time;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -45,7 +45,7 @@ var Player = (function () {
     }
     return Player;
 }());
-var User = (function () {
+var User = /** @class */ (function () {
     function User(id, email, password, role) {
         this.email = email;
         this._id = id;
@@ -54,9 +54,8 @@ var User = (function () {
     }
     return User;
 }());
-var GameStats = (function () {
-    function GameStats(id, gameCount, points, kills, deaths) {
-        this._id = id;
+var GameStats = /** @class */ (function () {
+    function GameStats(gameCount, points, kills, deaths) {
         this.gameCount = gameCount;
         this.points = points;
         this.kills = kills;
@@ -85,7 +84,7 @@ gameServer.run(server);
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
 //--- Class that deals with Rights --------------------------------------------
-var Rights = (function () {
+var Rights = /** @class */ (function () {
     // can be extended here with other user-roles
     function Rights(player, admin, superadmin) {
         this.player = player;
@@ -103,6 +102,7 @@ function checkRights(req, res, rights) {
         res.json({ message: "No session: Please log in" }); // send HTTP-response
         return false;
     }
+    //--- check rights against the needed rights (provided as parameter) --------
     else {
         var rightsOK = true;
         var message = "unsufficient rights";
@@ -110,11 +110,11 @@ function checkRights(req, res, rights) {
             rightsOK = rightsOK && req.session.rights.player;
             message += ": not logged in";
         }
-        if (rights.admin) {
+        if (rights.admin) { // checks if "admin" is needed
             rightsOK = rightsOK && req.session.rights.admin;
             message += ": not Moderator";
         }
-        if (rights.superadmin) {
+        if (rights.superadmin) { // ckecks if "superadmin" is needed
             rightsOK = rightsOK && req.session.rights.superadmin;
             message += ", not admin";
         }
@@ -172,7 +172,7 @@ router.post("/login/player", function (req, res) {
     var message = ""; // To be set
     var email = req.body.email;
     var password = req.body.password;
-    //---- ok -> check username/password in database and set Rights -------------
+    //---- ok -> check email/password in database and set Rights -------------
     if (password != "" && email != "") {
         var query = { email: email, password: cryptoJS.MD5(password).toString() };
         playerlistCollection.findOne(query).then(function (player) {
@@ -181,19 +181,21 @@ router.post("/login/player", function (req, res) {
                 req.session.email = email; // set session-variable email
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
+                res.status(status).json({ message: message, player: player });
             }
-            else {
+            else { // username and passwort does not match message = "Id " + id + " not found";
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
+                res.status(status).json({ message: message });
             }
-            res.status(status).json({ message: message });
         }).catch(function (error) {
             message = "Database error: " + error.code;
             status = 505;
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -215,10 +217,10 @@ router.put("/user/:id", function (req, res) {
     var role = (req.body.role ? req.body.role : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     var query = { _id: new bson_1.ObjectID(id) };
-    if (password == "" || password == "$keepPassword") {
+    if (password == "" || password == "$keepPassword") { // no new password set
         updateData = { email: email, role: role };
     }
-    else {
+    else { // new password set
         updateData = { password: cryptoJS.MD5(password).toString(), email: email, role: role };
     }
     userlistCollection.updateOne(query, { $set: updateData })
@@ -324,7 +326,8 @@ router.post("/user/create", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -359,7 +362,7 @@ router.post("/user/login", function (req, res) {
                     req.session.rights = new Rights(true, true, false);
                 status = 200;
             }
-            else {
+            else { // username and passwort does not match message = "Id " + id + " not found";
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
             }
@@ -370,7 +373,8 @@ router.post("/user/login", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -403,7 +407,7 @@ router.post("/logout/player", function (req, res) {
     res.status(200).json({ message: email + " logout successfull" });
 });
 /**
- * --- create new user with: post /user --------------------------------
+ * --- create new player with: post /create/player --------------------------------
  */
 router.post("/create/player", function (req, res) {
     var username = (req.body.username ? req.body.username : "").trim();
@@ -411,6 +415,7 @@ router.post("/create/player", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     var message = "";
     var status = 500; // Initial HTTP response status
+    var stats = new GameStats(0, 0, 0, 0);
     /*
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
@@ -420,10 +425,10 @@ router.post("/create/player", function (req, res) {
     //-- ok -> insert user-data into database -----------------------------------
     if ((username != "") && (email != "") && (password != "")) {
         var insertData = {
-            time: new Date().toLocaleString(),
             email: email,
             username: username,
-            password: cryptoJS.MD5(password).toString()
+            password: cryptoJS.MD5(password).toString(),
+            stats: stats
         };
         playerlistCollection.insertOne(insertData)
             .then(function (result) {
@@ -437,7 +442,8 @@ router.post("/create/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -492,10 +498,13 @@ router.put("/player/:email", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     query = { email: email };
-    if (password == "") {
+    if (password == "") { // no new password set
         updateData = { username: username };
     }
-    else {
+    else if (username == "") {
+        updateData = { password: password };
+    }
+    else { // new password set
         updateData = { password: cryptoJS.MD5(password).toString(), username: username };
     }
     playerlistCollection.updateOne(query, { $set: updateData })
@@ -506,7 +515,7 @@ router.put("/player/:email", function (req, res) {
             res.status(status).json({ message: message });
         }
         else {
-            message = "Not Valid: E-Mail " + email + " not valid";
+            message = "Not Valid: E-Mail: " + email + " not valid";
             status = 500;
             res.status(status).json({ message: message });
         }
@@ -573,14 +582,11 @@ router.get("/players", function (req, res) {
             player['password'] = undefined;
             return player;
         });
-        res.status(200).json({ message: "fetched users", players: players });
+        res.status(200).json({ message: "get all players succes", players: players });
     })
         .catch(function (error) {
         res.status(500).json({ message: "Database error" + error.code });
     });
-});
-router.get("/userlogin", function (req, res) {
-    res.status(200).json({ "message": "test" });
 });
 router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
 // Routen innerhalb der Angular-Anwendung zurückleiten
@@ -604,7 +610,7 @@ passport.deserializeUser(function (profile, done) {
     done(null, profile);
 });
 //kofnigurationsklasse welche die clientid und secret enthält
-var GoogleAuthConfig = (function () {
+var GoogleAuthConfig = /** @class */ (function () {
     function GoogleAuthConfig() {
         this.googleAuth = {
             clientID: '85564632151-r3mqfgrsrhk2kcdrdn0fe4hvsvcm7do6.apps.googleusercontent.com',
@@ -614,7 +620,7 @@ var GoogleAuthConfig = (function () {
     }
     return GoogleAuthConfig;
 }());
-var FacebookAuthConfig = (function () {
+var FacebookAuthConfig = /** @class */ (function () {
     function FacebookAuthConfig() {
         this.facebookAuth = {
             clientID: '286966021819558',

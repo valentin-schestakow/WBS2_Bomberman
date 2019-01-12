@@ -152,7 +152,7 @@ var AdminComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  player-list works!\r\n</p>\r\n\r\n<!--<ul class=\"list-group\">\r\n  <li *ngFor=\"let p of this.playerService.player\" class=\"list-group-item\">\r\n    {{p.email}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{p.username}}\r\n    </span>\r\n  </li>\r\n</ul>-->\r\n"
+module.exports = "<h1 class=\"display-1\">{{this.userAmount}} Users found</h1>\r\n\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.player\" class=\"list-group-item\">\r\n    {{u.username}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.email}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delPlayer(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editPlayer(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addPlayer()\">\r\n      <i class=\"fa fa-plus\"></i> Add Player\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -196,7 +196,10 @@ var PlayerListComponent = /** @class */ (function () {
     }
     PlayerListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.playerService.getUsers().then(function (player) { return console.log(_this.playerService.player); });
+        this.playerService.getAllPlayers().then(function (player) {
+            console.log(player);
+            _this.player = player;
+        });
     };
     PlayerListComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -443,12 +446,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 /* harmony import */ var _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./admin/admin.component */ "./src/app/admin/admin.component.ts");
+/* harmony import */ var _player_player_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./player/player.component */ "./src/app/player/player.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -463,6 +468,7 @@ var routes = [
     { path: 'admin/playerlist', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
     { path: 'admin/userlist', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
     { path: 'admin/userlist/edit/:id', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
+    { path: 'gamer', component: _player_player_component__WEBPACK_IMPORTED_MODULE_6__["PlayerComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -487,7 +493,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>Welcome to {{ title }}!</h1>\r\n\r\n\r\n<router-outlet></router-outlet>\r\n"
+module.exports = "<!--\r\n<h1>Welcome to {{ title }}!</h1>\r\n-->\r\n\r\n<router-outlet></router-outlet>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -531,6 +537,27 @@ var AppComponent = /** @class */ (function () {
         this.title = 'bomberman';
     }
     AppComponent.prototype.ngOnInit = function () {
+        /*
+        this.playerService.checkLogin()
+          .then(() => {
+            this.playerService.login("test@test.de", "test")
+          })
+          .then(() => {
+            this.playerService.checkLogin()
+          })
+          .then(() => {
+            this.playerService.createPlayer("new@test.de", "pw", "name")
+          })
+          .then(() => {
+            this.playerService.getPlayer("new@test.de")
+          })
+          .then(() => {
+            this.playerService.getAllPlayers()
+          })
+          .catch((err: HttpErrorResponse) => {
+            console.log(err)
+          });
+          */
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -568,16 +595,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_user_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./user/user.component */ "./src/app/user/user.component.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
-/* harmony import */ var _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./admin/player-list/player-list.component */ "./src/app/admin/player-list/player-list.component.ts");
-/* harmony import */ var _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./admin/user-list/user-list.component */ "./src/app/admin/user-list/user-list.component.ts");
-/* harmony import */ var _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./admin/user-list/user-detail/user-detail.component */ "./src/app/admin/user-list/user-detail/user-detail.component.ts");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _player_player_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./player/player.component */ "./src/app/player/player.component.ts");
+/* harmony import */ var _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./admin/player-list/player-list.component */ "./src/app/admin/player-list/player-list.component.ts");
+/* harmony import */ var _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./admin/user-list/user-list.component */ "./src/app/admin/user-list/user-list.component.ts");
+/* harmony import */ var _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./admin/user-list/user-detail/user-detail.component */ "./src/app/admin/user-list/user-detail/user-detail.component.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -604,16 +633,18 @@ var AppModule = /** @class */ (function () {
                 _login_login_component__WEBPACK_IMPORTED_MODULE_6__["LoginComponent"],
                 _admin_admin_component__WEBPACK_IMPORTED_MODULE_7__["AdminComponent"],
                 _user_user_component__WEBPACK_IMPORTED_MODULE_8__["UserComponent"],
-                _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_11__["PlayerListComponent"],
-                _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_12__["UserListComponent"],
-                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_13__["UserDetailComponent"]
+                _player_player_component__WEBPACK_IMPORTED_MODULE_11__["PlayerComponent"],
+                _user_user_component__WEBPACK_IMPORTED_MODULE_8__["UserComponent"],
+                _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_12__["PlayerListComponent"],
+                _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_13__["UserListComponent"],
+                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__["NgbModule"]
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__["NgbModule"]
             ],
             providers: [
                 _services_auth_service__WEBPACK_IMPORTED_MODULE_10__["AuthService"],
@@ -621,10 +652,10 @@ var AppModule = /** @class */ (function () {
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
             exports: [
-                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_13__["UserDetailComponent"],
+                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
             ],
             entryComponents: [
-                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_13__["UserDetailComponent"]
+                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"]
             ]
         })
     ], AppModule);
@@ -752,16 +783,16 @@ var Field = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/ingame/Player.ts":
-/*!**********************************!*\
-  !*** ./src/app/ingame/Player.ts ***!
-  \**********************************/
-/*! exports provided: Player */
+/***/ "./src/app/ingame/Gamer.ts":
+/*!*********************************!*\
+  !*** ./src/app/ingame/Gamer.ts ***!
+  \*********************************/
+/*! exports provided: Gamer */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Gamer", function() { return Gamer; });
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -777,11 +808,11 @@ var __extends = (undefined && undefined.__extends) || (function () {
     };
 })();
 
-var Player = /** @class */ (function (_super) {
-    __extends(Player, _super);
-    function Player(posX, posY, name) {
+var Gamer = /** @class */ (function (_super) {
+    __extends(Gamer, _super);
+    function Gamer(posX, posY, name) {
         var _this = _super.call(this, posX, posY) || this;
-        _this.type = "Player";
+        _this.type = "Gamer";
         _this.bombPlanted = 0;
         _this.lives = 3;
         _this.kills = 0;
@@ -792,7 +823,7 @@ var Player = /** @class */ (function (_super) {
         _this.posY = posY;
         return _this;
     }
-    Player.prototype.getRandomColor = function () {
+    Gamer.prototype.getRandomColor = function () {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
@@ -800,7 +831,7 @@ var Player = /** @class */ (function (_super) {
         }
         return color;
     };
-    return Player;
+    return Gamer;
 }(_Field__WEBPACK_IMPORTED_MODULE_0__["Field"]));
 
 
@@ -840,7 +871,7 @@ module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*#
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IngameComponent", function() { return IngameComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ "./src/app/ingame/Player.ts");
+/* harmony import */ var _Gamer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Gamer */ "./src/app/ingame/Gamer.ts");
 /* harmony import */ var _Bomb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bomb */ "./src/app/ingame/Bomb.ts");
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 /* harmony import */ var _Block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Block */ "./src/app/ingame/Block.ts");
@@ -871,7 +902,7 @@ var IngameComponent = /** @class */ (function () {
     }
     IngameComponent.prototype.ngOnInit = function () {
         this.size = 25;
-        this.myPlayer = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, 0, 'xXSlyerXx');
+        this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
         var width = 800;
         //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
@@ -922,7 +953,7 @@ var IngameComponent = /** @class */ (function () {
     IngameComponent.prototype.movePlayer = function (oldX, oldY, newX, newY) {
         //array
         // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Player(newX,newY, "Slyaer");
+        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
         //drawing
         //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
         /*if(this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Field"){
@@ -1226,6 +1257,77 @@ var LoginComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/player/player.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/player/player.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!--\r\n<div class=\"card m-3\" style=\"width: 18rem;\">\r\n  <div class=\"card-body\">\r\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\r\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\r\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\r\n    <p class=\"card-text\">{{player.stats.kills}}</p>\r\n    <p class=\"card-text\">{{player.stats.points}}</p>\r\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\r\n  </div>\r\n</div>\r\n-->\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n\r\n    <div class=\"\" >\r\n\r\n\r\n      <div class=\"panel panel-info\">\r\n        <div class=\"panel-heading\">\r\n          <h3 class=\"panel-title\">Player Info</h3>\r\n        </div>\r\n        <div class=\"panel-body\">\r\n          <div class=\"row\">\r\n\r\n            <div class=\" col-md-9 col-lg-9 \">\r\n              <table class=\"table table-user-information\">\r\n                <tbody>\r\n\r\n                <tr>\r\n                  <td>Username: </td>\r\n                  <td>{{player.username}}</td>\r\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Email: </td>\r\n                  <td>{{player.email}}</td>\r\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Game Count: </td>\r\n                  <td>{{player.stats.gameCount}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Points: </td>\r\n                  <td>{{player.stats.points}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Kills: </td>\r\n                  <td>{{player.stats.kills}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Deaths: </td>\r\n                  <td>{{player.stats.deaths}}</td>\r\n                </tr>\r\n                </tbody>\r\n              </table>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/player/player.component.scss":
+/*!**********************************************!*\
+  !*** ./src/app/player/player.component.scss ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3BsYXllci9wbGF5ZXIuY29tcG9uZW50LnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/player/player.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/player/player.component.ts ***!
+  \********************************************/
+/*! exports provided: PlayerComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerComponent", function() { return PlayerComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var PlayerComponent = /** @class */ (function () {
+    function PlayerComponent(playerServie) {
+        this.playerServie = playerServie;
+    }
+    PlayerComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.playerServie.login("new@test.de", "pw")
+            .then(function () {
+            _this.player = _this.playerServie.currentPlayer;
+        });
+    };
+    PlayerComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-player',
+            template: __webpack_require__(/*! ./player.component.html */ "./src/app/player/player.component.html"),
+            styles: [__webpack_require__(/*! ./player.component.scss */ "./src/app/player/player.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
+    ], PlayerComponent);
+    return PlayerComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/auth.service.ts":
 /*!******************************************!*\
   !*** ./src/app/services/auth.service.ts ***!
@@ -1366,27 +1468,82 @@ var PlayerService = /** @class */ (function () {
         this.http = http;
         this.isLoggedIn = false;
     }
-    PlayerService.prototype.getUsers = function () {
+    PlayerService.prototype.checkLogin = function () {
         var _this = this;
+        return this.http.get('https://localhost:8080/login/check')
+            .toPromise()
+            .then(function (data) {
+            console.log(data.message);
+        }).catch(function (err) {
+            console.log(err);
+            _this.isLoggedIn = false;
+        });
+    };
+    PlayerService.prototype.getAllPlayers = function () {
         return this.http.get('https://localhost:8080/players')
             .toPromise()
             .then(function (player) {
-            _this.player = player;
+            //console.log(data.players);
             return player;
         }).catch(function (err) {
             console.log(err);
             return [];
         });
     };
-    PlayerService.prototype.logIn = function () {
+    PlayerService.prototype.login = function (email, password) {
         var _this = this;
-        return this.http.post('https://localhost:8080/login/player', { email: "test@test.de", password: "test" }, httpOptions)
+        return this.http.post('https://localhost:8080/login/player', { email: email, password: password }, httpOptions)
             .toPromise()
             .then(function (res) {
             _this.isLoggedIn = true;
+            _this.currentPlayer = res.player;
             console.log(res.message);
         })
             .catch(function (err) {
+            console.log(err.message);
+        });
+    };
+    PlayerService.prototype.logout = function (email) {
+        var _this = this;
+        return this.http.post('https://localhost:8080/logout/player', { email: email }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            _this.isLoggedIn = false;
+            console.log(res.message);
+        })
+            .catch(function (err) {
+            console.log(err.message);
+        });
+    };
+    PlayerService.prototype.createPlayer = function (email, password, username) {
+        return this.http.post('https://localhost:8080/create/player', { email: email, password: password, username: username }, httpOptions)
+            .toPromise()
+            .then(function (res) {
+            //this.isLoggedIn = true;
+            console.log(res.message);
+        })
+            .catch(function (err) {
+            console.log(err.message);
+        });
+    };
+    PlayerService.prototype.getPlayer = function (email) {
+        return this.http.get('https://localhost:8080/player/' + email)
+            .toPromise()
+            .then(function (data) {
+            console.log(data.player);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    };
+    PlayerService.prototype.updateUser = function (email, username, password) {
+        return this.http.put('http://localhost:8080/user/' + email, {
+            username: username,
+            password: password
+        })
+            .toPromise()
+            .then(function (data) {
+            console.log(data.message);
+        }).catch(function (err) {
             console.log(err.message);
         });
     };

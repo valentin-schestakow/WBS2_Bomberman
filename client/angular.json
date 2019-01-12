@@ -38,6 +38,7 @@
               "src/assets/vendors/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/js/main.js"
             ]
+
           },
           "configurations": {
             "production": {

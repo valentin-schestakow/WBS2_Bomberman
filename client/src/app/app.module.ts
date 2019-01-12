@@ -9,6 +9,7 @@ import { AdminComponent } from './admin/admin.component';
 import { UserComponent } from './user/user.component';
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
+import { PlayerComponent } from './player/player.component';
 import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { UserListComponent } from './admin/user-list/user-list.component';
 import { UserDetailComponent } from './admin/user-list/user-detail/user-detail.component';
@@ -20,6 +21,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     IngameComponent,
     LoginComponent,
     AdminComponent,
+    UserComponent,
+    PlayerComponent,
     UserComponent,
     PlayerListComponent,
     UserListComponent,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PlayerService} from "../../services/player.service";
-import {Player} from "../../ingame/Player";
+import {Player} from "../../player/Player";
 
 @Component({
   selector: 'app-player-list',
@@ -9,11 +9,15 @@ import {Player} from "../../ingame/Player";
 })
 export class PlayerListComponent implements OnInit {
 
-  player: Player[];
+  protected player: Player[];
   constructor(protected playerService: PlayerService) { }
 
   ngOnInit() {
-    this.playerService.getUsers().then((player)=> console.log(this.playerService.player));
+    this.playerService.getAllPlayers().then(
+      (player)=> {
+        console.log(player)
+        this.player = player;
+      });
   }
 
 }

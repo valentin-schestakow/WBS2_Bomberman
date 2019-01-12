@@ -5,6 +5,7 @@ import {IngameComponent} from "./ingame/ingame.component";
 import {UserComponent} from "./user/user.component";
 import {LoginComponent} from "./login/login.component";
 import {AdminComponent} from "./admin/admin.component";
+import {PlayerComponent} from './player/player.component';
 
 const routes: Routes = [
   { path: 'play', component: IngameComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'admin/playerlist', component: AdminComponent },
   { path: 'admin/userlist', component: AdminComponent },
   { path: 'admin/userlist/edit/:id', component: AdminComponent },
+  { path: 'gamer', component: PlayerComponent }
 ];
 
 @NgModule({

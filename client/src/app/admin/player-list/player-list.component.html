@@ -1,12 +1,22 @@
-<p>
-  player-list works!
-</p>
+<h1 class="display-1">{{this.userAmount}} Users found</h1>
 
-<!--<ul class="list-group">
-  <li *ngFor="let p of this.playerService.player" class="list-group-item">
-    {{p.email}}
+<ul class="list-group">
+  <li *ngFor="let u of this.player" class="list-group-item">
+    {{u.username}}
     <span class="badge badge-primary badge-pill">
-      {{p.username}}
+      {{u.email}}
     </span>
+    <button type="button" class="btn btn-danger pull-right" (click)="delPlayer(u)"><i class="fa fa-trash"></i> Delete</button>
+    <button type="button" class="btn btn-warning pull-right" (click)="editPlayer(u)"><i class="fa fa-edit"></i> Edit</button>
+
   </li>
-</ul>-->
+</ul>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-2">
+    <button type="button" class="mt-2 btn btn-success" (click)="addPlayer()">
+      <i class="fa fa-plus"></i> Add Player
+    </button>
+  </div>
+</div>
+
