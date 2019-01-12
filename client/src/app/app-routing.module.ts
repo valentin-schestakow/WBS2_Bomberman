@@ -8,6 +8,7 @@ import {AdminComponent} from "./admin/admin.component";
 import {PlayerComponent} from './player/player.component';
 
 const routes: Routes = [
+  { path: '' , component: LoginComponent},
   { path: 'play', component: IngameComponent },
   { path: 'user', component: UserComponent },
   { path: 'login', component: LoginComponent },

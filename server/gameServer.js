@@ -1,11 +1,8 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -14,11 +11,14 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var socket = require("socket.io");
+var Gamer_1 = require("./Gamer");
 var size = 25;
 var playField;
 var activeBombs;
 var activeBomb;
 var gamer;
+var myPlayer;
+var gamers;
 function run(server) {
     generateField();
     console.log("Start GameServer");
@@ -30,21 +30,25 @@ function run(server) {
         socket.on('move', function (data) {
             //console.log('made socket connection', data);
             //console.log(data.move+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
-            gamer = checkGamerAction(data.move, data.gamer);
+            gamers = checkGamerAction(data.move, data.gamer);
             //console.log("\t\t"+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
             socket.emit('getField', playField);
             socket.broadcast.emit('getField', playField);
-            socket.emit('gamer', gamer);
-            socket.broadcast.emit('gamer', gamer);
+            socket.emit('gamer', gamers);
+            socket.broadcast.emit('gamer', gamers);
             //socket.emit('move', data);
         });
         socket.on('bombplace', function (Field) {
             socket.emit('bombplace', Field);
             socket.broadcast.emit('bombplace', Field);
         });
-        socket.on('gamer', function (gamer) {
+        socket.on('gamer', function (player) {
             //console.log(gamer);
             //socket.emit(ww'gamer',gamer);
+            //Player will be castet to gamer an broadcasted to all
+            //spawnGamer(player);
+            socket.emit('gamer', gamers);
+            socket.broadcast.emit('gamer', gamers);
         });
         socket.on('getField', function (field) {
             socket.emit('getField', playField);
@@ -56,6 +60,36 @@ function run(server) {
     });
 }
 exports.run = run;
+function spawnGamer(newPlayer) {
+    var newGamer;
+    var name = "bilbo";
+    name = newPlayer.username;
+    var playerNumb = gamers.length;
+    switch (playerNumb) {
+        case 0: {
+            newGamer = new Gamer_1.Gamer(25, 25, "sda");
+            //newGamer.color = "blue";
+            //gamers.push(newGamer);
+            break;
+        }
+        case 1: {
+            //newGamer = new Gamer(0, 25, newPlayer.username);
+            //newGamer.color = "yellow";
+            //gamers.push(newGamer);
+            break;
+        }
+        case 2: {
+            //newGamer = new Gamer(25, 0, newPlayer.username);
+            //newGamer.color = "pink";
+            //gamers.push(newGamer);
+            break;
+        }
+        default: {
+            //statements;
+            break;
+        }
+    }
+}
 function printField() {
     var row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9|\n";
     for (var i = 0; i < playField.length; i++) {
@@ -79,7 +113,7 @@ function generateField() {
         }
     }
 }
-var Field = /** @class */ (function () {
+var Field = (function () {
     function Field(posX, posY) {
         this.type = "Field";
         this.posX = posX;
@@ -88,7 +122,7 @@ var Field = /** @class */ (function () {
     return Field;
 }());
 exports.Field = Field;
-var Block = /** @class */ (function (_super) {
+var Block = (function (_super) {
     __extends(Block, _super);
     function Block(posX, posY) {
         var _this = _super.call(this, posX, posY) || this;
@@ -100,7 +134,7 @@ var Block = /** @class */ (function (_super) {
     return Block;
 }(Field));
 exports.Block = Block;
-var Bomb = /** @class */ (function (_super) {
+var Bomb = (function (_super) {
     __extends(Bomb, _super);
     function Bomb(posX, posY, timeLeft) {
         var _this = _super.call(this, posX, posY) || this;
@@ -152,7 +186,13 @@ function checkGamerAction(action, gamer) {
             }, 1000);
         }
     }
-    return gamer;
+    for (var _i = 0, gamers_1 = gamers; _i < gamers_1.length; _i++) {
+        var findGamer = gamers_1[_i];
+        if (findGamer.name == gamer.name) {
+            findGamer = gamer;
+        }
+    }
+    return gamers;
 }
 function bombExplode(posY, posX, gamer) {
     explosionHelper(posY, posX, "Fire");

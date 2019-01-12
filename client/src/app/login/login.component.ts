@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {UserService} from '../services/user.service';
 import {User} from '../admin/User';
+import {PlayerService} from '../services/player.service';
 
 @Component({
   selector: 'app-login',
@@ -15,14 +16,20 @@ export class LoginComponent implements OnInit {
 
   user: User;
 
-  constructor( protected route: Router, protected authService: AuthService, protected userService: UserService) { }
+  constructor(protected playerService: PlayerService, protected router: Router, protected authService: AuthService, protected userService: UserService) { }
 
   ngOnInit() {
+    if(this.playerService.isLoggedIn){
+      this.router.navigate(['/play']);
+    }
   }
 
 
   login(){
-    this.authService.userLogin(this.email, this.password).then().catch(
+    this.playerService.login(this.email, this.password).then(
+      () => {
+        this.router.navigate(['/play']);
+    }).catch(
       (err) => {
         alert("Login fehlgeschlagen: "+err);
       }

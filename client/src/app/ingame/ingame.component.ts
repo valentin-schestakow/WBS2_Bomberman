@@ -25,6 +25,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
   /** Template reference to the canvas element */
   @ViewChild('playground') playground: ElementRef;
   myPlayer: Gamer;
+  gamers: Gamer[];
   size: number;
   myBomb: Bomb;
   /** Canvas 2d context */
@@ -45,7 +46,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
     });
     this.playerService.receiveGamer().subscribe( data => {
       //console.log(data);
-      this.myPlayer = data;
+      this.gamers = data;
       //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
       //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
       this.reprintCanvas();
@@ -59,13 +60,14 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.playerService.emitField(this.playField);
   }
   broadcastPlayer(){
-    this.playerService.emitGamer(this.myPlayer);
+    this.playerService.emitGamer(this.playerService.currentPlayer);
   }
 
   ngOnInit() {
+    this.broadcastPlayer();
     this.broadcastField();
     this.size = 25;
-    this.myPlayer =  new Gamer(0, 0, 'xXSlyerXx');
+    this.myPlayer =  new Gamer(0, 0, this.playerService.currentPlayer.username);
     this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '2000');//3200
     (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '1500');//2400
@@ -120,12 +122,15 @@ export class IngameComponent implements OnInit, AfterViewInit {
         this.context.fillRect(this.playField[i][j].posX,this.playField[i][j].posY, 25, 25);
       }
     }
-    this.printPlayer(this.myPlayer);
+    //this.printPlayer(this.myPlayer);
+    for (let gamer of this.gamers){
+      this.printPlayer(gamer);
+    }
     //this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX * this.size, this.myPlayer.posY * this.size, this.size, this.size);
   }
 
   printPlayer(gamer: Gamer){
-    this.context.fillStyle = 'blue';
+    this.context.fillStyle = gamer.color;
     this.context.fillRect(gamer.posX,gamer.posY, 25, 25);
     //this.context.drawImage(this.spaceshipAlly.nativeElement, gamer.posX * this.size, gamer.posY * this.size, this.size, this.size);
     this.context.font = "5px";

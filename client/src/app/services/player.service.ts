@@ -26,8 +26,8 @@ export class PlayerService implements OnInit{
   emitField(field:Field[][]){
     this.socket.emit('getField', field);
   }
-  emitGamer(gamer:Gamer){
-    this.socket.emit('gamer', gamer);
+  emitGamer(player:Player){
+    this.socket.emit('gamer', player);
   }
 
   receiveMove(){
@@ -51,7 +51,7 @@ export class PlayerService implements OnInit{
   }
 
   receiveGamer(){
-    let obbservable = new Observable<Gamer>(observer => {
+    let obbservable = new Observable<Gamer[]>(observer => {
       this.socket.on('gamer', (data:any) => {
         observer.next(data);
       });
@@ -100,7 +100,7 @@ export class PlayerService implements OnInit{
       .then((res: any) => {
       this.isLoggedIn = true;
       this.currentPlayer = res.player;
-      console.log(res.message);
+      console.log(res.player);
     })
       .catch((err) => {
       console.log(err.message);

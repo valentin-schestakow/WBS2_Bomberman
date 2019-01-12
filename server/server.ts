@@ -46,7 +46,7 @@ MongoClient.connect("mongodb://localhost:27017",{ useNewUrlParser: true })
     console.error("Error connecting to database ...\n" + err);
 });
 
-class Player {
+export class Player {
     _id      : number;
     //time     : string; // time-time format defined[RFC 3339] e.g. 2017-12-31T23:59:6
     email: string;

@@ -20,9 +20,10 @@ export class Gamer extends Field{
     this.kills = 0;
     this.bombs = 1;
     this.name = name;
-    this.color = this.getRandomColor();
-    this.posX = posX;
-    this.posY = posY;
+    //this.color = this.getRandomColor();
+    //this.posX = posX;
+    //this.posY = posY;
+    this.points = 0;
   }
 
   private getRandomColor() {

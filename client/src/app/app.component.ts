@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {PlayerService} from './services/player.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,10 +12,10 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class AppComponent implements  OnInit{
   title = 'bomberman';
 
-  constructor(private playerService: PlayerService) {}
+  constructor(protected router: Router,private playerService: PlayerService) {}
 
   ngOnInit(): void {
-
+    //this.router.navigate(['/login']);
     /*
     this.playerService.checkLogin()
       .then(() => {
