@@ -16,6 +16,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PlayerService implements OnInit{
+  public url = window.location.protocol+'//'+window.location.host+'/';
 
   private socket = io.connect(window.location.protocol + '//' + window.location.host);
 
@@ -82,7 +83,7 @@ export class PlayerService implements OnInit{
   }
 
   getAllPlayers() : Promise<Player[]> {
-    return this.http.get('https://localhost:8080/players')
+    return this.http.get(this.url+'players')
       .toPromise()
       .then((res: any) => {
         //console.log(data.players);
@@ -94,7 +95,7 @@ export class PlayerService implements OnInit{
   }
 
   login(email: string, password: string) : Promise<void> {
-    return this.http.post('https://localhost:8080/login/player', {email: email, password: password}, httpOptions)
+    return this.http.post(this.url+'login/player', {email: email, password: password}, httpOptions)
       .toPromise()
       .then((res: any) => {
       this.isLoggedIn = true;
@@ -107,7 +108,7 @@ export class PlayerService implements OnInit{
   }
 
   logout(email: string) : Promise<void> {
-    return this.http.post('https://localhost:8080/logout/player', {email: email}, httpOptions)
+    return this.http.post(this.url+'logout/player', {email: email}, httpOptions)
       .toPromise()
       .then((res: any) => {
         this.isLoggedIn = false;
@@ -119,7 +120,7 @@ export class PlayerService implements OnInit{
   }
 
   createPlayer(email: string, password: string, username: string) : Promise<void> {
-    return this.http.post('https://localhost:8080/create/player', {email: email, password: password, username: username}, httpOptions)
+    return this.http.post(this.url+'create/player', {email: email, password: password, username: username}, httpOptions)
       .toPromise()
       .then((res: any) => {
         //this.isLoggedIn = true;
@@ -131,7 +132,7 @@ export class PlayerService implements OnInit{
   }
 
   getPlayer(email: string) : Promise<void> {
-    return this.http.get('https://localhost:8080/player/'+email)
+    return this.http.get(this.url+'player/'+email)
       .toPromise()
       .then((data: any) => {
         console.log(data.player);
