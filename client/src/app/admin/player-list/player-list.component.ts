@@ -10,6 +10,7 @@ import {Player} from "../../player/Player";
 export class PlayerListComponent implements OnInit {
 
   protected player: Player[];
+  protected playerAmount: number = 0;
   constructor(protected playerService: PlayerService) { }
 
   ngOnInit() {
@@ -17,6 +18,7 @@ export class PlayerListComponent implements OnInit {
       (player)=> {
         console.log(player)
         this.player = player;
+        this.playerAmount = this.player.length;
       });
   }
 

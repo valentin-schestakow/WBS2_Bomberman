@@ -32,9 +32,9 @@ export class PlayerService implements OnInit{
   getAllPlayers() : Promise<Player[]> {
     return this.http.get('https://localhost:8080/players')
       .toPromise()
-      .then((player: Player[]) => {
+      .then((res: any) => {
         //console.log(data.players);
-        return player;
+        return <Player[]>res.players;
       }).catch((err: HttpErrorResponse) => {
       console.log(err);
       return [];

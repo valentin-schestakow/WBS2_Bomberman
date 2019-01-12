@@ -193,12 +193,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var PlayerListComponent = /** @class */ (function () {
     function PlayerListComponent(playerService) {
         this.playerService = playerService;
+        this.playerAmount = 0;
     }
     PlayerListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.playerService.getAllPlayers().then(function (player) {
             console.log(player);
             _this.player = player;
+            _this.playerAmount = _this.player.length;
         });
     };
     PlayerListComponent = __decorate([
@@ -1482,9 +1484,9 @@ var PlayerService = /** @class */ (function () {
     PlayerService.prototype.getAllPlayers = function () {
         return this.http.get('https://localhost:8080/players')
             .toPromise()
-            .then(function (player) {
+            .then(function (res) {
             //console.log(data.players);
-            return player;
+            return res.players;
         }).catch(function (err) {
             console.log(err);
             return [];
