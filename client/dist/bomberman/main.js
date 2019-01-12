@@ -145,6 +145,89 @@ var AdminComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/admin/player-list/player-detail/player-detail.component.html":
+/*!******************************************************************************!*\
+  !*** ./src/app/admin/player-list/player-detail/player-detail.component.html ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"modal-header\">\n  <h5 class=\"modal-title\">Edit: {{player.username}}</h5>\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <div class=\"form-group\">\n    <label for=\"InputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"player.email\" placeholder=\"Enter email\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputRole\">Playername</label>\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"player.username\" placeholder=\"mod\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\n  </div>\n</div>\n<div class=\"modal-footer\">\n  <p class=\"label-warning\">{{errormsg}}</p>\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">Close</button>\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/admin/player-list/player-detail/player-detail.component.scss":
+/*!******************************************************************************!*\
+  !*** ./src/app/admin/player-list/player-detail/player-detail.component.scss ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL3BsYXllci1saXN0L3BsYXllci1kZXRhaWwvcGxheWVyLWRldGFpbC5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/admin/player-list/player-detail/player-detail.component.ts":
+/*!****************************************************************************!*\
+  !*** ./src/app/admin/player-list/player-detail/player-detail.component.ts ***!
+  \****************************************************************************/
+/*! exports provided: PlayerDetailComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerDetailComponent", function() { return PlayerDetailComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _player_Player__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../player/Player */ "./src/app/player/Player.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var PlayerDetailComponent = /** @class */ (function () {
+    function PlayerDetailComponent(activeModal, router) {
+        this.activeModal = activeModal;
+        this.router = router;
+    }
+    PlayerDetailComponent.prototype.ngOnInit = function () {
+    };
+    PlayerDetailComponent.prototype.save = function () {
+        if (this.player.password == '' || this.player.password == undefined)
+            this.errormsg = 'Please enter a password!';
+        else {
+            this.activeModal.close(this.player);
+            this.router.navigateByUrl('/admin/playerlist');
+        }
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", _player_Player__WEBPACK_IMPORTED_MODULE_3__["Player"])
+    ], PlayerDetailComponent.prototype, "player", void 0);
+    PlayerDetailComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-player-detail',
+            template: __webpack_require__(/*! ./player-detail.component.html */ "./src/app/admin/player-list/player-detail/player-detail.component.html"),
+            styles: [__webpack_require__(/*! ./player-detail.component.scss */ "./src/app/admin/player-list/player-detail/player-detail.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+    ], PlayerDetailComponent);
+    return PlayerDetailComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/admin/player-list/player-list.component.html":
 /*!**************************************************************!*\
   !*** ./src/app/admin/player-list/player-list.component.html ***!
@@ -152,7 +235,7 @@ var AdminComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"display-1\">{{this.userAmount}} Users found</h1>\r\n\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.player\" class=\"list-group-item\">\r\n    {{u.username}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.email}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delPlayer(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editPlayer(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addPlayer()\">\r\n      <i class=\"fa fa-plus\"></i> Add Player\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<h1 class=\"display-1\">{{this.playerAmount}} Players found</h1>\r\n\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.player\" class=\"list-group-item\">\r\n    {{u.username}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.email}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delPlayer(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editPlayer(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addPlayer()\">\r\n      <i class=\"fa fa-plus\"></i> Add Player\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -179,6 +262,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerListComponent", function() { return PlayerListComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/player.service */ "./src/app/services/player.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./player-detail/player-detail.component */ "./src/app/admin/player-list/player-detail/player-detail.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -188,17 +275,53 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
 
 
 var PlayerListComponent = /** @class */ (function () {
-    function PlayerListComponent(playerService) {
+    function PlayerListComponent(route, router, platformID, injector, playerService) {
+        this.route = route;
+        this.router = router;
+        this.platformID = platformID;
+        this.injector = injector;
         this.playerService = playerService;
+        this.playerAmount = 0;
+        if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_3__["isPlatformBrowser"])(this.platformID))
+            this.modalService = this.injector.get(_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__["NgbModal"]);
     }
     PlayerListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.playerService.getAllPlayers().then(function (player) {
             console.log(player);
             _this.player = player;
+            _this.playerAmount = _this.player.length;
+        });
+    };
+    PlayerListComponent.prototype.editPlayer = function (player) {
+        var _this = this;
+        var modalRef = this.modalService.open(_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_5__["PlayerDetailComponent"]);
+        modalRef.result.then(function (player) {
+            console.log("Update: " + player.email);
+            _this.playerService.updateUser(player.email, player.username, player.password).then(function () {
+                // console.log("ging");
+                _this.getPlayers();
+            }).catch(function () { return console.log("ging nicht"); });
+            //alert("ging");
+        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
+        modalRef.componentInstance.user = Object.assign(player);
+        //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
+    };
+    PlayerListComponent.prototype.getPlayers = function () {
+        var _this = this;
+        return this.playerService.getAllPlayers().then(function (player) {
+            _this.player = player;
+            _this.playerAmount = _this.player.length;
         });
     };
     PlayerListComponent = __decorate([
@@ -207,7 +330,8 @@ var PlayerListComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./player-list.component.html */ "./src/app/admin/player-list/player-list.component.html"),
             styles: [__webpack_require__(/*! ./player-list.component.scss */ "./src/app/admin/player-list/player-list.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
+        __param(2, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_core__WEBPACK_IMPORTED_MODULE_0__["PLATFORM_ID"])),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], _services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
     ], PlayerListComponent);
     return PlayerListComponent;
 }());
@@ -600,12 +724,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./admin/user-list/user-list.component */ "./src/app/admin/user-list/user-list.component.ts");
 /* harmony import */ var _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./admin/user-list/user-detail/user-detail.component */ "./src/app/admin/user-list/user-detail/user-detail.component.ts");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./admin/player-list/player-detail/player-detail.component */ "./src/app/admin/player-list/player-detail/player-detail.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -637,7 +763,8 @@ var AppModule = /** @class */ (function () {
                 _user_user_component__WEBPACK_IMPORTED_MODULE_8__["UserComponent"],
                 _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_12__["PlayerListComponent"],
                 _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_13__["UserListComponent"],
-                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"]
+                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
+                _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -653,9 +780,11 @@ var AppModule = /** @class */ (function () {
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
             exports: [
                 _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
+                _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ],
             entryComponents: [
-                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"]
+                _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
+                _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ]
         })
     ], AppModule);
@@ -876,8 +1005,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Field__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Field */ "./src/app/ingame/Field.ts");
 /* harmony import */ var _Block__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Block */ "./src/app/ingame/Block.ts");
 /* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_6__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -893,143 +1020,125 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
-var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_6__["connect"](window.location.protocol + '//' + window.location.host);
 var IngameComponent = /** @class */ (function () {
     //ctx: CanvasRenderingContext2D;
     function IngameComponent(playerService) {
+        var _this = this;
         this.playerService = playerService;
+        this.playerService.receiveMove().subscribe(function (data) {
+            //console.log(data)
+        });
+        this.playerService.receiveField().subscribe(function (data) {
+            //console.log(data);
+            _this.playField = data;
+            _this.reprintCanvas();
+        });
+        this.playerService.receiveGamer().subscribe(function (data) {
+            //console.log(data);
+            _this.myPlayer = data;
+            //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+            //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
+            _this.reprintCanvas();
+        });
     }
+    IngameComponent.prototype.broadcastMove = function (move, gamer) {
+        this.playerService.emitMove({ move: move, gamer: gamer });
+    };
+    IngameComponent.prototype.broadcastField = function () {
+        this.playerService.emitField(this.playField);
+    };
+    IngameComponent.prototype.broadcastPlayer = function () {
+        this.playerService.emitGamer(this.myPlayer);
+    };
     IngameComponent.prototype.ngOnInit = function () {
+        this.broadcastField();
         this.size = 25;
         this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, 'xXSlyerXx');
         this.context = this.playground.nativeElement.getContext('2d');
-        var width = 800;
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '800');
-        //(this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '600');
-        this.playground.nativeElement.setAttribute('width', '3200');
-        this.playground.nativeElement.setAttribute('height', '2400');
+        this.playground.nativeElement.setAttribute('width', '2000'); //3200
+        this.playground.nativeElement.setAttribute('height', '1500'); //2400
         this.context.scale(4, 4);
-        this.draw();
-    };
-    IngameComponent.prototype.ngDoCheck = function () {
-        socket.on('getField', function (field) {
-            this.playField = field;
-            console.log("socket works");
-            //$('#output').html('<p><strong>Erased by ' + data + '</strong></p>');
-        });
-        //socket.emit( 'getField', this.playField);
-        this.reprintCanvas();
+        this.generatePlayField();
     };
     IngameComponent.prototype.ngAfterViewInit = function () {
-        this.spawnPlayer(this.myPlayer);
+        this.reprintCanvas();
     };
-    IngameComponent.prototype.draw = function () {
+    IngameComponent.prototype.generatePlayField = function () {
         var size = 25;
-        var box = new Image();
-        box.src = '../../assets/images/box.JPG';
-        console.log(box.height);
         this.playField = [];
         for (var i = 0; i < 14; i++) {
             this.playField[i] = [];
             for (var j = 0; j < 20; j++) {
-                this.context.beginPath();
-                this.context.fillStyle = ['#eee', '#eee'][(i + j) % 2];
-                this.context.fillRect(j * size, i * size, size, size);
                 this.playField[i][j] = new _Field__WEBPACK_IMPORTED_MODULE_3__["Field"](j * size, i * size);
                 if (i > 0 && Math.random() * 100 > 40 && i < 14) {
-                    this.context.fillStyle = ['green', 'green'][(i + j) % 2];
-                    this.context.fillRect(j * size, i * size, size, size);
                     this.playField[i][j] = new _Block__WEBPACK_IMPORTED_MODULE_4__["Block"](j * size, i * size);
                 }
-                this.context.closePath();
             }
         }
-        // SET PLAYER ON MAP
     };
     IngameComponent.prototype.spawnPlayer = function (player) {
         this.context.drawImage(this.spaceshipAlly.nativeElement, player.posX * this.size, player.posY * this.size, this.size, this.size);
     };
     IngameComponent.prototype.movePlayer = function (oldX, oldY, newX, newY) {
-        //array
-        // this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)] = new Field(oldX,oldY);
-        //this.playField[this.convertAbsolutePosToRelativePos(newX)][this.convertAbsolutePosToRelativePos(newY)] = new Gamer(newX,newY, "Slyaer");
-        //drawing
-        //console.log("Old Pos: "+this.convertAbsolutePosToRelativePos(oldX)+" "+this.convertAbsolutePosToRelativePos(oldY)+" "+this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType());
-        /*if(this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Field"){
-          this.context.fillStyle = '#eee';
-        } else if (this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Block") {
-          this.context.fillStyle = 'green';
-        } else if (this.playField[this.convertAbsolutePosToRelativePos(oldX)][this.convertAbsolutePosToRelativePos(oldY)].getType() == "Bomb") {
-          this.context.fillStyle = 'orange';
-        }*/
-        //this.context.fillRect(oldX, oldY, 25, 25);
         this.myPlayer.posX = newX;
         this.myPlayer.posY = newY;
         this.reprintCanvas();
-        //this.context.drawImage(this.spaceshipAlly.nativeElement, newX, newY , 25, 25);
     };
     IngameComponent.prototype.reprintCanvas = function () {
         for (var i = 0; i < this.playField.length; i++) {
             for (var j = 0; j < 20; j++) {
-                if (this.playField[i][j].getType() == 'Field') {
+                if (this.playField[i][j].type == 'Field') {
                     this.context.fillStyle = '#eee';
                 }
-                else if (this.playField[i][j].getType() == 'Block') {
+                else if (this.playField[i][j].type == 'Block') {
                     this.context.fillStyle = 'green';
                 }
-                else if (this.playField[i][j].getType() == 'Bomb') {
+                else if (this.playField[i][j].type == 'Bomb') {
                     this.context.fillStyle = 'orange';
                 }
-                else if (this.playField[i][j].getType() == 'Fire') {
+                else if (this.playField[i][j].type == 'Fire') {
                     this.context.fillStyle = 'red';
                 }
                 this.context.fillRect(this.playField[i][j].posX, this.playField[i][j].posY, 25, 25);
             }
         }
-        this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX, this.myPlayer.posY, 25, 25);
-        this.printPlayer();
+        this.printPlayer(this.myPlayer);
+        //this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX * this.size, this.myPlayer.posY * this.size, this.size, this.size);
     };
-    IngameComponent.prototype.printPlayer = function () {
+    IngameComponent.prototype.printPlayer = function (gamer) {
+        this.context.fillStyle = 'blue';
+        this.context.fillRect(gamer.posX, gamer.posY, 25, 25);
+        //this.context.drawImage(this.spaceshipAlly.nativeElement, gamer.posX * this.size, gamer.posY * this.size, this.size, this.size);
         this.context.font = "5px";
         this.context.fillStyle = "black";
-        this.context.fillText(this.myPlayer.name, this.myPlayer.posX + 25, this.myPlayer.posY + 25);
+        this.context.fillText(gamer.name, gamer.posX + 25, gamer.posY + 25);
     };
     IngameComponent.prototype.playerAction = function (action) {
         var _this = this;
-        socket.emit('getField', this.playField);
+        this.broadcastMove(action, this.myPlayer);
+        /*
         if (action === 'moveUp') {
-            if (this.myPlayer.posY > 0) {
-                if (this.playField[this.myPlayer.posY / 25 - 1][this.myPlayer.posX / 25].getType() !== 'Block') {
-                    this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY - 25);
-                    //this.myPlayer.posY -= this.size;
-                }
-            }
+          if (this.myPlayer.posY > 0 && this.playField[this.myPlayer.posY / 25 - 1][this.myPlayer.posX / 25].type !== 'Block') {
+            this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY - 25);
+            //this.myPlayer.posY -= this.size;
+          }
+        } else if (action === 'moveDown') {
+          if (this.myPlayer.posY / 25 < 13 && this.playField[this.myPlayer.posY / 25 + 1][this.myPlayer.posX / 25].type !== 'Block') {
+            this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY + 25);
+            //this.myPlayer.posY += this.size;
+          }
+        } else if (action === 'moveLeft') {
+          if (this.myPlayer.posX > 0 && this.playField[this.myPlayer.posY / 25][this.myPlayer.posX / 25 - 1].type !== 'Block') {
+            this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX - 25, this.myPlayer.posY);
+            //this.myPlayer.posX -= this.size;
+          }
+        } else if (action === 'moveRight') {
+          if (this.myPlayer.posX / 25 < 19 && this.playField[this.myPlayer.posY / 25][this.myPlayer.posX / 25 + 1].type !== 'Block') {
+            this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX + 25, this.myPlayer.posY);
+            //this.myPlayer.posX += this.size;
+          }
         }
-        else if (action === 'moveDown') {
-            if (this.myPlayer.posY / 25 < 13) {
-                if (this.playField[this.myPlayer.posY / 25 + 1][this.myPlayer.posX / 25].getType() !== 'Block') {
-                    this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX, this.myPlayer.posY + 25);
-                    //this.myPlayer.posY += this.size;
-                }
-            }
-        }
-        else if (action === 'moveLeft') {
-            if (this.myPlayer.posX > 0) {
-                if (this.playField[this.myPlayer.posY / 25][this.myPlayer.posX / 25 - 1].getType() !== 'Block') {
-                    this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX - 25, this.myPlayer.posY);
-                    //this.myPlayer.posX -= this.size;
-                }
-            }
-        }
-        else if (action === 'moveRight') {
-            if (this.myPlayer.posX / 25 < 19) {
-                if (this.playField[this.myPlayer.posY / 25][this.myPlayer.posX / 25 + 1].getType() !== 'Block') {
-                    this.movePlayer(this.myPlayer.posX, this.myPlayer.posY, this.myPlayer.posX + 25, this.myPlayer.posY);
-                    //this.myPlayer.posX += this.size;
-                }
-            }
-        }
+    */
         if (action === 'plantBomb') {
             if (this.myPlayer.bombPlanted < 1) {
                 this.myPlayer.bombPlanted++;
@@ -1039,13 +1148,13 @@ var IngameComponent = /** @class */ (function () {
                 this.myBomb = new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
                 this.reprintCanvas();
                 //timer(500);
-                /*Tiemr*/
                 //let timeLeft =3;
                 var interval_1 = setInterval(function () {
                     if (_this.myBomb.timeLeft > 0) {
                         _this.myBomb.timeLeft--;
                     }
                     else {
+                        _this.broadcastField();
                         _this.bombExplode(_this.convertAbsolutePosToRelativePos(_this.myBomb.posY), _this.convertAbsolutePosToRelativePos(_this.myBomb.posX));
                         clearInterval(interval_1);
                     }
@@ -1057,7 +1166,7 @@ var IngameComponent = /** @class */ (function () {
             for (var i = 0; i < this.playField.length; i++) {
                 row = row.concat(i + ":\t");
                 for (var j = 0; j < 20; j++) {
-                    row = row.concat(this.playField[i][j].getType().charAt(0) + "|");
+                    row = row.concat(this.playField[i][j].type.charAt(0) + "|");
                 }
                 row = row.concat("\n");
             }
@@ -1066,8 +1175,7 @@ var IngameComponent = /** @class */ (function () {
         else if (action === 'reprintField') {
             this.reprintCanvas();
         }
-        //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
-        //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
+        //this.broadcastPlayer();
     };
     IngameComponent.prototype.convertAbsolutePosToRelativePos = function (absolutePos) {
         return absolutePos / 25;
@@ -1078,60 +1186,31 @@ var IngameComponent = /** @class */ (function () {
     IngameComponent.prototype.keyEvent = function (event) {
         //console.log(event.code);
         //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
-        if (event.code === 'KeyW') {
+        if (event.code === 'KeyW' || event.code === 'ArrowUp') {
             this.playerAction('moveUp');
         }
-        if (event.code === 'KeyS') {
+        if (event.code === 'KeyS' || event.code === 'ArrowDown') {
             this.playerAction('moveDown');
         }
-        if (event.code === 'KeyA') {
+        if (event.code === 'KeyA' || event.code === 'ArrowLeft') {
             this.playerAction('moveLeft');
         }
-        if (event.code === 'KeyD') {
+        if (event.code === 'KeyD' || event.code === 'ArrowRight') {
             this.playerAction('moveRight');
         }
-        if (event.code === 'KeyB') {
+        if (event.code === 'KeyB' || event.code === 'Space') {
             this.playerAction('plantBomb');
         }
         if (event.code === 'KeyP') {
             this.playerAction('printDebug');
         }
         if (event.code === 'KeyR') {
+            this.broadcastField();
             this.playerAction('reprintField');
         }
     };
-    /*private delay(ms: number){
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }*/
     IngameComponent.prototype.bombExplode = function (posY, posX) {
         var _this = this;
-        /*
-            if(posY > 0){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY, 25, 25);
-    
-              this.playField[posY-1][posX] = new Field(this.playField[posY-1][posX].posX,this.playField[posY-1][posX].posY);
-            }
-            if(posY < 13){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY, 25, 25);
-    
-              this.playField[posY+1][posX] = new Field(this.playField[posY+1][posX].posX,this.playField[posY+1][posX].posY);
-            }
-            if(posX > 0){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY, 25, 25);
-    
-              this.playField[posY][posX-1] = new Field(this.playField[posY][posX-1].posX,this.playField[posY][posX-1].posY);
-            }
-            if(posX < 19){
-              this.context.fillStyle = 'red';
-              this.context.fillRect(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY, 25, 25);
-    
-              this.playField[posY][posX+1] = new Field(this.playField[posY][posX+1].posX,this.playField[posY][posX+1].posY);
-            }
-            this.playField[posY][posX] = new Field(this.playField[posY][posX].posX,this.playField[posY][posX].posY);
-            */
         this.explosionHelper(posY, posX, "Fire");
         this.reprintCanvas();
         var timeleft = 1;
@@ -1143,6 +1222,7 @@ var IngameComponent = /** @class */ (function () {
                 _this.explosionHelper(posY, posX, "Field");
                 _this.myPlayer.bombPlanted--;
                 _this.reprintCanvas();
+                _this.broadcastField();
                 clearInterval(interval);
             }
         }, 1000);
@@ -1171,7 +1251,7 @@ var IngameComponent = /** @class */ (function () {
         __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
     ], IngameComponent.prototype, "spaceshipAlly", void 0);
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:keyup', ['$event']),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:keydown', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [KeyboardEvent]),
         __metadata("design:returntype", void 0)
@@ -1180,6 +1260,7 @@ var IngameComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-ingame',
             template: __webpack_require__(/*! ./ingame.component.html */ "./src/app/ingame/ingame.component.html"),
+            providers: [_services_player_service__WEBPACK_IMPORTED_MODULE_5__["PlayerService"]],
             styles: [__webpack_require__(/*! ./ingame.component.scss */ "./src/app/ingame/ingame.component.scss")]
         })
         //liste von fiels field kann player oder leer oder
@@ -1251,6 +1332,32 @@ var LoginComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], LoginComponent);
     return LoginComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/player/Player.ts":
+/*!**********************************!*\
+  !*** ./src/app/player/Player.ts ***!
+  \**********************************/
+/*! exports provided: Player */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Player", function() { return Player; });
+var Player = /** @class */ (function () {
+    function Player(id, time, username, email, password, stats) {
+        this._id = id;
+        //this.time     = time;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.stats = stats;
+    }
+    return Player;
 }());
 
 
@@ -1449,6 +1556,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerService", function() { return PlayerService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/Observable */ "./node_modules/rxjs-compat/_esm5/Observable.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1460,14 +1570,57 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var httpOptions = {
     headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Content-Type': 'application/json' })
 };
 var PlayerService = /** @class */ (function () {
     function PlayerService(http) {
         this.http = http;
+        this.url = window.location.protocol + '//' + window.location.host + '/';
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2__["connect"](window.location.protocol + '//' + window.location.host);
         this.isLoggedIn = false;
     }
+    PlayerService.prototype.emitMove = function (data) {
+        this.socket.emit('move', data);
+    };
+    PlayerService.prototype.emitField = function (field) {
+        this.socket.emit('getField', field);
+    };
+    PlayerService.prototype.emitGamer = function (gamer) {
+        this.socket.emit('gamer', gamer);
+    };
+    PlayerService.prototype.receiveMove = function () {
+        var _this = this;
+        var obbservable = new rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"](function (observer) {
+            _this.socket.on('move', function (data) {
+                observer.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return obbservable;
+    };
+    PlayerService.prototype.receiveField = function () {
+        var _this = this;
+        var obbservable = new rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"](function (observer) {
+            _this.socket.on('getField', function (data) {
+                observer.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return obbservable;
+    };
+    PlayerService.prototype.receiveGamer = function () {
+        var _this = this;
+        var obbservable = new rxjs_Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"](function (observer) {
+            _this.socket.on('gamer', function (data) {
+                observer.next(data);
+            });
+            return function () { _this.socket.disconnect(); };
+        });
+        return obbservable;
+    };
     PlayerService.prototype.checkLogin = function () {
         var _this = this;
         return this.http.get('https://localhost:8080/login/check')
@@ -1480,11 +1633,11 @@ var PlayerService = /** @class */ (function () {
         });
     };
     PlayerService.prototype.getAllPlayers = function () {
-        return this.http.get('https://localhost:8080/players')
+        return this.http.get(this.url + 'players')
             .toPromise()
-            .then(function (player) {
+            .then(function (res) {
             //console.log(data.players);
-            return player;
+            return res.players;
         }).catch(function (err) {
             console.log(err);
             return [];
@@ -1492,7 +1645,7 @@ var PlayerService = /** @class */ (function () {
     };
     PlayerService.prototype.login = function (email, password) {
         var _this = this;
-        return this.http.post('https://localhost:8080/login/player', { email: email, password: password }, httpOptions)
+        return this.http.post(this.url + 'login/player', { email: email, password: password }, httpOptions)
             .toPromise()
             .then(function (res) {
             _this.isLoggedIn = true;
@@ -1505,7 +1658,7 @@ var PlayerService = /** @class */ (function () {
     };
     PlayerService.prototype.logout = function (email) {
         var _this = this;
-        return this.http.post('https://localhost:8080/logout/player', { email: email }, httpOptions)
+        return this.http.post(this.url + 'logout/player', { email: email }, httpOptions)
             .toPromise()
             .then(function (res) {
             _this.isLoggedIn = false;
@@ -1516,7 +1669,7 @@ var PlayerService = /** @class */ (function () {
         });
     };
     PlayerService.prototype.createPlayer = function (email, password, username) {
-        return this.http.post('https://localhost:8080/create/player', { email: email, password: password, username: username }, httpOptions)
+        return this.http.post(this.url + 'create/player', { email: email, password: password, username: username }, httpOptions)
             .toPromise()
             .then(function (res) {
             //this.isLoggedIn = true;
@@ -1527,7 +1680,7 @@ var PlayerService = /** @class */ (function () {
         });
     };
     PlayerService.prototype.getPlayer = function (email) {
-        return this.http.get('https://localhost:8080/player/' + email)
+        return this.http.get(this.url + 'player/' + email)
             .toPromise()
             .then(function (data) {
             console.log(data.player);

@@ -14,6 +14,7 @@ import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { UserListComponent } from './admin/user-list/user-list.component';
 import { UserDetailComponent } from './admin/user-list/user-detail/user-detail.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { PlayerDetailComponent } from './admin/player-list/player-detail/player-detail.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     UserComponent,
     PlayerListComponent,
     UserListComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    PlayerDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +44,11 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
   bootstrap: [AppComponent],
   exports: [
     UserDetailComponent,
+    PlayerDetailComponent
   ],
   entryComponents: [
-    UserDetailComponent
+    UserDetailComponent,
+    PlayerDetailComponent
   ]
 
 })
