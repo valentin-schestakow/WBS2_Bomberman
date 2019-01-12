@@ -19,6 +19,7 @@ export class PlayerDetailComponent implements OnInit {
   constructor(protected activeModal: NgbActiveModal, protected router: Router) { }
 
   ngOnInit() {
+   // console.log(this.player);
   }
 
 

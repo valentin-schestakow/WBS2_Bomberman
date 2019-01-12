@@ -19,6 +19,7 @@ export class AdminComponent implements OnInit {
   email: string;
   password: string;
   user: User;
+  protected errormsg;
   constructor( protected route: Router, protected authService: AuthService, protected userService: UserService) { }
 
   ngOnInit() {
@@ -27,7 +28,7 @@ export class AdminComponent implements OnInit {
     this.email ='';
     this.password='';
     this.user = null;
-
+    this.errormsg ='';
     this.authService.checkLogin();
     this.userService.getUsers().then(
       (users: User[]) => {
@@ -51,9 +52,9 @@ export class AdminComponent implements OnInit {
    * @returns void
    */
   login(){
-    this.authService.userLogin(this.email, this.password).then().catch(
-      (err) => {
-        alert("Login fehlgeschlagen: "+err);
+    this.authService.userLogin(this.email, this.password).then(
+      () => {
+        if(!this.authService.isLoggedIn) this.errormsg = 'Login failed: email/password is wrong!';
       }
     );
   }

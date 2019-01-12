@@ -1,6 +1,8 @@
 <!-- Player Detail rendering -->
+
+
 <div class="modal-header">
-  <h5 class="modal-title">Edit: {{player.username}}</h5>
+  <h5 class="modal-title">Edit: {{this.player.username}}</h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -8,19 +10,21 @@
 <div class="modal-body">
   <div class="form-group">
     <label for="InputEmail1">Email address</label>
-    <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" [(ngModel)]="player.email" placeholder="Enter email">
+    <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" [(ngModel)]="this.player.email" placeholder="Enter email">
   </div>
   <div class="form-group">
     <label for="InputRole">Playername</label>
-    <input type="text" class="form-control" id="InputRole" aria-describedby="emailHelp" [(ngModel)]="player.username" placeholder="mod">
+    <input type="text" class="form-control" id="InputRole" aria-describedby="emailHelp" [(ngModel)]="this.player.username" placeholder="username">
   </div>
   <div class="form-group">
     <label for="InputPassword1">Password</label>
-    <input type="password" class="form-control" id="InputPassword1" [(ngModel)]="user.password" placeholder="Password">
+    <input type="password" class="form-control" id="InputPassword1" [(ngModel)]="this.player.password" placeholder="Password">
   </div>
 </div>
 <div class="modal-footer">
-  <p class="label-warning">{{errormsg}}</p>
+  <p class="label-warning">{{this.errormsg}}</p>
   <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')">Close</button>
   <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
 </div>
+
+

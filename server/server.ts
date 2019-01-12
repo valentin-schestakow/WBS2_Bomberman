@@ -616,7 +616,7 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
 
     //--- ok -> update user with new attributes ---------------------------------
     query = {email: email};
-    if (password == "") { // no new password set
+    if (password == "" || password == '$keepPassword') { // no new password set
         updateData = {username: username};
     } else if (username == "") {
         updateData = {password: password};
@@ -703,7 +703,7 @@ router.get("/players", function(req: Request, res: Response) {
             players = players.map((player) => {
                 player['id'] = player['_id'];
                 player['_id'] = undefined;
-                player['password'] = undefined;
+                player['password'] = '$keepPassword';
                 return player;
             })
             res.status(200).json({message: "get all players succes", players: players});

@@ -5,6 +5,7 @@ import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
 import {Field} from '../ingame/Field';
 import {Gamer} from '../ingame/Gamer';
+import {User} from "../admin/User";
 
 
 
@@ -119,8 +120,8 @@ export class PlayerService implements OnInit{
       });
   }
 
-  createPlayer(email: string, password: string, username: string) : Promise<void> {
-    return this.http.post(this.url+'create/player', {email: email, password: password, username: username}, httpOptions)
+  createPlayer(player: Player) : Promise<void> {
+    return this.http.post(this.url+'create/player', player, httpOptions)
       .toPromise()
       .then((res: any) => {
         //this.isLoggedIn = true;
@@ -141,17 +142,22 @@ export class PlayerService implements OnInit{
     });
   }
 
-  updateUser(email: string, username: string, password: string) : Promise<void> {
-    return this.http.put('http://localhost:8080/user/' + email, {
-      username: username,
-      password: password
-    })
+  updatePlayer(player: Player) : Promise<void> {
+    return this.http.put(this.url+'player/' + player.email, player)
       .toPromise()
       .then((data: any) => {
         console.log(data.message);
       }).catch((err: HttpErrorResponse) => {
       console.log(err.message);
     });
+  }
+
+  deletePlayer(player: Player): Promise<void> {
+    return this.http.delete(`${this.url}player/${player.email}`).toPromise()
+      .then((res: any) => {
+        console.log("User gelöscht");
+      })
+      .catch((err) =>  console.log("User nicht gelöscht"));
   }
 
 

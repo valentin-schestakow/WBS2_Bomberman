@@ -1,13 +1,13 @@
 <h1 class="display-1">{{this.playerAmount}} Players found</h1>
 <!-- Player List rendering -->
 <ul class="list-group">
-  <li *ngFor="let u of this.player" class="list-group-item">
-    {{u.username}}
+  <li *ngFor="let p of this.player" class="list-group-item">
+    {{p.username}}
     <span class="badge badge-primary badge-pill">
-      {{u.email}}
+      {{p.email}}
     </span>
-    <button type="button" class="btn btn-danger pull-right" (click)="delPlayer(u)"><i class="fa fa-trash"></i> Delete</button>
-    <button type="button" class="btn btn-warning pull-right" (click)="editPlayer(u)"><i class="fa fa-edit"></i> Edit</button>
+    <button type="button" class="btn btn-danger pull-right" (click)="delPlayer(p)"><i class="fa fa-trash"></i> Delete</button>
+    <button type="button" class="btn btn-warning pull-right" (click)="editPlayer(p)"><i class="fa fa-edit"></i> Edit</button>
 
   </li>
 </ul>
