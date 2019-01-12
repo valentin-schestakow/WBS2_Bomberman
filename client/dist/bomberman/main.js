@@ -1437,7 +1437,7 @@ var UserService = /** @class */ (function () {
         this.url = window.location.protocol + '//' + window.location.host + '/';
     }
     UserService.prototype.getUsers = function () {
-        return this.http.get('https://localhost:8080/user/getAll').toPromise()
+        return this.http.get(this.url + 'user/getAll').toPromise()
             .then(function (res) {
             console.log("User gefunden: ");
             //console.log(res.users);

@@ -18,7 +18,7 @@ export class UserService {
 
 
   getUsers(): Promise<User[]> {
-    return this.http.get<User[]>('https://localhost:8080/user/getAll').toPromise()
+    return this.http.get<User[]>(this.url+'user/getAll').toPromise()
       .then((res: any) => {
         console.log("User gefunden: ");
        //console.log(res.users);
