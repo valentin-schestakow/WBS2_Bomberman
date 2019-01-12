@@ -9,12 +9,17 @@ import {UserService} from "../services/user.service";
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
+
+/**
+ * Admin Dashboard
+ */
 export class AdminComponent implements OnInit {
   role: string;
   path: string;
   email: string;
   password: string;
   user: User;
+  protected errormsg;
   constructor( protected route: Router, protected authService: AuthService, protected userService: UserService) { }
 
   ngOnInit() {
@@ -23,11 +28,11 @@ export class AdminComponent implements OnInit {
     this.email ='';
     this.password='';
     this.user = null;
-
+    this.errormsg ='';
     this.authService.checkLogin();
     this.userService.getUsers().then(
       (users: User[]) => {
-        console.log(users.length+ "user gefunden:")
+
 
         if(users.length==0){
           console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
@@ -41,13 +46,24 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  /**
+   * login user function
+   * @param
+   * @returns void
+   */
   login(){
-    this.authService.userLogin(this.email, this.password).then().catch(
-      (err) => {
-        alert("Login fehlgeschlagen: "+err);
+    this.authService.userLogin(this.email, this.password).then(
+      () => {
+        if(!this.authService.isLoggedIn) this.errormsg = 'Login failed: email/password is wrong!';
       }
     );
   }
+
+  /**
+   * logout user
+   * @param ()
+   * @returns void
+   */
   logout () {
     this.authService.logout();
   }

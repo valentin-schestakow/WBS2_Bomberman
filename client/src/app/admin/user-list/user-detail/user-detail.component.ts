@@ -8,6 +8,10 @@ import {Router} from "@angular/router";
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss']
 })
+
+/**
+ * UserDetail Component
+ */
 export class UserDetailComponent implements OnInit {
 
   @Input() user: User;
@@ -17,6 +21,11 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * save user function
+   * @param ()
+   * @returns  void
+   */
   save(){
     if(this.user.password=='' || this.user.password==undefined) this.errormsg = 'Please enter a password!';
     else {

@@ -11,6 +11,10 @@ import {isPlatformBrowser} from "@angular/common";
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
+
+/**
+ * UserList Component
+ */
 export class UserListComponent implements OnInit {
   protected users: User[];
   protected userAmount: number =0;
@@ -38,6 +42,11 @@ export class UserListComponent implements OnInit {
 
   }
 
+  /**
+   * get all users function
+   * @param ()
+   * @returns Promise<void>
+   */
   getUsers() : Promise<void>{
     return this.userService.getUsers().then((users)=>{
         this.users = users;
@@ -46,6 +55,12 @@ export class UserListComponent implements OnInit {
       }
     );
   }
+
+  /**
+   * get all users function
+   * @param (user)
+   * @returns void
+   */
   editUser(user: User){
     const modalRef = this.modalService.open(UserDetailComponent);
     modalRef.result.then(
@@ -66,12 +81,22 @@ export class UserListComponent implements OnInit {
     //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
   }
 
+  /**
+   * delete user function
+   * @param (user)
+   * @returns void
+   */
   delUser(user: User){
     this.userService.deleteUser(user).then(
       () => this.getUsers()
     );
   }
 
+  /**
+   * add user function
+   * @param ()
+   * @returns void
+   */
   addUser(){
     const modalRef = this.modalService.open(UserDetailComponent);
     modalRef.result.then(
