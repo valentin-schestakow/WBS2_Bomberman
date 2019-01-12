@@ -12,6 +12,7 @@ import {AuthService} from "./services/auth.service";
 import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { UserListComponent } from './admin/user-list/user-list.component';
 import { UserDetailComponent } from './admin/user-list/user-detail/user-detail.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { UserDetailComponent } from './admin/user-list/user-detail/user-detail.c
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    NgbModule
   ],
   providers: [
     AuthService,

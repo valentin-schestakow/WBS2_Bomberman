@@ -220,7 +220,7 @@ var PlayerListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  user-detail works!\n</p>\n"
+module.exports = "<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{user.email}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">User role</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.role\" placeholder=\"mod\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -247,6 +247,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserDetailComponent", function() { return UserDetailComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../User */ "./src/app/admin/User.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -258,10 +260,18 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var UserDetailComponent = /** @class */ (function () {
-    function UserDetailComponent() {
+    function UserDetailComponent(activeModal, router) {
+        this.activeModal = activeModal;
+        this.router = router;
     }
     UserDetailComponent.prototype.ngOnInit = function () {
+    };
+    UserDetailComponent.prototype.save = function () {
+        this.activeModal.close(this.user);
+        this.router.navigateByUrl('/admin/userlist');
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -273,7 +283,7 @@ var UserDetailComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./user-detail.component.html */ "./src/app/admin/user-list/user-detail/user-detail.component.html"),
             styles: [__webpack_require__(/*! ./user-detail.component.scss */ "./src/app/admin/user-list/user-detail/user-detail.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbActiveModal"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], UserDetailComponent);
     return UserDetailComponent;
 }());
@@ -317,9 +327,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/user.service */ "./src/app/services/user.service.ts");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./user-detail/user-detail.component */ "./src/app/admin/user-list/user-detail/user-detail.component.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../User */ "./src/app/admin/User.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./user-detail/user-detail.component */ "./src/app/admin/user-list/user-detail/user-detail.component.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -338,6 +349,7 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
+
 var UserListComponent = /** @class */ (function () {
     function UserListComponent(userService, route, router, platformID, injector) {
         this.userService = userService;
@@ -346,15 +358,11 @@ var UserListComponent = /** @class */ (function () {
         this.platformID = platformID;
         this.injector = injector;
         this.userAmount = 0;
-        if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_5__["isPlatformBrowser"])(this.platformID))
+        if (Object(_angular_common__WEBPACK_IMPORTED_MODULE_6__["isPlatformBrowser"])(this.platformID))
             this.modalService = this.injector.get(_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"]);
     }
     UserListComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userService.getUsers().then(function (users) {
-            _this.users = users;
-            _this.userAmount = _this.users.length;
-        });
+        this.getUsers();
         /*this.route.params.subscribe((params: any) => {
           if (params['id'] != null) {
             const user = this.users.find((el) => el._id === params['id']);
@@ -364,20 +372,35 @@ var UserListComponent = /** @class */ (function () {
           }
         });*/
     };
+    UserListComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.userService.getUsers().then(function (users) {
+            _this.users = users;
+            _this.userAmount = _this.users.length;
+        });
+    };
     UserListComponent.prototype.editUser = function (user) {
         var _this = this;
-        var modalRef = this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_4__["UserDetailComponent"]);
-        modalRef.result.then(function (user) { return _this.userService.updateUser(user); }).catch(function (err) { return console.log("Modal geschlossen"); });
-        //modalRef.componentInstance.user = Object.assign({}, user);
-        //this.router.navigate('/admin/userlist/edit/' + user._id);
-        // this.userService.updateUser(user);
+        var modalRef = this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
+        modalRef.result.then(function (user) {
+            //this.userService.updateUser(user);
+            alert("ging");
+        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
+        modalRef.componentInstance.user = Object.assign(user);
+        this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
     };
     UserListComponent.prototype.delUser = function (user) {
         this.userService.deleteUser(user);
-        /*.then(
-        () => {
-          this.users.find(user).splice(0,1);
-        });*/
+        this.getUsers();
+    };
+    UserListComponent.prototype.addUser = function () {
+        var _this = this;
+        var modalRef = this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
+        modalRef.result.then(function (user) {
+            _this.userService.addUser(user);
+            _this.getUsers();
+        });
+        modalRef.componentInstance.user = Object.assign(new _User__WEBPACK_IMPORTED_MODULE_3__["User"](0, "newUser@mail.com", "", "mod"));
     };
     UserListComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -386,7 +409,7 @@ var UserListComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./user-list.component.scss */ "./src/app/admin/user-list/user-list.component.scss")]
         }),
         __param(3, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_core__WEBPACK_IMPORTED_MODULE_0__["PLATFORM_ID"])),
-        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"]])
+        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], Object, _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"]])
     ], UserListComponent);
     return UserListComponent;
 }());
@@ -539,12 +562,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./admin/player-list/player-list.component */ "./src/app/admin/player-list/player-list.component.ts");
 /* harmony import */ var _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./admin/user-list/user-list.component */ "./src/app/admin/user-list/user-list.component.ts");
 /* harmony import */ var _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./admin/user-list/user-detail/user-detail.component */ "./src/app/admin/user-list/user-detail/user-detail.component.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -579,6 +604,7 @@ var AppModule = /** @class */ (function () {
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_9__["FormsModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__["NgbModule"]
             ],
             providers: [
                 _services_auth_service__WEBPACK_IMPORTED_MODULE_10__["AuthService"],
@@ -790,7 +816,7 @@ module.exports = "<h2>ingame Component!</h2>\r\n<img id=\"box\" src=\"../../asse
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaW5nYW1lL0M6XFxVc2Vyc1xcX0FJTk9cXE5leHRjbG91ZFxcTWF4IFNwaWVzXFxUSE1cXFNvY2lhbCBNZWRpYSBTeXN0ZW1zXFxXQlMyXFxCb21iZXJtYW5cXHdiczItYm9tYmVybWFuXFxjbGllbnQvc3JjXFxhcHBcXGluZ2FtZVxcaW5nYW1lLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0MsWUFBVyxFQUNYOztBQUNEO0VBQ0UsY0FBYSxFQUNkIiwiZmlsZSI6InNyYy9hcHAvaW5nYW1lL2luZ2FtZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImNhbnZhcyB7XHJcbiB3aWR0aDogMTAwJTtcclxufVxyXG5pbWcge1xyXG4gIGRpc3BsYXk6IG5vbmU7XHJcbn1cclxuIl19 */"
+module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaW5nYW1lL0M6XFxVc2Vyc1xcX0FJTk9cXERlc2t0b3BcXGJvbWItc2Vydlxcd2JzMi1ib21iZXJtYW5cXGNsaWVudC9zcmNcXGFwcFxcaW5nYW1lXFxpbmdhbWUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDQyxZQUFXLEVBQ1g7O0FBQ0Q7RUFDRSxjQUFhLEVBQ2QiLCJmaWxlIjoic3JjL2FwcC9pbmdhbWUvaW5nYW1lLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiY2FudmFzIHtcclxuIHdpZHRoOiAxMDAlO1xyXG59XHJcbmltZyB7XHJcbiAgZGlzcGxheTogbm9uZTtcclxufVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -1229,7 +1255,7 @@ var AuthService = /** @class */ (function () {
     }
     AuthService.prototype.checkLogin = function () {
         var _this = this;
-        this.http.get(this.url + 'user/login/check')
+        return this.http.get(this.url + 'user/login/check')
             .toPromise()
             .then(function (data) {
             console.log(data.message);
@@ -1333,7 +1359,7 @@ var PlayerService = /** @class */ (function () {
     }
     PlayerService.prototype.getUsers = function () {
         var _this = this;
-        this.http.get('https://localhost:8080/players')
+        return this.http.get('https://localhost:8080/players')
             .toPromise()
             .then(function (player) {
             _this.player = player;
@@ -1572,7 +1598,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\_AINO\Nextcloud\Max Spies\THM\Social Media Systems\WBS2\Bomberman\wbs2-bomberman\client\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\_AINO\Desktop\bomb-serv\wbs2-bomberman\client\src\main.ts */"./src/main.ts");
 
 
 /***/ }),

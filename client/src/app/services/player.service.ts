@@ -19,7 +19,7 @@ export class PlayerService implements OnInit{
 
 
   public getUsers(): Promise<Player[]>{
-    this.http.get('https://localhost:8080/players')
+    return this.http.get('https://localhost:8080/players')
       .toPromise()
       .then((player: Player[]) => {
         this.player = player;

@@ -22,7 +22,7 @@ export class AuthService implements OnInit{
   constructor(private router: Router, private http: HttpClient) { }
 
     checkLogin() : Promise<boolean>{
-        this.http.get(this.url+'user/login/check')
+        return this.http.get(this.url+'user/login/check')
             .toPromise()
             .then((data: any) => {
                 console.log(data.message);

@@ -20,12 +20,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getUsers().then((users)=>{
-      this.users = users;
-      this.userAmount = this.users.length;
-
-      }
-    );
+    this.getUsers();
     /*this.route.params.subscribe((params: any) => {
       if (params['id'] != null) {
         const user = this.users.find((el) => el._id === params['id']);
@@ -36,22 +31,40 @@ export class UserListComponent implements OnInit {
     });*/
   }
 
+  getUsers(){
+    this.userService.getUsers().then((users)=>{
+        this.users = users;
+        this.userAmount = this.users.length;
+
+      }
+    );
+  }
   editUser(user: User){
     const modalRef = this.modalService.open(UserDetailComponent);
     modalRef.result.then(
-      (user: User) => this.userService.updateUser(user)
-    ).catch((err)=> console.log("Modal geschlossen"))
-    //modalRef.componentInstance.user = Object.assign({}, user);
-    //this.router.navigate('/admin/userlist/edit/' + user._id);
-   // this.userService.updateUser(user);
+      (user: User) => {
+        //this.userService.updateUser(user);
+        alert("ging");
+      }
+    ).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
+    modalRef.componentInstance.user = Object.assign(user);
+    this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
   }
 
   delUser(user: User){
     this.userService.deleteUser(user)
-      /*.then(
-      () => {
-        this.users.find(user).splice(0,1);
-      });*/
+    this.getUsers();
+  }
+
+  addUser(){
+    const modalRef = this.modalService.open(UserDetailComponent);
+    modalRef.result.then(
+      (user: User) => {
+        this.userService.addUser(user);
+        this.getUsers();
+      }
+    );
+    modalRef.componentInstance.user = Object.assign(new User(0,"newUser@mail.com","","mod"));
   }
 
 
