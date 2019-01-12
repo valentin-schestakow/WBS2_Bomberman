@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -69,7 +72,7 @@ function generateField() {
         }
     }
 }
-var Field = (function () {
+var Field = /** @class */ (function () {
     function Field(posX, posY) {
         //this.type = type;
         this.type = "Field";
@@ -81,7 +84,7 @@ var Field = (function () {
     };
     return Field;
 }());
-var Block = (function (_super) {
+var Block = /** @class */ (function (_super) {
     __extends(Block, _super);
     function Block(posX, posY) {
         var _this = _super.call(this, posX, posY) || this;

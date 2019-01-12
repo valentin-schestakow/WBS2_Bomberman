@@ -8,6 +8,7 @@ var pGoogle = require("passport-google-oauth20");
 var fs = require("fs");
 var https = require("https");
 var mongodb_1 = require("mongodb");
+var bson_1 = require("bson");
 var cryptoJS = require("crypto-js");
 var bodyParser = require("body-parser");
 var gameServer = require("../server/gameServer");
@@ -16,11 +17,13 @@ var gameServer = require("../server/gameServer");
  *****************************************************************************/
 var bombermanDB;
 var playerlistCollection;
+var userlistCollection;
 //---- connect to database ----------------------------------------------------
 mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true })
     .then(function (dbClient) {
     bombermanDB = dbClient.db("bomberman");
     playerlistCollection = bombermanDB.collection("player");
+    userlistCollection = bombermanDB.collection("user");
     return playerlistCollection.findOne({ email: "test@test.de" });
 })
     .then(function (res) {
@@ -31,7 +34,7 @@ mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: tr
 }).catch(function (err) {
     console.error("Error connecting to database ...\n" + err);
 });
-var Player = (function () {
+var Player = /** @class */ (function () {
     function Player(id, time, username, email, password, stats) {
         this._id = id;
         //this.time     = time;
@@ -42,7 +45,16 @@ var Player = (function () {
     }
     return Player;
 }());
-var GameStats = (function () {
+var User = /** @class */ (function () {
+    function User(id, email, password, role) {
+        this.email = email;
+        this._id = id;
+        this.password = password;
+        this.role = role;
+    }
+    return User;
+}());
+var GameStats = /** @class */ (function () {
     function GameStats(gameCount, points, kills, deaths) {
         this.gameCount = gameCount;
         this.points = points;
@@ -72,7 +84,7 @@ gameServer.run(server);
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
 //--- Class that deals with Rights --------------------------------------------
-var Rights = (function () {
+var Rights = /** @class */ (function () {
     // can be extended here with other user-roles
     function Rights(player, admin, superadmin) {
         this.player = player;
@@ -90,6 +102,7 @@ function checkRights(req, res, rights) {
         res.json({ message: "No session: Please log in" }); // send HTTP-response
         return false;
     }
+    //--- check rights against the needed rights (provided as parameter) --------
     else {
         var rightsOK = true;
         var message = "unsufficient rights";
@@ -97,11 +110,11 @@ function checkRights(req, res, rights) {
             rightsOK = rightsOK && req.session.rights.player;
             message += ": not logged in";
         }
-        if (rights.admin) {
+        if (rights.admin) { // checks if "admin" is needed
             rightsOK = rightsOK && req.session.rights.admin;
             message += ": not Moderator";
         }
-        if (rights.superadmin) {
+        if (rights.superadmin) { // ckecks if "superadmin" is needed
             rightsOK = rightsOK && req.session.rights.superadmin;
             message += ", not admin";
         }
@@ -142,12 +155,6 @@ router.use(session({
 }));
 //router.use("/jquery", express.static( __dirname + "/node_modules/jquery/dist"));
 /**
- * User Login
- */
-router.post('/userLogin', function (req, res) {
-    res.status(200).json({ message: "success" });
-});
-/**
  * Check Login
  */
 router.get("/login/check", function (req, res) {
@@ -176,7 +183,7 @@ router.post("/login/player", function (req, res) {
                 status = 200;
                 res.status(status).json({ message: message, player: player });
             }
-            else {
+            else { // username and passwort does not match message = "Id " + id + " not found";
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
                 res.status(status).json({ message: message });
@@ -187,9 +194,203 @@ router.post("/login/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
+});
+/**
+ * --- update user with: put /user/:id ---------------------------------
+ */
+router.put("/user/:id", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var updateData = {}; // No type provided - depends on existence of password
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- check if parameters exists -> initialize each if not ------------------
+    var id = (req.params.id ? req.params.id : "");
+    var email = (req.body.email ? req.body.email : "").trim();
+    var password = (req.body.password ? req.body.password : "").trim();
+    var role = (req.body.role ? req.body.role : "").trim();
+    //--- ok -> update user with new attributes ---------------------------------
+    var query = { _id: new bson_1.ObjectID(id) };
+    if (password == "" || password == "$keepPassword") { // no new password set
+        updateData = { email: email, role: role };
+    }
+    else { // new password set
+        updateData = { password: cryptoJS.MD5(password).toString(), email: email, role: role };
+    }
+    userlistCollection.updateOne(query, { $set: updateData })
+        .then(function (result) {
+        if (result.matchedCount === 1) {
+            message = email + " successfully updated";
+            status = 201;
+            res.status(status).json({ message: message });
+        }
+        else {
+            message = "Not Valid: E-Mail " + email + " not valid";
+            status = 500;
+            res.status(status).json({ message: message });
+        }
+    })
+        .catch(function (error) {
+        message = "Database error: " + error.code;
+        status = 505;
+        res.status(status).json({ message: message });
+    });
+});
+/**
+ * --- delete user with /user/delete/:email --------------------------------------
+ */
+router.delete("/user/delete/:email", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var email = (req.body.email != "" ? req.params.email : -1);
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- ok -> delete user from database ---------------------------------------
+    var query = { email: email };
+    userlistCollection.findOne(query)
+        .then(function (res) {
+        return userlistCollection.deleteOne(query);
+    })
+        .then(function (result) {
+        if (result.deletedCount === 1) {
+            message = "E-Mail " + email + " successfully deleted";
+            status = 200;
+        }
+        else {
+            message = "E-Mail " + email + " not found";
+            status = 404;
+        }
+        res.status(status).json({ message: message });
+    }).catch(function (error) {
+        message = "Database error: " + error;
+        status = 505;
+        res.status(status).json({ message: message });
+    });
+});
+/**
+ * --- get all users with: get /user/getAll --------------------------------
+ */
+router.get('/user/getAll', function (req, res) {
+    var query = {};
+    userlistCollection.find(query).toArray()
+        .then(function (users) {
+        users = users.map(function (user) {
+            user['password'] = '$keepPassword';
+            return user;
+        });
+        res.status(200).json({ message: 'fetched users', users: users });
+    })
+        .catch(function (error) {
+        res.status(500).json({ message: 'Database error' + error.code });
+    });
+});
+/**
+ * --- create new user with: post /user --------------------------------
+ */
+router.post("/user/create", function (req, res) {
+    var email = (req.body.email ? req.body.email : "").trim();
+    var password = (req.body.password ? req.body.password : "").trim();
+    var role = (req.body.role ? req.body.role : "").trim();
+    var message = "";
+    var status = 500; // Initial HTTP response status
+    /*
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    */
+    //-- ok -> insert user-data into database -----------------------------------
+    if ((role != "") && (email != "") && (password != "")) {
+        var insertData = {
+            email: email,
+            role: role,
+            password: cryptoJS.MD5(password).toString(),
+        };
+        userlistCollection.insertOne(insertData)
+            .then(function (result) {
+            message = "Created: " + email;
+            status = 201;
+            res.status(status).json({ message: message });
+        })
+            .catch(function (error) {
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({ message: message });
+        });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
+        res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
+    }
+});
+/**
+ * Check Login
+ */
+router.get("/user/login/check", function (req, res) {
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    res.status(200).json({ message: "user still logged in" });
+});
+/**
+ * --- login with: post /user/login -----------------------------------------
+ */
+router.post("/user/login", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var email = req.body.email;
+    var password = req.body.password;
+    //---- ok -> check username/password in database and set Rights -------------
+    if (password != "" && email != "") {
+        var query = { email: email, password: cryptoJS.MD5(password).toString() };
+        userlistCollection.findOne(query).then(function (user) {
+            if (user !== null) {
+                message = email + " logged in by email/password";
+                req.session.email = email; // set session-variable email
+                if (user.role == 'admin')
+                    req.session.rights = new Rights(true, true, true);
+                else
+                    req.session.rights = new Rights(true, true, false);
+                status = 200;
+            }
+            else { // username and passwort does not match message = "Id " + id + " not found";
+                message = "Not Valid: user '" + email + "' does not match password";
+                status = 401;
+            }
+            res.status(status).json({ message: message });
+        }).catch(function (error) {
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({ message: message });
+        });
+    }
+    //--- nok -------------------------------------------------------------------
+    else { // either username or password not provided
+        res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
+    }
+});
+/**
+ * --- logout with: post /logout ---------------------------------------
+ */
+router.post("/user/logout", function (req, res) {
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- ok -> delete session-variable and reset Rights ------------------------
+    var email = req.session.email;
+    req.session.email = null; // delete session-variable
+    req.session.rights = null; // reset all Rights
+    res.status(200).json({ message: email + " logout successfull" });
 });
 /**
  * --- logout with: post /logout ---------------------------------------
@@ -241,7 +442,8 @@ router.post("/create/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    else {
+    //--- nok -------------------------------------------------------------------
+    else { // some parameters are not provided
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -296,13 +498,13 @@ router.put("/player/:email", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     query = { email: email };
-    if (password == "") {
+    if (password == "") { // no new password set
         updateData = { username: username };
     }
     else if (username == "") {
         updateData = { password: password };
     }
-    else {
+    else { // new password set
         updateData = { password: cryptoJS.MD5(password).toString(), username: username };
     }
     playerlistCollection.updateOne(query, { $set: updateData })
@@ -408,7 +610,7 @@ passport.deserializeUser(function (profile, done) {
     done(null, profile);
 });
 //kofnigurationsklasse welche die clientid und secret enthält
-var GoogleAuthConfig = (function () {
+var GoogleAuthConfig = /** @class */ (function () {
     function GoogleAuthConfig() {
         this.googleAuth = {
             clientID: '85564632151-r3mqfgrsrhk2kcdrdn0fe4hvsvcm7do6.apps.googleusercontent.com',
@@ -418,7 +620,7 @@ var GoogleAuthConfig = (function () {
     }
     return GoogleAuthConfig;
 }());
-var FacebookAuthConfig = (function () {
+var FacebookAuthConfig = /** @class */ (function () {
     function FacebookAuthConfig() {
         this.facebookAuth = {
             clientID: '286966021819558',

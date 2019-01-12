@@ -12,6 +12,9 @@ const routes: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'admin/playerlist', component: AdminComponent },
+  { path: 'admin/userlist', component: AdminComponent },
+  { path: 'admin/userlist/edit/:id', component: AdminComponent },
   { path: 'gamer', component: PlayerComponent }
 ];
 
