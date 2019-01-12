@@ -1,6 +1,11 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Player} from '../player/Player';
+import * as io from 'socket.io-client';
+import { Observable } from 'rxjs/Observable';
+import {Field} from '../ingame/Field';
+import {Gamer} from '../ingame/Gamer';
+
 
 
 const httpOptions = {
@@ -11,6 +16,53 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PlayerService implements OnInit{
+
+  private socket = io.connect(window.location.protocol + '//' + window.location.host);
+
+  emitMove(data:any){
+    this.socket.emit('move',data);
+  }
+  emitField(field:Field[][]){
+    this.socket.emit('getField', field);
+  }
+  emitGamer(gamer:Gamer){
+    this.socket.emit('gamer', gamer);
+  }
+
+  receiveMove(){
+    let obbservable = new Observable<{move: string, gamer: Gamer}>(observer => {
+      this.socket.on('move', (data:any) => {
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect();}
+    });
+    return obbservable
+  }
+
+  receiveField(){
+    let obbservable = new Observable<Field[][]>(observer => {
+      this.socket.on('getField', (data:any) => {
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect();}
+    });
+    return obbservable
+  }
+
+  receiveGamer(){
+    let obbservable = new Observable<Gamer>(observer => {
+      this.socket.on('gamer', (data:any) => {
+        observer.next(data);
+      });
+      return () => {this.socket.disconnect();}
+    });
+    return obbservable
+  }
+
+
+
+
+
 
   public currentPlayer: Player;
   public isLoggedIn = false;
