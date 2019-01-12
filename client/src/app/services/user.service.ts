@@ -40,7 +40,7 @@ export class UserService {
   }
 
   updateUser(user: User): Promise<void> {
-    return this.http.put(`${this.usersUrl}user/${user._id}`, user, httpOptions).toPromise()
+    return this.http.put(`${this.url}user/${user._id}`, user, httpOptions).toPromise()
       .then((res: any) => {
         console.log("User geupdated");
       })
@@ -48,7 +48,7 @@ export class UserService {
   }
 
   deleteUser(user: User): Promise<void> {
-    return this.http.delete(`${this.usersUrl}user/${user._id}`).toPromise()
+    return this.http.delete(`${this.url}user/delete/${user.email}`).toPromise()
       .then((res: any) => {
         console.log("User gelöscht");
       })

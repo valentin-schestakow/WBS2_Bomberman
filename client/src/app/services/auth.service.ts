@@ -17,25 +17,27 @@ export class AuthService implements OnInit{
   isLoggedIn: boolean;
   email: string;
   role: string;
-
+  public url = window.location.protocol+'//'+window.location.host+'/';
 
   constructor(private router: Router, private http: HttpClient) { }
 
-    checkLogin(){
-        this.http.get('http://localhost:8080/login/check')
+    checkLogin() : Promise<boolean>{
+        this.http.get(this.url+'user/login/check')
             .toPromise()
             .then((data: any) => {
                 console.log(data.message);
                 this.isLoggedIn = true;
+                return true;
             }).catch((err: HttpErrorResponse) => {
             console.log(err.message);
             this.isLoggedIn = false;
+            return false;
         })
     }
 
 
     login(email: string, password: string) {
-        this.http.post('http://localhost:8080/login', {
+        this.http.post(this.url+'login', {
             email: email,
             password: password
         })
@@ -50,7 +52,7 @@ export class AuthService implements OnInit{
     }
 
   userLogin(email: string, pwd: string) : Promise<void> {
-    return this.http.post('https://localhost:8080/user/login', {email: email, password: pwd}, httpOptions)
+    return this.http.post(this.url+'user/login', {email: email, password: pwd}, httpOptions)
       .toPromise()
       .then((res: any) => {
         this.isLoggedIn = true;
@@ -64,7 +66,7 @@ export class AuthService implements OnInit{
 
 
   logout(){
-        this.http.post('http://localhost:8080/logout', {
+        this.http.post(this.url+'user/logout', {
             username: this.email
         })
             .toPromise()

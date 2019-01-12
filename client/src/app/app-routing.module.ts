@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'admin/playerlist', component: AdminComponent },
   { path: 'admin/userlist', component: AdminComponent },
+  { path: 'admin/userlist/edit/:id', component: AdminComponent },
 ];
 
 @NgModule({

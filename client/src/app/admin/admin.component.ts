@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
     this.password='';
     this.user = null;
 
-
+    this.authService.checkLogin();
     this.userService.getUsers().then(
       (users: User[]) => {
         console.log(users.length+ "user gefunden:")
@@ -49,5 +49,6 @@ export class AdminComponent implements OnInit {
     );
   }
   logout () {
+    this.authService.logout();
   }
 }

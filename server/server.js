@@ -197,6 +197,39 @@ router.post("/login/player", function (req, res) {
     }
 });
 /**
+ * --- delete user with /player/:email --------------------------------------
+ */
+router.delete("/user/delete/:email", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var email = (req.body.email != "" ? req.params.email : -1);
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- ok -> delete user from database ---------------------------------------
+    var query = { email: email };
+    userlistCollection.findOne(query)
+        .then(function (res) {
+        return userlistCollection.deleteOne(query);
+    })
+        .then(function (result) {
+        if (result.deletedCount === 1) {
+            message = "E-Mail " + email + " successfully deleted";
+            status = 200;
+        }
+        else {
+            message = "E-Mail " + email + " not found";
+            status = 404;
+        }
+        res.status(status).json({ message: message });
+    }).catch(function (error) {
+        message = "Database error: " + error;
+        status = 505;
+        res.status(status).json({ message: message });
+    });
+});
+/**
  * --- get all users with: get /user/getAll --------------------------------
  */
 router.get('/user/getAll', function (req, res) {
@@ -252,6 +285,16 @@ router.post("/user/create", function (req, res) {
     }
 });
 /**
+ * Check Login
+ */
+router.get("/user/login/check", function (req, res) {
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    res.status(200).json({ message: "user still logged in" });
+});
+/**
  * --- login with: post /user/login -----------------------------------------
  */
 router.post("/user/login", function (req, res) {
@@ -267,9 +310,9 @@ router.post("/user/login", function (req, res) {
                 message = email + " logged in by email/password";
                 req.session.email = email; // set session-variable email
                 if (user.role == 'admin')
-                    req.session.rights = new Rights(false, false, true);
+                    req.session.rights = new Rights(true, true, true);
                 else
-                    req.session.rights = new Rights(false, true, false);
+                    req.session.rights = new Rights(true, true, false);
                 status = 200;
             }
             else {
@@ -286,6 +329,20 @@ router.post("/user/login", function (req, res) {
     else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
+});
+/**
+ * --- logout with: post /logout ---------------------------------------
+ */
+router.post("/user/logout", function (req, res) {
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- ok -> delete session-variable and reset Rights ------------------------
+    var email = req.session.email;
+    req.session.email = null; // delete session-variable
+    req.session.rights = null; // reset all Rights
+    res.status(200).json({ message: email + " logout successfull" });
 });
 /**
  * --- logout with: post /logout ---------------------------------------

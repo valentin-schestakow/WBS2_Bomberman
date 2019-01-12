@@ -1,5 +1,22 @@
-<p>
-  user-list works!
-</p>
+<h1 class="display-1">{{this.userAmount}} Users found</h1>
 
-<h1 class="display-1">{{this.users.length}} User gefunden</h1>
+<ul class="list-group">
+  <li *ngFor="let u of this.users" class="list-group-item">
+    {{u.email}}
+    <span class="badge badge-primary badge-pill">
+      {{u.role}}
+    </span>
+    <button type="button" class="btn btn-danger pull-right" (click)="delUser(u)"><i class="fa fa-trash"></i> Delete</button>
+    <button type="button" class="btn btn-warning pull-right" (click)="editUser(u)"><i class="fa fa-edit"></i> Edit</button>
+
+  </li>
+</ul>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-2">
+    <button type="button" class="mt-2 btn btn-success" (click)="addUser()">
+      <i class="fa fa-plus"></i> Add User
+    </button>
+  </div>
+</div>
+

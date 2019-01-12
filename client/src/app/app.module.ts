@@ -11,6 +11,7 @@ import {FormsModule} from "@angular/forms";
 import {AuthService} from "./services/auth.service";
 import { PlayerListComponent } from './admin/player-list/player-list.component';
 import { UserListComponent } from './admin/user-list/user-list.component';
+import { UserDetailComponent } from './admin/user-list/user-detail/user-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UserListComponent } from './admin/user-list/user-list.component';
     AdminComponent,
     UserComponent,
     PlayerListComponent,
-    UserListComponent
+    UserListComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +34,13 @@ import { UserListComponent } from './admin/user-list/user-list.component';
     AuthService,
     HttpClient
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    UserDetailComponent,
+  ],
+  entryComponents: [
+    UserDetailComponent
+  ]
+
 })
 export class AppModule { }

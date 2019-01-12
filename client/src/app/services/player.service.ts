@@ -43,8 +43,7 @@ export class PlayerService implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getUsers();
-    this.logIn();
+
   }
 
 }

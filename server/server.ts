@@ -262,6 +262,45 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
     }
 });
 
+
+/**
+ * --- delete user with /player/:email --------------------------------------
+ */
+router.delete ("/user/delete/:email",    function (req: Request, res: Response) {
+    let status    : number = 500; // Initial HTTP response status
+    let message   : string = "";  // To be set
+    let email     : string = (req.body.email != "" ? req.params.email: -1);
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) {
+        return;
+    }
+
+    //--- ok -> delete user from database ---------------------------------------
+    let query = {email: email};
+
+    userlistCollection.findOne(query)
+        .then((res) => {
+                return userlistCollection.deleteOne(query)
+        })
+        .then((result: DeleteWriteOpResultObject) => {
+            if (result.deletedCount === 1) {
+                message = "E-Mail " + email + " successfully deleted";
+                status = 200;
+            } else {
+                message = "E-Mail " + email + " not found";
+                status = 404;
+            }
+            res.status(status).json({message: message});
+        }).catch((error: Error) => { // database error
+        message = "Database error: " + error;
+        status = 505;
+        res.status(status).json({message: message});
+    });
+});
+
+
+
 /**
  * --- get all users with: get /user/getAll --------------------------------
  */
@@ -326,6 +365,20 @@ router.post   ("/user/create",        function (req: Request, res: Response) {
 
 });
 
+
+/**
+ * Check Login
+ */
+router.get    ("/user/login/check", function (req: Request, res: Response) {
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) {
+        return;
+    }
+
+    res.status(200).json({message: "user still logged in"});
+
+});
 /**
  * --- login with: post /user/login -----------------------------------------
  */
@@ -343,8 +396,8 @@ router.post   ("/user/login",       function (req: Request, res: Response) {
             if (user !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email;    // set session-variable email
-                if(user.role=='admin')req.session.rights = new Rights(false, false, true);
-                else req.session.rights = new Rights(false, true, false);
+                if(user.role=='admin')req.session.rights = new Rights(true, true, true);
+                else req.session.rights = new Rights(true, true, false);
 
                 status = 200;
             } else { // username and passwort does not match message = "Id " + id + " not found";
@@ -364,6 +417,23 @@ router.post   ("/user/login",       function (req: Request, res: Response) {
     }
 
 
+});
+
+/**
+ * --- logout with: post /logout ---------------------------------------
+ */
+router.post   ("/user/logout",      function (req: Request, res: Response) {
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) {
+        return;
+    }
+
+    //--- ok -> delete session-variable and reset Rights ------------------------
+    let email : string = req.session.email;
+    req.session.email = null; // delete session-variable
+    req.session.rights   = null; // reset all Rights
+    res.status(200).json({message: email + " logout successfull"})
 });
 
 
