@@ -19,6 +19,7 @@
   </div>
 </div>
 <div class="modal-footer">
+  <p class="label-warning">{{errormsg}}</p>
   <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="activeModal.dismiss(); router.navigateByUrl('/admin/userlist')">Close</button>
   <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
 </div>

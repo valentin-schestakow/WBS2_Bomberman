@@ -114,7 +114,7 @@
           <app-player-list></app-player-list>
         </div>
 
-        <div *ngIf="this.path=='/admin/userlist'" class="container">
+        <div *ngIf="this.path.includes('/admin/userlist')" class="container">
           <app-user-list></app-user-list>
         </div>
 

@@ -8,6 +8,7 @@ var pGoogle = require("passport-google-oauth20");
 var fs = require("fs");
 var https = require("https");
 var mongodb_1 = require("mongodb");
+var bson_1 = require("bson");
 var cryptoJS = require("crypto-js");
 var bodyParser = require("body-parser");
 var gameServer = require("../server/gameServer");
@@ -197,7 +198,50 @@ router.post("/login/player", function (req, res) {
     }
 });
 /**
- * --- delete user with /player/:email --------------------------------------
+ * --- update user with: put /user/:id ---------------------------------
+ */
+router.put("/user/:id", function (req, res) {
+    var status = 500; // Initial HTTP response status
+    var message = ""; // To be set
+    var updateData = {}; // No type provided - depends on existence of password
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        return;
+    }
+    //--- check if parameters exists -> initialize each if not ------------------
+    var id = (req.params.id ? req.params.id : "");
+    var email = (req.body.email ? req.body.email : "").trim();
+    var password = (req.body.password ? req.body.password : "").trim();
+    var role = (req.body.role ? req.body.role : "").trim();
+    //--- ok -> update user with new attributes ---------------------------------
+    var query = { _id: new bson_1.ObjectID(id) };
+    if (password == "" || password == "$keepPassword") {
+        updateData = { email: email, role: role };
+    }
+    else {
+        updateData = { password: cryptoJS.MD5(password).toString(), email: email, role: role };
+    }
+    userlistCollection.updateOne(query, { $set: updateData })
+        .then(function (result) {
+        if (result.matchedCount === 1) {
+            message = email + " successfully updated";
+            status = 201;
+            res.status(status).json({ message: message });
+        }
+        else {
+            message = "Not Valid: E-Mail " + email + " not valid";
+            status = 500;
+            res.status(status).json({ message: message });
+        }
+    })
+        .catch(function (error) {
+        message = "Database error: " + error.code;
+        status = 505;
+        res.status(status).json({ message: message });
+    });
+});
+/**
+ * --- delete user with /user/delete/:email --------------------------------------
  */
 router.delete("/user/delete/:email", function (req, res) {
     var status = 500; // Initial HTTP response status
@@ -237,7 +281,7 @@ router.get('/user/getAll', function (req, res) {
     userlistCollection.find(query).toArray()
         .then(function (users) {
         users = users.map(function (user) {
-            user['password'] = undefined;
+            user['password'] = '$keepPassword';
             return user;
         });
         res.status(200).json({ message: 'fetched users', users: users });

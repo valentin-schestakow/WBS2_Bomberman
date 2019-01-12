@@ -20,19 +20,26 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUsers();
-    /*this.route.params.subscribe((params: any) => {
-      if (params['id'] != null) {
-        const user = this.users.find((el) => el._id === params['id']);
+    this.getUsers().then(
+      () => {
 
-        const modalRef = this.modalService.open(UserDetailComponent);
-        modalRef.componentInstance.user = Object.assign({}, user);
+        this.route.params.subscribe((params: any) => {
+          if (params['id'] != null) {
+
+            const user = this.users.find((el) => el._id === params['id']);
+
+            const modalRef = this.modalService.open(UserDetailComponent);
+            modalRef.componentInstance.user = Object.assign(user);
+          }
+        });
+
       }
-    });*/
+    );
+
   }
 
-  getUsers(){
-    this.userService.getUsers().then((users)=>{
+  getUsers() : Promise<void>{
+    return this.userService.getUsers().then((users)=>{
         this.users = users;
         this.userAmount = this.users.length;
 
@@ -43,17 +50,26 @@ export class UserListComponent implements OnInit {
     const modalRef = this.modalService.open(UserDetailComponent);
     modalRef.result.then(
       (user: User) => {
-        //this.userService.updateUser(user);
-        alert("ging");
+        console.log("Update: " +user.email);
+        this.userService.updateUser(user).then(
+          ()=> {
+           // console.log("ging");
+            this.getUsers();
+          }
+        ).catch(
+          () => console.log("ging nicht")
+        );
+        //alert("ging");
       }
     ).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
     modalRef.componentInstance.user = Object.assign(user);
-    this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
+    //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
   }
 
   delUser(user: User){
-    this.userService.deleteUser(user)
-    this.getUsers();
+    this.userService.deleteUser(user).then(
+      () => this.getUsers()
+    );
   }
 
   addUser(){

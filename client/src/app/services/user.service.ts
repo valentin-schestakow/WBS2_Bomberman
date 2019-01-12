@@ -35,22 +35,25 @@ export class UserService {
     return this.http.post(this.url+'user/create', user, httpOptions).toPromise()
       .then((res: any) => {
         console.log("User hinzugefügt");
+        this.getUsers();
       })
       .catch((err) =>  console.log("User nicht geaddet"));
   }
 
   updateUser(user: User): Promise<void> {
+    console.log(user);
     return this.http.put(`${this.url}user/${user._id}`, user, httpOptions).toPromise()
       .then((res: any) => {
         console.log("User geupdated");
       })
-      .catch((err) =>  console.log("User nicht geupdated"));
+      .catch((err) =>  console.log("User nicht geupdated: " +err.message));
   }
 
   deleteUser(user: User): Promise<void> {
     return this.http.delete(`${this.url}user/delete/${user.email}`).toPromise()
       .then((res: any) => {
         console.log("User gelöscht");
+        this.getUsers();
       })
       .catch((err) =>  console.log("User nicht gelöscht"));
   }

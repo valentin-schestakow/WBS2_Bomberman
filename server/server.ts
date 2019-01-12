@@ -262,9 +262,53 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
     }
 });
 
+/**
+ * --- update user with: put /user/:id ---------------------------------
+ */
+router.put    ("/user/:id",    function (req: Request, res: Response) {
+    let status      : number = 500; // Initial HTTP response status
+    let message     : string = ""; // To be set
+    let updateData  : any = {}; // No type provided - depends on existence of password
+
+
+    //--- check Rights -> RETURN if not sufficient ------------------------------
+    if (!checkRights(req,res, new Rights (true, false, false))) { return; }
+
+    //--- check if parameters exists -> initialize each if not ------------------
+    let id       : string = (req.params.id ? req.params.id     : "");
+    let email : string = (req.body.email ? req.body.email : "").trim();
+    let password : string = (req.body.password ? req.body.password : "").trim();
+    let role : string = (req.body.role ? req.body.role : "").trim();
+
+    //--- ok -> update user with new attributes ---------------------------------
+    let query:Object = {_id: new ObjectID(id)};
+    if (password == "" || password== "$keepPassword") { // no new password set
+        updateData = {email: email, role: role};
+    } else { // new password set
+        updateData = { password: cryptoJS.MD5(password).toString(), email: email, role: role};
+    }
+
+    userlistCollection.updateOne(query, {$set: updateData})
+        .then((result: UpdateWriteOpResult) => {
+            if (result.matchedCount === 1) {
+                message = email + " successfully updated";
+                status = 201;
+                res.status(status).json({message: message});
+            } else {
+                message = "Not Valid: E-Mail " + email + " not valid";
+                status = 500;
+                res.status(status).json({message: message});
+            }
+        })
+        .catch((error: MongoError) => {
+            message = "Database error: " + error.code;
+            status = 505;
+            res.status(status).json({message: message});
+        });
+});
 
 /**
- * --- delete user with /player/:email --------------------------------------
+ * --- delete user with /user/delete/:email --------------------------------------
  */
 router.delete ("/user/delete/:email",    function (req: Request, res: Response) {
     let status    : number = 500; // Initial HTTP response status
@@ -310,7 +354,7 @@ router.get('/user/getAll', function (req: Request, res: Response) {
     userlistCollection.find(query).toArray()
         .then((users: User[]) => {
             users = users.map((user) => {
-                user['password'] = undefined;
+                user['password'] = '$keepPassword';
                 return user;
             });
             res.status(200).json({message: 'fetched users', users: users});
