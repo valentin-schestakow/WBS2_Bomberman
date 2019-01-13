@@ -344,7 +344,7 @@ router.get("/user/login/check", function (req, res) {
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
-    res.status(200).json({ message: "user still logged in" });
+    res.status(200).json({ message: "user still logged in", email: req.session.email });
 });
 /**
  * user login function
@@ -363,10 +363,14 @@ router.post("/user/login", function (req, res) {
             if (user !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email; // set session-variable email
-                if (user.role == 'admin')
+                if (user.role == 'admin') {
+                    console.log("user is admin");
                     req.session.rights = new Rights(true, true, true);
-                else
+                }
+                else {
+                    console.log("user is not admin");
                     req.session.rights = new Rights(true, true, false);
+                }
                 status = 200;
             }
             else {
@@ -542,6 +546,7 @@ router.delete("/player/:email", function (req, res) {
     var email = (req.body.id != "" ? req.params.id : -1);
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
+        console.log("user is not allowed to delete");
         return;
     }
     //--- ok -> delete user from database ---------------------------------------
@@ -584,8 +589,6 @@ router.get("/players", function (req, res) {
     playerlistCollection.find(query).toArray()
         .then(function (players) {
         players = players.map(function (player) {
-            player['id'] = player['_id'];
-            player['_id'] = undefined;
             player['password'] = '$keepPassword';
             return player;
         });

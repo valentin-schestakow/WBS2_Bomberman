@@ -6,6 +6,8 @@ import {isPlatformBrowser} from "@angular/common";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PlayerDetailComponent} from "./player-detail/player-detail.component";
 import {GameStats} from "../../player/GameStats";
+import {UserDetailComponent} from "../user-list/user-detail/user-detail.component";
+import {User} from "../User";
 
 @Component({
   selector: 'app-player-list',
@@ -32,6 +34,31 @@ export class PlayerListComponent implements OnInit {
         //console.log(player)
         this.player = player;
         this.playerAmount = this.player.length;
+
+      /*  this.route.params.subscribe((params: any) => {
+          if (params['id'] != null) {
+
+            const player = this.player.find((el) => el._id === params['id']);
+            console.log(player);
+            const modalRef = this.modalService.open(PlayerDetailComponent);
+            modalRef.result.then(
+              (player: Player) => {
+                console.log("Update: " +player.email);
+                this.playerService.updatePlayer(player).then(
+                  ()=> {
+                    // console.log("ging");
+                    this.getPlayers();
+                  }
+                ).catch(
+                  () => console.log("ging nicht")
+                );
+                //alert("ging");
+              }
+            ).catch((err)=> this.router.navigateByUrl('/admin/playerlist'));
+            modalRef.componentInstance.player = Object.assign(player);
+          }
+        });*/
+
       });
   }
 
@@ -41,7 +68,7 @@ export class PlayerListComponent implements OnInit {
    * @returns  void
    */
   editPlayer(player: Player) {
-    const modalRef = this.modalService.open(PlayerDetailComponent);
+   const modalRef = this.modalService.open(PlayerDetailComponent);
     modalRef.result.then(
       (player: Player) => {
         console.log("Update: " + player.email);
@@ -53,8 +80,9 @@ export class PlayerListComponent implements OnInit {
         ).catch(
           () => console.log("ging nicht")
         );
-      }).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
+      }).catch((err)=> this.router.navigateByUrl('/admin/playerlist'));
       modalRef.componentInstance.player = Object.assign(player);
+  // this.router.navigateByUrl('/admin/playerlist/edit/' + player._id);
 
   }
 
@@ -76,8 +104,8 @@ export class PlayerListComponent implements OnInit {
         ).catch(
           () => console.log("ging nicht")
         );
-      }).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
-      modalRef.componentInstance.player = Object.assign(new Player(0,new Date(),"username","test@test.com","password", new GameStats(0,0,0,0)));
+      }).catch((err)=> this.router.navigateByUrl('/admin/playerlist'));
+      modalRef.componentInstance.player = Object.assign(new Player(0,"","username","test@test.com","password", new GameStats(0,0,0,0)));
 
   }
 

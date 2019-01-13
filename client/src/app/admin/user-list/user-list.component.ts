@@ -33,6 +33,20 @@ export class UserListComponent implements OnInit {
             const user = this.users.find((el) => el._id === params['id']);
 
             const modalRef = this.modalService.open(UserDetailComponent);
+            modalRef.result.then(
+              (user: User) => {
+                console.log("Update: " +user.email);
+                this.userService.updateUser(user).then(
+                  ()=> {
+                    // console.log("ging");
+                    this.getUsers();
+                  }
+                ).catch(
+                  () => console.log("ging nicht")
+                );
+                //alert("ging");
+              }
+            ).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
             modalRef.componentInstance.user = Object.assign(user);
           }
         });
@@ -62,7 +76,7 @@ export class UserListComponent implements OnInit {
    * @returns void
    */
   editUser(user: User){
-    const modalRef = this.modalService.open(UserDetailComponent);
+   /* const modalRef = this.modalService.open(UserDetailComponent);
     modalRef.result.then(
       (user: User) => {
         console.log("Update: " +user.email);
@@ -77,8 +91,8 @@ export class UserListComponent implements OnInit {
         //alert("ging");
       }
     ).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
-    modalRef.componentInstance.user = Object.assign(user);
-    //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
+    modalRef.componentInstance.user = Object.assign(user);*/
+    this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
   }
 
   /**

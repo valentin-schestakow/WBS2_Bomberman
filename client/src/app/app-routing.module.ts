@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'admin/playerlist', component: AdminComponent },
   { path: 'admin/userlist', component: AdminComponent },
   { path: 'admin/userlist/edit/:id', component: AdminComponent },
+  { path: 'admin/playerlist/edit/:id', component: AdminComponent },
   { path: 'gamer', component: PlayerComponent }
 ];
 

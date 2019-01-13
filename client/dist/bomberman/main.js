@@ -62,7 +62,7 @@ var User = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"authService.isLoggedIn\">\r\n<!-- display dashboard template, if user is logged in -->\r\n  <aside id=\"left-panel\" class=\"left-panel\">\r\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\r\n\r\n      <div class=\"navbar-header\">\r\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n          <i class=\"fa fa-bars\"></i>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\r\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\r\n      </div>\r\n\r\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li>\r\n            <a routerLink=\"/admin\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\r\n          </li>\r\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\r\n          <li class=\"menu-item-has-children active dropdown\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>Groups</a>\r\n            <ul class=\"sub-menu children dropdown-menu\">\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/userlist\">User List</a></li>\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/playerlist\">Player List</a></li>\r\n            </ul>\r\n          </li>\r\n\r\n\r\n\r\n        </ul>\r\n      </div><!-- /.navbar-collapse -->\r\n    </nav>\r\n  </aside><!-- /#left-panel -->\r\n\r\n  <!-- Left Panel -->\r\n\r\n  <!-- Right Panel -->\r\n\r\n  <div id=\"right-panel\" class=\"right-panel\">\r\n\r\n    <!-- Header-->\r\n    <header id=\"header\" class=\"header\">\r\n\r\n      <div class=\"header-menu\">\r\n\r\n        <div class=\"col-sm-7\">\r\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\r\n          <div class=\"header-left\">\r\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\r\n            <div class=\"form-inline\">\r\n              <form class=\"search-form\">\r\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\r\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"dropdown for-notification\">\r\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                <i class=\"fa fa-bell\"></i>\r\n              </button>\r\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\r\n                <!--<app-alerts></app-alerts>-->\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-sm-5\">\r\n          <div class=\"user-area dropdown float-right\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n              <img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\r\n            </a>\r\n\r\n            <div class=\"user-menu dropdown-menu\">\r\n\r\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\r\n            </div>\r\n          </div>\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </header><!-- /header -->\r\n    <!-- Header-->\r\n\r\n    <div class=\"breadcrumbs\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"page-header float-left\">\r\n          <div class=\"page-title\">\r\n            <h1>Dashboard</h1>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n        <div class=\"page-header float-right\">\r\n          <div class=\"page-title\">\r\n            <ol class=\"breadcrumb text-right\">\r\n              <li><a href=\"#\">Dashboard</a></li>\r\n              <li class=\"active\">{{this.path}}</li>\r\n            </ol>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"content mt-3\">\r\n      <div class=\"animated fadeIn\">\r\n\r\n\r\n        <div *ngIf=\"this.path=='/admin/playerlist'\" class=\"container\">\r\n          <app-player-list></app-player-list>\r\n        </div>\r\n\r\n        <div *ngIf=\"this.path.includes('/admin/userlist')\" class=\"container\">\r\n          <app-user-list></app-user-list>\r\n        </div>\r\n\r\n\r\n\r\n      </div><!-- .animated -->\r\n    </div><!-- .content -->\r\n\r\n\r\n  </div><!-- /#right-panel -->\r\n\r\n</div>\r\n<div *ngIf=\"!authService.isLoggedIn\" class=\"container\">\r\n  <!-- display user login, if user is logged in -->\r\n  <div class=\"row justify-content-md-center\">\r\n    <div class=\"col-md-4\">\r\n      <h2>Please log in!</h2>\r\n      <form>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputEmail1\">Email address</label>\r\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\r\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputPassword1\">Password</label>\r\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\r\n        </div>\r\n        <strong class=\"text-warning\">{{this.errormsg}}</strong>\r\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div *ngIf=\"authService.isLoggedIn\">\r\n<!-- display dashboard template, if user is logged in -->\r\n  <aside id=\"left-panel\" class=\"left-panel\">\r\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\r\n\r\n      <div class=\"navbar-header\">\r\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n          <i class=\"fa fa-bars\"></i>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\r\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\r\n      </div>\r\n\r\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li>\r\n            <a routerLink=\"/admin\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\r\n          </li>\r\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\r\n          <li class=\"menu-item-has-children active dropdown\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>Groups</a>\r\n            <ul class=\"sub-menu children dropdown-menu\">\r\n              <li *ngIf=\"this.role=='admin'\"><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/userlist\">User List</a></li>\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/playerlist\">Player List</a></li>\r\n            </ul>\r\n          </li>\r\n\r\n\r\n\r\n        </ul>\r\n      </div><!-- /.navbar-collapse -->\r\n    </nav>\r\n  </aside><!-- /#left-panel -->\r\n\r\n  <!-- Left Panel -->\r\n\r\n  <!-- Right Panel -->\r\n\r\n  <div id=\"right-panel\" class=\"right-panel\">\r\n\r\n    <!-- Header-->\r\n    <header id=\"header\" class=\"header\">\r\n\r\n      <div class=\"header-menu\">\r\n\r\n        <div class=\"col-sm-7\">\r\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\r\n          <div class=\"header-left\">\r\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\r\n            <div class=\"form-inline\">\r\n              <form class=\"search-form\">\r\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\r\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"dropdown for-notification\">\r\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                <i class=\"fa fa-bell\"></i>\r\n              </button>\r\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\r\n                <!--<app-alerts></app-alerts>-->\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-sm-5\">\r\n          <div class=\"user-area dropdown float-right\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n              {{this.email}}<img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\r\n            </a>\r\n\r\n            <div class=\"user-menu dropdown-menu\">\r\n\r\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\r\n            </div>\r\n          </div>\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </header><!-- /header -->\r\n    <!-- Header-->\r\n\r\n    <div class=\"breadcrumbs\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"page-header float-left\">\r\n          <div class=\"page-title\">\r\n            <h1>Dashboard</h1>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n        <div class=\"page-header float-right\">\r\n          <div class=\"page-title\">\r\n            <ol class=\"breadcrumb text-right\">\r\n              <li><a href=\"#\" routerLink=\"/admin\">Dashboard</a></li>\r\n              <li class=\"active\">{{this.path}}</li>\r\n            </ol>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"content mt-3\">\r\n      <div class=\"animated fadeIn\">\r\n\r\n\r\n        <div *ngIf=\"this.path==('/admin')\" class=\"container\">\r\n          <h1 class=\"display-1\">Welcome to Dashboard {{this.email}}</h1>\r\n\r\n        </div>\r\n        <div *ngIf=\"this.path.includes('/admin/playerlist')\" class=\"container\">\r\n          <app-player-list></app-player-list>\r\n        </div>\r\n\r\n        <div *ngIf=\"this.path.includes('/admin/userlist') && this.role=='admin'\" class=\"container\">\r\n          <app-user-list></app-user-list>\r\n        </div>\r\n\r\n\r\n\r\n      </div><!-- .animated -->\r\n    </div><!-- .content -->\r\n\r\n\r\n  </div><!-- /#right-panel -->\r\n\r\n</div>\r\n<div *ngIf=\"!authService.isLoggedIn\" class=\"container\">\r\n  <!-- display user login, if user is logged in -->\r\n  <div class=\"row justify-content-md-center\">\r\n    <div class=\"col-md-4\">\r\n      <h2>Please log in!</h2>\r\n      <form>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputEmail1\">Email address</label>\r\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\r\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputPassword1\">Password</label>\r\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\r\n        </div>\r\n        <p class=\"text-warning\">{{this.errormsg}}</p>\r\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -114,20 +114,26 @@ var AdminComponent = /** @class */ (function () {
     }
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.role = 'admin';
         this.path = this.route.url;
         this.email = '';
+        this.role = 'admin';
         this.password = '';
         this.user = null;
         this.errormsg = '';
-        this.authService.checkLogin();
-        this.userService.getUsers().then(function (users) {
-            if (users.length == 0) {
-                console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
-                _this.userService.addUser(new _User__WEBPACK_IMPORTED_MODULE_2__["User"](1, "mail@max-spies.de", "password", "admin"));
-            }
-        }).catch(function (err) {
-            console.log("getUser fehlgeschlagen: " + err);
+        this.authService.checkLogin().then(function () {
+            _this.email = _this.authService.email;
+            _this.userService.getUsers().then(function (users) {
+                if (users.length == 0) {
+                    console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
+                    _this.userService.addUser(new _User__WEBPACK_IMPORTED_MODULE_2__["User"](1, "mail@max-spies.de", "password", "admin"));
+                }
+                else {
+                    _this.role = users.find(function (el) { return el.email === _this.email; }).role;
+                    console.log(_this.role);
+                }
+            }).catch(function (err) {
+                console.log("getUser fehlgeschlagen: " + err);
+            });
         });
     };
     /**
@@ -139,7 +145,7 @@ var AdminComponent = /** @class */ (function () {
         var _this = this;
         this.authService.userLogin(this.email, this.password).then(function () {
             if (!_this.authService.isLoggedIn)
-                _this.errormsg = 'Login failed: email/password is wrong!';
+                _this.errormsg = 'Login failed: wrong email/password combination!';
         });
     };
     /**
@@ -176,7 +182,7 @@ var AdminComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Player Detail rendering -->\r\n\r\n\r\n<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{this.player.username}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"this.player.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">Playername</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"this.player.username\" placeholder=\"username\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"this.player.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{this.errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<!-- Player Detail rendering -->\r\n\r\n\r\n<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{this.player.username}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\"  [(ngModel)]=\"this.player.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">Playername</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"this.player.username\" placeholder=\"username\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"this.player.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{this.errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -339,6 +345,29 @@ var PlayerListComponent = /** @class */ (function () {
             //console.log(player)
             _this.player = player;
             _this.playerAmount = _this.player.length;
+            /*  this.route.params.subscribe((params: any) => {
+                if (params['id'] != null) {
+      
+                  const player = this.player.find((el) => el._id === params['id']);
+                  console.log(player);
+                  const modalRef = this.modalService.open(PlayerDetailComponent);
+                  modalRef.result.then(
+                    (player: Player) => {
+                      console.log("Update: " +player.email);
+                      this.playerService.updatePlayer(player).then(
+                        ()=> {
+                          // console.log("ging");
+                          this.getPlayers();
+                        }
+                      ).catch(
+                        () => console.log("ging nicht")
+                      );
+                      //alert("ging");
+                    }
+                  ).catch((err)=> this.router.navigateByUrl('/admin/playerlist'));
+                  modalRef.componentInstance.player = Object.assign(player);
+                }
+              });*/
         });
     };
     /**
@@ -355,8 +384,9 @@ var PlayerListComponent = /** @class */ (function () {
                 // console.log("ging");
                 _this.getPlayers();
             }).catch(function () { return console.log("ging nicht"); });
-        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
+        }).catch(function (err) { return _this.router.navigateByUrl('/admin/playerlist'); });
         modalRef.componentInstance.player = Object.assign(player);
+        // this.router.navigateByUrl('/admin/playerlist/edit/' + player._id);
     };
     /**
      * edit player function
@@ -372,8 +402,8 @@ var PlayerListComponent = /** @class */ (function () {
                 // console.log("ging");
                 _this.getPlayers();
             }).catch(function () { return console.log("ging nicht"); });
-        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
-        modalRef.componentInstance.player = Object.assign(new _player_Player__WEBPACK_IMPORTED_MODULE_2__["Player"](0, new Date(), "username", "test@test.com", "password", new _player_GameStats__WEBPACK_IMPORTED_MODULE_7__["GameStats"](0, 0, 0, 0)));
+        }).catch(function (err) { return _this.router.navigateByUrl('/admin/playerlist'); });
+        modalRef.componentInstance.player = Object.assign(new _player_Player__WEBPACK_IMPORTED_MODULE_2__["Player"](0, "", "username", "test@test.com", "password", new _player_GameStats__WEBPACK_IMPORTED_MODULE_7__["GameStats"](0, 0, 0, 0)));
     };
     PlayerListComponent.prototype.delPlayer = function (player) {
         var _this = this;
@@ -418,7 +448,7 @@ var PlayerListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- User Detail rendering -->\r\n<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{user.email}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">User role</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.role\" placeholder=\"mod\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n"
+module.exports = "<!-- User Detail rendering -->\r\n<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{user.email}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">User role</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.role\" placeholder=\"mod\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\" >Save changes</button>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -579,6 +609,14 @@ var UserListComponent = /** @class */ (function () {
                 if (params['id'] != null) {
                     var user = _this.users.find(function (el) { return el._id === params['id']; });
                     var modalRef = _this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
+                    modalRef.result.then(function (user) {
+                        console.log("Update: " + user.email);
+                        _this.userService.updateUser(user).then(function () {
+                            // console.log("ging");
+                            _this.getUsers();
+                        }).catch(function () { return console.log("ging nicht"); });
+                        //alert("ging");
+                    }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
                     modalRef.componentInstance.user = Object.assign(user);
                 }
             });
@@ -602,18 +640,23 @@ var UserListComponent = /** @class */ (function () {
      * @returns void
      */
     UserListComponent.prototype.editUser = function (user) {
-        var _this = this;
-        var modalRef = this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
-        modalRef.result.then(function (user) {
-            console.log("Update: " + user.email);
-            _this.userService.updateUser(user).then(function () {
+        /* const modalRef = this.modalService.open(UserDetailComponent);
+         modalRef.result.then(
+           (user: User) => {
+             console.log("Update: " +user.email);
+             this.userService.updateUser(user).then(
+               ()=> {
                 // console.log("ging");
-                _this.getUsers();
-            }).catch(function () { return console.log("ging nicht"); });
-            //alert("ging");
-        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
-        modalRef.componentInstance.user = Object.assign(user);
-        //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
+                 this.getUsers();
+               }
+             ).catch(
+               () => console.log("ging nicht")
+             );
+             //alert("ging");
+           }
+         ).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
+         modalRef.componentInstance.user = Object.assign(user);*/
+        this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
     };
     /**
      * delete user function
@@ -699,6 +742,7 @@ var routes = [
     { path: 'admin/playerlist', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
     { path: 'admin/userlist', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
     { path: 'admin/userlist/edit/:id', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
+    { path: 'admin/playerlist/edit/:id', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
     { path: 'gamer', component: _player_player_component__WEBPACK_IMPORTED_MODULE_6__["PlayerComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -1617,6 +1661,8 @@ var AuthService = /** @class */ (function () {
             .then(function (data) {
             console.log(data.message);
             _this.isLoggedIn = true;
+            _this.email = data.email;
+            console.log(_this.email + "still logged in");
             return true;
         }).catch(function (err) {
             console.log(err.message);
@@ -1633,7 +1679,7 @@ var AuthService = /** @class */ (function () {
             .toPromise()
             .then(function (data) {
             _this.isLoggedIn = true;
-            _this.email = email;
+            console.log(_this.email + "logged in");
             //console.log(data.message);
         }).catch(function (err) {
             _this.isLoggedIn = false;
@@ -1912,7 +1958,6 @@ var UserService = /** @class */ (function () {
             .catch(function (err) { return console.log("User nicht geaddet"); });
     };
     UserService.prototype.updateUser = function (user) {
-        console.log(user);
         return this.http.put(this.url + "user/" + user._id, user, httpOptions).toPromise()
             .then(function (res) {
             console.log("User geupdated");

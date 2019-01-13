@@ -41,7 +41,6 @@ export class UserService {
   }
 
   updateUser(user: User): Promise<void> {
-    console.log(user);
     return this.http.put(`${this.url}user/${user._id}`, user, httpOptions).toPromise()
       .then((res: any) => {
         console.log("User geupdated");
