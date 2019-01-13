@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Oauth2Service} from '../services/oauth2.service';
 import {PlayerService} from '../services/player.service';
-
-
+import {Router} from '@angular/router';
+import {AuthService} from '../services/auth.service';
+import {UserService} from '../services/user.service';
+import {User} from '../admin/User';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +18,14 @@ export class LoginComponent implements OnInit {
   public username: string = "";
 
 
-  constructor(private oauth: Oauth2Service, private playerService: PlayerService) { }
+  user: User;
+
+  constructor(private oauth: Oauth2Service, protected playerService: PlayerService, protected router: Router, protected authService: AuthService, protected userService: UserService) { }
 
   ngOnInit() {
+    if(this.playerService.isLoggedIn){
+      this.router.navigate(['/play']);
+    }
   }
 
   facebookLogin(){
@@ -37,6 +44,20 @@ export class LoginComponent implements OnInit {
         }
       });
     //this.playerService.login(this.email, password);
+  }
+  //may be deprecated
+  login(){
+    this.playerService.login(this.email, this.password).then(
+      () => {
+        this.router.navigate(['/play']);
+      }).catch(
+      (err) => {
+        alert("Login fehlgeschlagen: "+err);
+      }
+    );
+  }
+  logout () {
+    this.authService.logout();
   }
 
 }

@@ -11,6 +11,7 @@ import {PlayerComponent} from './player/player.component';
  * Routes for navigation
  */
 const routes: Routes = [
+  { path: '' , component: LoginComponent},
   { path: 'play', component: IngameComponent },
   { path: 'user', component: UserComponent },
   { path: 'login', component: LoginComponent },

@@ -64,7 +64,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Bomberman</title>
   <link href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" rel="stylesheet" type="text/css">
   <script type="application/javascript" src="../client/node_modules/jquery/dist/jquery.js"></script>
   <script type="application/javascript" src="../client/node_modules/popper.js/dist/popper.js"></script>
@@ -72,7 +72,8 @@
   <script type="application/javascript" src="../client/script/client.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
-<body>
+<body style="
+  background: url(../../assets/images/41A6A62B-9AD7-4297-AB68-6A6DC652487C.JPEG) no-repeat fixed center center;">
 
 <div class="container">
   <div class="d-flex justify-content-center">
@@ -81,19 +82,38 @@
 
 </div>
 
+<div *ngIf="!authService.isLoggedIn" class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-4">
+      <h2>Please log in!</h2>
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input [(ngModel)]="email" type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input [(ngModel)]="password" type="text" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <button type="submit" (click)="login()" class="btn btn-primary">Submit</button>
+        <form action="https://localhost:8443/auth/google" method="get">
+          <button type="submit" class=" btn btn-danger" id="google" >Google</button>
+        </form>
+
+        <form action="https://localhost:8443/auth/facebook" method="get">
+          <button type="submit" class=" btn btn-primary" id="facebook" >Facebook</button>
+        </form>
+      </form>
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <div class="d-flex justify-content-center">
 
-    <a class="btn btn-secondary" href="/auth/google">Login</a>
 
-    <form action="https://localhost:8443/auth/google" method="get">
-      <button type="submit" class=" btn btn-danger" id="google" >Google</button>
-    </form>
 
-    <form action="https://localhost:8443/auth/facebook" method="get">
-      <button type="submit" class=" btn btn-primary" id="facebook" >Facebook</button>
-    </form>
   </div>
 
 </div>

@@ -27,8 +27,8 @@ export class PlayerService implements OnInit{
   emitField(field:Field[][]){
     this.socket.emit('getField', field);
   }
-  emitGamer(gamer:Gamer){
-    this.socket.emit('gamer', gamer);
+  emitGamer(player:Player){
+    this.socket.emit('gamer', player);
   }
 
   receiveMove(){
@@ -52,7 +52,7 @@ export class PlayerService implements OnInit{
   }
 
   receiveGamer(){
-    let obbservable = new Observable<Gamer>(observer => {
+    let obbservable = new Observable<Gamer[]>(observer => {
       this.socket.on('gamer', (data:any) => {
         observer.next(data);
       });
@@ -91,7 +91,7 @@ export class PlayerService implements OnInit{
     return this.http.get(this.url+'players')
       .toPromise()
       .then((res: any) => {
-        console.log(res);
+        //console.log(res);
         return <Player[]>res.players;
       }).catch((err: HttpErrorResponse) => {
       console.log(err);
@@ -107,11 +107,16 @@ export class PlayerService implements OnInit{
       this.currentPlayer = res.player;
       console.log(res.message);
         return true;
+      //console.log(res.player);
     })
       .catch((err) => {
       console.log(err.message);
         return false;
     });
+  }
+
+  getCurrentPlayer() : Player{
+    return this.currentPlayer;
   }
 
   logout(email: string) : Promise<void> {
