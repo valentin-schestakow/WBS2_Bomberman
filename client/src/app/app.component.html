@@ -22,7 +22,11 @@
 <div *ngIf="isLoggedIn">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="collapse navbar-collapse">
-
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <p class="nav-link">Life's: {{lives}}</p>
+        </li>
+      </ul>
       <a class="navbar-brand navbar-header text-primary"  href="/play">Play BOMBERMAN!</a>
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">

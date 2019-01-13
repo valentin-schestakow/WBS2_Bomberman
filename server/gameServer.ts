@@ -205,7 +205,8 @@ function checkGamerAction(action: string, gamer: Gamer) {
     }
 
     if(playField[gamer.posY/25][gamer.posX/25].type == "Fire"){
-        gamer.lives--;
+        //gamer.lives--;
+        gamer.lives > 0?gamer.lives--:gamer.lives;
     }
 
     for (let i = 0; i < gamers.length; i++){
@@ -214,7 +215,7 @@ function checkGamerAction(action: string, gamer: Gamer) {
             gamers[i].posX = gamer.posX;
             gamers[i].lives = gamer.lives;
             gamers[i].color = gamer.color;
-            console.log(gamers[i].name+" lost life. "+gamers[i].lives+" Lives left.")
+            //console.log(gamers[i].name+" lost life. "+gamers[i].lives+" Lives left.")
             //for debugging
             //console.log(gamers[i].name+": "+action+" x:"+gamers[i].posX+" y:"+gamers[i].posY);
         }
@@ -296,8 +297,8 @@ function burnPlayer(y,x,type){
     if(type == 'Fire'){
         for (let k = 0; k < gamers.length; k++) {
             if(gamers[k].posX == x && gamers[k].posY == y){
-                gamers[k].lives--;
-                console.log(gamers[k].name+" lost life. "+gamers[k].lives+" Lives left.")
+                gamers[k].lives > 0?gamers[k].lives--:gamers[k].lives;
+                //console.log(gamers[k].name+" lost life. "+gamers[k].lives+" Lives left.")
             }
         }
     }
