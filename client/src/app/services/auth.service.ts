@@ -27,6 +27,8 @@ export class AuthService implements OnInit{
             .then((data: any) => {
                 console.log(data.message);
                 this.isLoggedIn = true;
+                this.email = data.email;
+                console.log(this.email + "still logged in");
                 return true;
             }).catch((err: HttpErrorResponse) => {
             console.log(err.message);
@@ -44,7 +46,7 @@ export class AuthService implements OnInit{
             .toPromise()
             .then((data: any) => {
                 this.isLoggedIn = true;
-                this.email = email;
+              console.log(this.email + "logged in");
                 //console.log(data.message);
             }).catch((err: HttpErrorResponse) => {
             this.isLoggedIn = false;

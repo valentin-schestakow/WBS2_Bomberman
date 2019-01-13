@@ -1,5 +1,5 @@
 <div *ngIf="authService.isLoggedIn">
-
+<!-- display dashboard template, if user is logged in -->
   <aside id="left-panel" class="left-panel">
     <nav class="navbar navbar-expand-sm navbar-default">
 
@@ -20,7 +20,7 @@
           <li class="menu-item-has-children active dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Groups</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-list"></i><a href="#" routerLink="/admin/userlist">User List</a></li>
+              <li *ngIf="this.role=='admin'"><i class="fa fa-list"></i><a href="#" routerLink="/admin/userlist">User List</a></li>
               <li><i class="fa fa-list"></i><a href="#" routerLink="/admin/playerlist">Player List</a></li>
             </ul>
           </li>
@@ -69,7 +69,7 @@
         <div class="col-sm-5">
           <div class="user-area dropdown float-right">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{this.authService.email}}<img class="user-avatar rounded-circle" src="../../assets/images/admin.jpg" alt="User Avatar">
+              {{this.email}}<img class="user-avatar rounded-circle" src="../../assets/images/admin.jpg" alt="User Avatar">
             </a>
 
             <div class="user-menu dropdown-menu">
@@ -98,7 +98,7 @@
         <div class="page-header float-right">
           <div class="page-title">
             <ol class="breadcrumb text-right">
-              <li><a href="#">Dashboard</a></li>
+              <li><a href="#" routerLink="/admin">Dashboard</a></li>
               <li class="active">{{this.path}}</li>
             </ol>
           </div>
@@ -110,11 +110,15 @@
       <div class="animated fadeIn">
 
 
-        <div *ngIf="this.path=='/admin/playerlist'" class="container">
+        <div *ngIf="this.path==('/admin')" class="container">
+          <h1 class="display-1">Welcome to Dashboard {{this.email}}</h1>
+
+        </div>
+        <div *ngIf="this.path.includes('/admin/playerlist')" class="container">
           <app-player-list></app-player-list>
         </div>
 
-        <div *ngIf="this.path.includes('/admin/userlist')" class="container">
+        <div *ngIf="this.path.includes('/admin/userlist') && this.role=='admin'" class="container">
           <app-user-list></app-user-list>
         </div>
 
@@ -128,6 +132,7 @@
 
 </div>
 <div *ngIf="!authService.isLoggedIn" class="container">
+  <!-- display user login, if user is logged in -->
   <div class="row justify-content-md-center">
     <div class="col-md-4">
       <h2>Please log in!</h2>
@@ -141,6 +146,7 @@
           <label for="exampleInputPassword1">Password</label>
           <input [(ngModel)]="password" type="text" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
+        <p class="text-warning">{{this.errormsg}}</p>
         <button type="submit" (click)="login()" class="btn btn-primary">Submit</button>
       </form>
     </div>

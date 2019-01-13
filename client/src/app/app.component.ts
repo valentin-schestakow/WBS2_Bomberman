@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayerService} from './services/player.service';
-import {HttpErrorResponse} from '@angular/common/http';
-
-import {Router} from '@angular/router';
-
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {LoginFormComponent} from './login-form/login-form.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,11 +9,18 @@ import {Router} from '@angular/router';
 })
 export class AppComponent implements  OnInit{
   title = 'bomberman';
+  isLoggedIn: boolean;
 
-  constructor(protected router: Router,private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService, private modalService: NgbModal) {
+    this.playerService.checkLogin()
+      .then((res:boolean) => {
+        this.isLoggedIn = res;
+      });
+  }
 
   ngOnInit(): void {
-    //this.router.navigate(['/login']);
+
+    //this.isLoggedIn = this.playerService.isLoggedIn;
     /*
     this.playerService.checkLogin()
       .then(() => {
@@ -38,4 +43,22 @@ export class AppComponent implements  OnInit{
       });
       */
   }
+
+  loginButton(){
+    const modalRef = this.modalService.open(LoginFormComponent);
+
+  }
+
+  signUpButton(){
+    window.location.replace(this.playerService.url+"login");
+  }
+
+  logoutButton(){
+    this.playerService.logout(this.playerService.currentPlayer.email)
+      .then(() => {
+        window.location.replace('/');
+      })
+  }
+
+
 }

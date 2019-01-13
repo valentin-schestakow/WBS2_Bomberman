@@ -5,7 +5,7 @@ export class Gamer { //extends Field{
   public points: number;
   public lives: number;
   public kills: number;
-  public color: string;
+  public color: string = "";
   public name: string;
   public bombs: number;
   public posX: number;
