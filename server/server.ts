@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as passport from 'passport';
 import * as session from 'express-session';
 import * as pFacebook from 'passport-facebook';
-import * as pGoogle from "passport-google-oauth20";
 import {Profile} from "passport";
 import * as fs from 'fs';
 import * as https from 'https';
@@ -60,7 +59,7 @@ class Player {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.gamestats = null;
+        this.gamestats = stats;
     }
 }
 class User {
@@ -448,7 +447,7 @@ router.get    ("/user/login/check", function (req: Request, res: Response) {
         return;
     }
 
-    res.status(200).json({message: "user still logged in"});
+    res.status(200).json({message: "user still logged in", email: req.session.email});
 
 });
 
@@ -472,8 +471,14 @@ router.post   ("/user/login",       function (req: Request, res: Response) {
             if (user !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email;    // set session-variable email
-                if(user.role=='admin')req.session.rights = new Rights(true, true, true);
-                else req.session.rights = new Rights(true, true, false);
+                if(user.role=='admin'){
+                    console.log("user is admin");
+                    req.session.rights = new Rights(true, true, true);
+                }
+                else {
+                    console.log("user is not admin");
+                    req.session.rights = new Rights(true, true, false);
+                }
 
                 status = 200;
             } else { // username and passwort does not match message = "Id " + id + " not found";
@@ -683,7 +688,8 @@ router.delete ("/player/:email",    function (req: Request, res: Response) {
     let email     : number = (req.body.id != "" ? req.params.id: -1);
 
     //--- check Rights -> RETURN if not sufficient ------------------------------
-    if (!checkRights(req,res, new Rights (true, true, true))) {
+    if (!checkRights(req,res, new Rights (true, false, false))) {
+        console.log("user is not allowed to delete");
         return;
     }
 
@@ -729,8 +735,6 @@ router.get("/players", function(req: Request, res: Response) {
     playerlistCollection.find(query).toArray()
         .then((players: Player[]) => {
             players = players.map((player) => {
-                player['id'] = player['_id'];
-                player['_id'] = undefined;
                 player['password'] = '$keepPassword';
                 return player;
             })

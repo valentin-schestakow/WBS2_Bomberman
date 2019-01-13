@@ -40,7 +40,7 @@ var Player = (function () {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.gamestats = null;
+        this.gamestats = stats;
     }
     return Player;
 }());
@@ -212,7 +212,9 @@ router.post("/login/player", function (req, res) {
     }
 });
 /**
- * --- update user with: put /user/:id ---------------------------------
+ * update user function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.put("/user/:id", function (req, res) {
     var status = 500; // Initial HTTP response status
@@ -255,7 +257,9 @@ router.put("/user/:id", function (req, res) {
     });
 });
 /**
- * --- delete user with /user/delete/:email --------------------------------------
+ * delete user function
+ * @param Request (user.email)
+ * @returns Response (Errorcode, message)
  */
 router.delete("/user/delete/:email", function (req, res) {
     var status = 500; // Initial HTTP response status
@@ -288,7 +292,9 @@ router.delete("/user/delete/:email", function (req, res) {
     });
 });
 /**
- * --- get all users with: get /user/getAll --------------------------------
+ * get all users function
+ * @param Request ()
+ * @returns Response (Errorcode, message)
  */
 router.get('/user/getAll', function (req, res) {
     var query = {};
@@ -305,7 +311,9 @@ router.get('/user/getAll', function (req, res) {
     });
 });
 /**
- * --- create new user with: post /user --------------------------------
+ * create user function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.post("/user/create", function (req, res) {
     var email = (req.body.email ? req.body.email : "").trim();
@@ -313,12 +321,10 @@ router.post("/user/create", function (req, res) {
     var role = (req.body.role ? req.body.role : "").trim();
     var message = "";
     var status = 500; // Initial HTTP response status
-    /*
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
-    */
     //-- ok -> insert user-data into database -----------------------------------
     if ((role != "") && (email != "") && (password != "")) {
         var insertData = {
@@ -343,17 +349,21 @@ router.post("/user/create", function (req, res) {
     }
 });
 /**
- * Check Login
+ * check if user is logged in function
+ * @param Request ()
+ * @returns Response (Errorcode, message)
  */
 router.get("/user/login/check", function (req, res) {
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
-    res.status(200).json({ message: "user still logged in" });
+    res.status(200).json({ message: "user still logged in", email: req.session.email });
 });
 /**
- * --- login with: post /user/login -----------------------------------------
+ * user login function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.post("/user/login", function (req, res) {
     var status = 500; // Initial HTTP response status
@@ -367,10 +377,14 @@ router.post("/user/login", function (req, res) {
             if (user !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email; // set session-variable email
-                if (user.role == 'admin')
+                if (user.role == 'admin') {
+                    console.log("user is admin");
                     req.session.rights = new Rights(true, true, true);
-                else
+                }
+                else {
+                    console.log("user is not admin");
                     req.session.rights = new Rights(true, true, false);
+                }
                 status = 200;
             }
             else {
@@ -389,7 +403,9 @@ router.post("/user/login", function (req, res) {
     }
 });
 /**
- * --- logout with: post /logout ---------------------------------------
+ * user logout function
+ * @param Request (user)
+ * @returns Response (Errorcode, message)
  */
 router.post("/user/logout", function (req, res) {
     //--- check Rights -> RETURN if not sufficient ------------------------------
@@ -518,7 +534,7 @@ router.put("/player/:email", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     query = { email: email };
-    if (password == "") {
+    if (password == "" || password == '$keepPassword') {
         updateData = { username: username };
     }
     else if (username == "") {
@@ -554,7 +570,8 @@ router.delete("/player/:email", function (req, res) {
     var message = ""; // To be set
     var email = (req.body.id != "" ? req.params.id : -1);
     //--- check Rights -> RETURN if not sufficient ------------------------------
-    if (!checkRights(req, res, new Rights(true, true, true))) {
+    if (!checkRights(req, res, new Rights(true, false, false))) {
+        console.log("user is not allowed to delete");
         return;
     }
     //--- ok -> delete user from database ---------------------------------------
@@ -597,9 +614,7 @@ router.get("/players", function (req, res) {
     playerlistCollection.find(query).toArray()
         .then(function (players) {
         players = players.map(function (player) {
-            player['id'] = player['_id'];
-            player['_id'] = undefined;
-            player['password'] = undefined;
+            player['password'] = '$keepPassword';
             return player;
         });
         res.status(200).json({ message: "get all players succes", players: players });

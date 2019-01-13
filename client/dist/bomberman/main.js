@@ -62,7 +62,7 @@ var User = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"authService.isLoggedIn\">\r\n<!-- display dashboard template, if user is logged in -->\r\n  <aside id=\"left-panel\" class=\"left-panel\">\r\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\r\n\r\n      <div class=\"navbar-header\">\r\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n          <i class=\"fa fa-bars\"></i>\r\n        </button>\r\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\r\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\r\n      </div>\r\n\r\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li>\r\n            <a routerLink=\"/admin\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\r\n          </li>\r\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\r\n          <li class=\"menu-item-has-children active dropdown\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>Groups</a>\r\n            <ul class=\"sub-menu children dropdown-menu\">\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/userlist\">User List</a></li>\r\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/playerlist\">Player List</a></li>\r\n            </ul>\r\n          </li>\r\n\r\n\r\n\r\n        </ul>\r\n      </div><!-- /.navbar-collapse -->\r\n    </nav>\r\n  </aside><!-- /#left-panel -->\r\n\r\n  <!-- Left Panel -->\r\n\r\n  <!-- Right Panel -->\r\n\r\n  <div id=\"right-panel\" class=\"right-panel\">\r\n\r\n    <!-- Header-->\r\n    <header id=\"header\" class=\"header\">\r\n\r\n      <div class=\"header-menu\">\r\n\r\n        <div class=\"col-sm-7\">\r\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\r\n          <div class=\"header-left\">\r\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\r\n            <div class=\"form-inline\">\r\n              <form class=\"search-form\">\r\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\r\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"dropdown for-notification\">\r\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n                <i class=\"fa fa-bell\"></i>\r\n              </button>\r\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\r\n                <!--<app-alerts></app-alerts>-->\r\n              </div>\r\n            </div>\r\n\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-sm-5\">\r\n          <div class=\"user-area dropdown float-right\">\r\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\r\n              <img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\r\n            </a>\r\n\r\n            <div class=\"user-menu dropdown-menu\">\r\n\r\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\r\n            </div>\r\n          </div>\r\n\r\n\r\n\r\n        </div>\r\n      </div>\r\n\r\n    </header><!-- /header -->\r\n    <!-- Header-->\r\n\r\n    <div class=\"breadcrumbs\">\r\n      <div class=\"col-sm-4\">\r\n        <div class=\"page-header float-left\">\r\n          <div class=\"page-title\">\r\n            <h1>Dashboard</h1>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-8\">\r\n        <div class=\"page-header float-right\">\r\n          <div class=\"page-title\">\r\n            <ol class=\"breadcrumb text-right\">\r\n              <li><a href=\"#\">Dashboard</a></li>\r\n              <li class=\"active\">{{this.path}}</li>\r\n            </ol>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"content mt-3\">\r\n      <div class=\"animated fadeIn\">\r\n\r\n\r\n        <div *ngIf=\"this.path=='/admin/playerlist'\" class=\"container\">\r\n          <app-player-list></app-player-list>\r\n        </div>\r\n\r\n        <div *ngIf=\"this.path.includes('/admin/userlist')\" class=\"container\">\r\n          <app-user-list></app-user-list>\r\n        </div>\r\n\r\n\r\n\r\n      </div><!-- .animated -->\r\n    </div><!-- .content -->\r\n\r\n\r\n  </div><!-- /#right-panel -->\r\n\r\n</div>\r\n<div *ngIf=\"!authService.isLoggedIn\" class=\"container\">\r\n  <!-- display user login, if user is logged in -->\r\n  <div class=\"row justify-content-md-center\">\r\n    <div class=\"col-md-4\">\r\n      <h2>Please log in!</h2>\r\n      <form>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputEmail1\">Email address</label>\r\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\r\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <label for=\"exampleInputPassword1\">Password</label>\r\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\r\n        </div>\r\n        <strong class=\"text-warning\">{{this.errormsg}}</strong>\r\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div *ngIf=\"authService.isLoggedIn\">\n<!-- display dashboard template, if user is logged in -->\n  <aside id=\"left-panel\" class=\"left-panel\">\n    <nav class=\"navbar navbar-expand-sm navbar-default\">\n\n      <div class=\"navbar-header\">\n        <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-menu\" aria-controls=\"main-menu\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n          <i class=\"fa fa-bars\"></i>\n        </button>\n        <a class=\"navbar-brand\" href=\"./\"><img src=\"../../assets/images/logo.png\" alt=\"Logo\"></a>\n        <a class=\"navbar-brand hidden\" href=\"./\"><img src=\"../../assets/images/logo2.png\" alt=\"Logo\"></a>\n      </div>\n\n      <div id=\"main-menu\" class=\"main-menu collapse navbar-collapse\">\n        <ul class=\"nav navbar-nav\">\n          <li>\n            <a routerLink=\"/admin\"> <i class=\"menu-icon fa fa-dashboard\" ></i>Dashboard </a>\n          </li>\n          <h3 class=\"menu-title\">UI elements</h3><!-- /.menu-title -->\n          <li class=\"menu-item-has-children active dropdown\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"> <i class=\"menu-icon fa fa-users\"></i>Groups</a>\n            <ul class=\"sub-menu children dropdown-menu\">\n              <li *ngIf=\"this.role=='admin'\"><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/userlist\">User List</a></li>\n              <li><i class=\"fa fa-list\"></i><a href=\"#\" routerLink=\"/admin/playerlist\">Player List</a></li>\n            </ul>\n          </li>\n\n\n\n        </ul>\n      </div><!-- /.navbar-collapse -->\n    </nav>\n  </aside><!-- /#left-panel -->\n\n  <!-- Left Panel -->\n\n  <!-- Right Panel -->\n\n  <div id=\"right-panel\" class=\"right-panel\">\n\n    <!-- Header-->\n    <header id=\"header\" class=\"header\">\n\n      <div class=\"header-menu\">\n\n        <div class=\"col-sm-7\">\n          <a id=\"menuToggle\" class=\"menutoggle pull-left\"><i class=\"fa fa fa-tasks\"></i></a>\n          <div class=\"header-left\">\n            <button class=\"search-trigger\"><i class=\"fa fa-search\"></i></button>\n            <div class=\"form-inline\">\n              <form class=\"search-form\">\n                <input class=\"form-control mr-sm-2\" type=\"text\" placeholder=\"Search ...\" aria-label=\"Search\">\n                <button class=\"search-close\" type=\"submit\"><i class=\"fa fa-close\"></i></button>\n              </form>\n            </div>\n\n            <div class=\"dropdown for-notification\">\n              <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"notification\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n                <i class=\"fa fa-bell\"></i>\n              </button>\n              <div class=\"dropdown-menu\" aria-labelledby=\"notification\">\n                <!--<app-alerts></app-alerts>-->\n              </div>\n            </div>\n\n          </div>\n        </div>\n\n        <div class=\"col-sm-5\">\n          <div class=\"user-area dropdown float-right\">\n            <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n              {{this.email}}<img class=\"user-avatar rounded-circle\" src=\"../../assets/images/admin.jpg\" alt=\"User Avatar\">\n            </a>\n\n            <div class=\"user-menu dropdown-menu\">\n\n              <a class=\"nav-link\" href=\"#\" (click)=\"logout()\"><i class=\"fa fa-power-off\"></i> Logout</a>\n            </div>\n          </div>\n\n\n\n        </div>\n      </div>\n\n    </header><!-- /header -->\n    <!-- Header-->\n\n    <div class=\"breadcrumbs\">\n      <div class=\"col-sm-4\">\n        <div class=\"page-header float-left\">\n          <div class=\"page-title\">\n            <h1>Dashboard</h1>\n          </div>\n        </div>\n      </div>\n      <div class=\"col-sm-8\">\n        <div class=\"page-header float-right\">\n          <div class=\"page-title\">\n            <ol class=\"breadcrumb text-right\">\n              <li><a href=\"#\" routerLink=\"/admin\">Dashboard</a></li>\n              <li class=\"active\">{{this.path}}</li>\n            </ol>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"content mt-3\">\n      <div class=\"animated fadeIn\">\n\n\n        <div *ngIf=\"this.path==('/admin')\" class=\"container\">\n          <h1 class=\"display-1\">Welcome to Dashboard {{this.email}}</h1>\n\n        </div>\n        <div *ngIf=\"this.path.includes('/admin/playerlist')\" class=\"container\">\n          <app-player-list></app-player-list>\n        </div>\n\n        <div *ngIf=\"this.path.includes('/admin/userlist') && this.role=='admin'\" class=\"container\">\n          <app-user-list></app-user-list>\n        </div>\n\n\n\n      </div><!-- .animated -->\n    </div><!-- .content -->\n\n\n  </div><!-- /#right-panel -->\n\n</div>\n<div *ngIf=\"!authService.isLoggedIn\" class=\"container\">\n  <!-- display user login, if user is logged in -->\n  <div class=\"row justify-content-md-center\">\n    <div class=\"col-md-4\">\n      <h2>Please log in!</h2>\n      <form>\n        <div class=\"form-group\">\n          <label for=\"exampleInputEmail1\">Email address</label>\n          <input [(ngModel)]=\"email\" type=\"text\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"exampleInputPassword1\">Password</label>\n          <input [(ngModel)]=\"password\" type=\"text\" name=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\n        </div>\n        <p class=\"text-warning\">{{this.errormsg}}</p>\n        <button type=\"submit\" (click)=\"login()\" class=\"btn btn-primary\">Submit</button>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -114,20 +114,26 @@ var AdminComponent = /** @class */ (function () {
     }
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.role = 'admin';
         this.path = this.route.url;
         this.email = '';
+        this.role = 'admin';
         this.password = '';
         this.user = null;
         this.errormsg = '';
-        this.authService.checkLogin();
-        this.userService.getUsers().then(function (users) {
-            if (users.length == 0) {
-                console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
-                _this.userService.addUser(new _User__WEBPACK_IMPORTED_MODULE_2__["User"](1, "mail@max-spies.de", "password", "admin"));
-            }
-        }).catch(function (err) {
-            console.log("getUser fehlgeschlagen: " + err);
+        this.authService.checkLogin().then(function () {
+            _this.email = _this.authService.email;
+            _this.userService.getUsers().then(function (users) {
+                if (users.length == 0) {
+                    console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
+                    _this.userService.addUser(new _User__WEBPACK_IMPORTED_MODULE_2__["User"](1, "mail@max-spies.de", "password", "admin"));
+                }
+                else {
+                    _this.role = users.find(function (el) { return el.email === _this.email; }).role;
+                    console.log(_this.role);
+                }
+            }).catch(function (err) {
+                console.log("getUser fehlgeschlagen: " + err);
+            });
         });
     };
     /**
@@ -139,7 +145,7 @@ var AdminComponent = /** @class */ (function () {
         var _this = this;
         this.authService.userLogin(this.email, this.password).then(function () {
             if (!_this.authService.isLoggedIn)
-                _this.errormsg = 'Login failed: email/password is wrong!';
+                _this.errormsg = 'Login failed: wrong email/password combination!';
         });
     };
     /**
@@ -176,7 +182,7 @@ var AdminComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Player Detail rendering -->\r\n\r\n\r\n<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{this.player.username}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"this.player.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">Playername</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"this.player.username\" placeholder=\"username\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"this.player.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{this.errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<!-- Player Detail rendering -->\n\n\n<div class=\"modal-header\">\n  <h5 class=\"modal-title\">Edit: {{this.player.username}}</h5>\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <div class=\"form-group\">\n    <label for=\"InputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\"  [(ngModel)]=\"this.player.email\" placeholder=\"Enter email\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputRole\">Playername</label>\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"this.player.username\" placeholder=\"username\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"this.player.password\" placeholder=\"Password\">\n  </div>\n</div>\n<div class=\"modal-footer\">\n  <p class=\"label-warning\">{{this.errormsg}}</p>\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/playerlist')\">Close</button>\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -269,7 +275,7 @@ var PlayerDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"display-1\">{{this.playerAmount}} Players found</h1>\r\n<!-- Player List rendering -->\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let p of this.player\" class=\"list-group-item\">\r\n    {{p.username}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{p.email}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delPlayer(p)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editPlayer(p)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addPlayer()\">\r\n      <i class=\"fa fa-plus\"></i> Add Player\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<h1 class=\"display-1\">{{this.playerAmount}} Players found</h1>\n<!-- Player List rendering -->\n<ul class=\"list-group\">\n  <li *ngFor=\"let p of this.player\" class=\"list-group-item\">\n    {{p.username}}\n    <span class=\"badge badge-primary badge-pill\">\n      {{p.email}}\n    </span>\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delPlayer(p)\"><i class=\"fa fa-trash\"></i> Delete</button>\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editPlayer(p)\"><i class=\"fa fa-edit\"></i> Edit</button>\n\n  </li>\n</ul>\n\n<div class=\"row justify-content-md-center\">\n  <div class=\"col-md-2\">\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addPlayer()\">\n      <i class=\"fa fa-plus\"></i> Add Player\n    </button>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -339,6 +345,29 @@ var PlayerListComponent = /** @class */ (function () {
             //console.log(player)
             _this.player = player;
             _this.playerAmount = _this.player.length;
+            /*  this.route.params.subscribe((params: any) => {
+                if (params['id'] != null) {
+      
+                  const player = this.player.find((el) => el._id === params['id']);
+                  console.log(player);
+                  const modalRef = this.modalService.open(PlayerDetailComponent);
+                  modalRef.result.then(
+                    (player: Player) => {
+                      console.log("Update: " +player.email);
+                      this.playerService.updatePlayer(player).then(
+                        ()=> {
+                          // console.log("ging");
+                          this.getPlayers();
+                        }
+                      ).catch(
+                        () => console.log("ging nicht")
+                      );
+                      //alert("ging");
+                    }
+                  ).catch((err)=> this.router.navigateByUrl('/admin/playerlist'));
+                  modalRef.componentInstance.player = Object.assign(player);
+                }
+              });*/
         });
     };
     /**
@@ -355,8 +384,9 @@ var PlayerListComponent = /** @class */ (function () {
                 // console.log("ging");
                 _this.getPlayers();
             }).catch(function () { return console.log("ging nicht"); });
-        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
+        }).catch(function (err) { return _this.router.navigateByUrl('/admin/playerlist'); });
         modalRef.componentInstance.player = Object.assign(player);
+        // this.router.navigateByUrl('/admin/playerlist/edit/' + player._id);
     };
     /**
      * edit player function
@@ -368,12 +398,12 @@ var PlayerListComponent = /** @class */ (function () {
         var modalRef = this.modalService.open(_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_6__["PlayerDetailComponent"]);
         modalRef.result.then(function (player) {
             console.log("Update: " + player.email);
-            _this.playerService.createPlayer(player).then(function () {
+            _this.playerService.createPlayer(player.email, player.password, player.username).then(function () {
                 // console.log("ging");
                 _this.getPlayers();
             }).catch(function () { return console.log("ging nicht"); });
-        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
-        modalRef.componentInstance.player = Object.assign(new _player_Player__WEBPACK_IMPORTED_MODULE_2__["Player"](0, new Date(), "username", "test@test.com", "password", new _player_GameStats__WEBPACK_IMPORTED_MODULE_7__["GameStats"](0, 0, 0, 0)));
+        }).catch(function (err) { return _this.router.navigateByUrl('/admin/playerlist'); });
+        modalRef.componentInstance.player = Object.assign(new _player_Player__WEBPACK_IMPORTED_MODULE_2__["Player"](0, "", "username", "test@test.com", "password", new _player_GameStats__WEBPACK_IMPORTED_MODULE_7__["GameStats"](0, 0, 0, 0)));
     };
     PlayerListComponent.prototype.delPlayer = function (player) {
         var _this = this;
@@ -418,7 +448,7 @@ var PlayerListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- User Detail rendering -->\r\n<div class=\"modal-header\">\r\n  <h5 class=\"modal-title\">Edit: {{user.email}}</h5>\r\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">\r\n    <span aria-hidden=\"true\">&times;</span>\r\n  </button>\r\n</div>\r\n<div class=\"modal-body\">\r\n  <div class=\"form-group\">\r\n    <label for=\"InputEmail1\">Email address</label>\r\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.email\" placeholder=\"Enter email\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputRole\">User role</label>\r\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.role\" placeholder=\"mod\">\r\n  </div>\r\n  <div class=\"form-group\">\r\n    <label for=\"InputPassword1\">Password</label>\r\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\r\n  </div>\r\n</div>\r\n<div class=\"modal-footer\">\r\n  <p class=\"label-warning\">{{errormsg}}</p>\r\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">Close</button>\r\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\">Save changes</button>\r\n</div>\r\n"
+module.exports = "<!-- User Detail rendering -->\n<div class=\"modal-header\">\n  <h5 class=\"modal-title\">Edit: {{user.email}}</h5>\n  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <div class=\"form-group\">\n    <label for=\"InputEmail1\">Email address</label>\n    <input type=\"email\" class=\"form-control\" id=\"InputEmail1\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.email\" placeholder=\"Enter email\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputRole\">User role</label>\n    <input type=\"text\" class=\"form-control\" id=\"InputRole\" aria-describedby=\"emailHelp\" [(ngModel)]=\"user.role\" placeholder=\"mod\">\n  </div>\n  <div class=\"form-group\">\n    <label for=\"InputPassword1\">Password</label>\n    <input type=\"password\" class=\"form-control\" id=\"InputPassword1\" [(ngModel)]=\"user.password\" placeholder=\"Password\">\n  </div>\n</div>\n<div class=\"modal-footer\">\n  <p class=\"label-warning\">{{errormsg}}</p>\n  <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"activeModal.dismiss(); router.navigateByUrl('/admin/userlist')\">Close</button>\n  <button type=\"button\" class=\"btn btn-primary\" (click)=\"save()\" >Save changes</button>\n</div>\n"
 
 /***/ }),
 
@@ -510,7 +540,7 @@ var UserDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"display-1\">{{this.userAmount}} Users found</h1>\r\n<!-- User List rendering -->\r\n<ul class=\"list-group\">\r\n  <li *ngFor=\"let u of this.users\" class=\"list-group-item\">\r\n    {{u.email}}\r\n    <span class=\"badge badge-primary badge-pill\">\r\n      {{u.role}}\r\n    </span>\r\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delUser(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\r\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editUser(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\r\n\r\n  </li>\r\n</ul>\r\n\r\n<div class=\"row justify-content-md-center\">\r\n  <div class=\"col-md-2\">\r\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addUser()\">\r\n      <i class=\"fa fa-plus\"></i> Add User\r\n    </button>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<h1 class=\"display-1\">{{this.userAmount}} Users found</h1>\n<!-- User List rendering -->\n<ul class=\"list-group\">\n  <li *ngFor=\"let u of this.users\" class=\"list-group-item\">\n    {{u.email}}\n    <span class=\"badge badge-primary badge-pill\">\n      {{u.role}}\n    </span>\n    <button type=\"button\" class=\"btn btn-danger pull-right\" (click)=\"delUser(u)\"><i class=\"fa fa-trash\"></i> Delete</button>\n    <button type=\"button\" class=\"btn btn-warning pull-right\" (click)=\"editUser(u)\"><i class=\"fa fa-edit\"></i> Edit</button>\n\n  </li>\n</ul>\n\n<div class=\"row justify-content-md-center\">\n  <div class=\"col-md-2\">\n    <button type=\"button\" class=\"mt-2 btn btn-success\" (click)=\"addUser()\">\n      <i class=\"fa fa-plus\"></i> Add User\n    </button>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -579,6 +609,14 @@ var UserListComponent = /** @class */ (function () {
                 if (params['id'] != null) {
                     var user = _this.users.find(function (el) { return el._id === params['id']; });
                     var modalRef = _this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
+                    modalRef.result.then(function (user) {
+                        console.log("Update: " + user.email);
+                        _this.userService.updateUser(user).then(function () {
+                            // console.log("ging");
+                            _this.getUsers();
+                        }).catch(function () { return console.log("ging nicht"); });
+                        //alert("ging");
+                    }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
                     modalRef.componentInstance.user = Object.assign(user);
                 }
             });
@@ -602,18 +640,23 @@ var UserListComponent = /** @class */ (function () {
      * @returns void
      */
     UserListComponent.prototype.editUser = function (user) {
-        var _this = this;
-        var modalRef = this.modalService.open(_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_5__["UserDetailComponent"]);
-        modalRef.result.then(function (user) {
-            console.log("Update: " + user.email);
-            _this.userService.updateUser(user).then(function () {
+        /* const modalRef = this.modalService.open(UserDetailComponent);
+         modalRef.result.then(
+           (user: User) => {
+             console.log("Update: " +user.email);
+             this.userService.updateUser(user).then(
+               ()=> {
                 // console.log("ging");
-                _this.getUsers();
-            }).catch(function () { return console.log("ging nicht"); });
-            //alert("ging");
-        }).catch(function (err) { return _this.router.navigateByUrl('/admin/userlist'); });
-        modalRef.componentInstance.user = Object.assign(user);
-        //this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
+                 this.getUsers();
+               }
+             ).catch(
+               () => console.log("ging nicht")
+             );
+             //alert("ging");
+           }
+         ).catch((err)=> this.router.navigateByUrl('/admin/userlist'));
+         modalRef.componentInstance.user = Object.assign(user);*/
+        this.router.navigateByUrl('/admin/userlist/edit/' + user._id);
     };
     /**
      * delete user function
@@ -699,7 +742,8 @@ var routes = [
     { path: 'admin/playerlist', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
     { path: 'admin/userlist', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
     { path: 'admin/userlist/edit/:id', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
-    { path: 'gamer', component: _player_player_component__WEBPACK_IMPORTED_MODULE_6__["PlayerComponent"] }
+    { path: 'admin/playerlist/edit/:id', component: _admin_admin_component__WEBPACK_IMPORTED_MODULE_5__["AdminComponent"] },
+    { path: 'player', component: _player_player_component__WEBPACK_IMPORTED_MODULE_6__["PlayerComponent"] }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -724,7 +768,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\r\n<h1>Welcome to {{ title }}!</h1>\r\n-->\r\n\r\n<router-outlet></router-outlet>\r\n\r\n\r\n"
+module.exports = "<!--\n<h1>Welcome to {{ title }}!</h1>\n-->\n<div *ngIf=\"!isLoggedIn\">\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n  <div class=\"collapse navbar-collapse\" >\n\n    <a class=\"navbar-brand navbar-header\"  href=\"#\">BOMBERMAN</a>\n    <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\n      <li class=\"nav-item\">\n        <button class=\"btn btn-outline-success my-2 my-sm-0 \" (click)=\"loginButton()\" type=\"submit\">Login</button>\n      </li>\n      <li class=\"nav-item\">\n        <button class=\"btn btn-outline-warning my-2 my-sm-0\" (click)=\"signUpButton()\" type=\"submit\">Sign Up</button>\n      </li>\n    </ul>\n  </div>\n</nav>\n</div>\n\n\n<div *ngIf=\"isLoggedIn\">\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <div class=\"collapse navbar-collapse\">\n\n      <a class=\"navbar-brand navbar-header text-primary\"  href=\"/play\">Play BOMBERMAN!</a>\n      <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"  href=\"player\">Stats</a>\n        </li>\n      </ul>\n      <a class=\"nav-item justify-content-end\">\n        <button class=\"btn btn-outline-danger my-2 my-sm-0\" (click)=\"logoutButton()\" type=\"submit\">Logout</button>\n      </a>\n    </div>\n  </nav>\n</div>\n<router-outlet></router-outlet>\n\n\n"
 
 /***/ }),
 
@@ -751,6 +795,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/player.service */ "./src/app/services/player.service.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login-form/login-form.component */ "./src/app/login-form/login-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -762,12 +808,21 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(playerService) {
+    function AppComponent(playerService, modalService) {
+        var _this = this;
         this.playerService = playerService;
+        this.modalService = modalService;
         this.title = 'bomberman';
+        this.playerService.checkLogin()
+            .then(function (res) {
+            _this.isLoggedIn = res;
+        });
     }
     AppComponent.prototype.ngOnInit = function () {
+        //this.isLoggedIn = this.playerService.isLoggedIn;
         /*
         this.playerService.checkLogin()
           .then(() => {
@@ -790,13 +845,25 @@ var AppComponent = /** @class */ (function () {
           });
           */
     };
+    AppComponent.prototype.loginButton = function () {
+        var modalRef = this.modalService.open(_login_form_login_form_component__WEBPACK_IMPORTED_MODULE_3__["LoginFormComponent"]);
+    };
+    AppComponent.prototype.signUpButton = function () {
+        window.location.replace(this.playerService.url + "login");
+    };
+    AppComponent.prototype.logoutButton = function () {
+        this.playerService.logout(this.playerService.currentPlayer.email)
+            .then(function () {
+            window.location.replace('/');
+        });
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -832,12 +899,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./admin/user-list/user-detail/user-detail.component */ "./src/app/admin/user-list/user-detail/user-detail.component.ts");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
 /* harmony import */ var _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./admin/player-list/player-detail/player-detail.component */ "./src/app/admin/player-list/player-detail/player-detail.component.ts");
+/* harmony import */ var angular_font_awesome__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! angular-font-awesome */ "./node_modules/angular-font-awesome/dist/angular-font-awesome.es5.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/player.service */ "./src/app/services/player.service.ts");
+/* harmony import */ var _services_oauth2_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./services/oauth2.service */ "./src/app/services/oauth2.service.ts");
+/* harmony import */ var _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./login-form/login-form.component */ "./src/app/login-form/login-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
+
 
 
 
@@ -871,9 +946,11 @@ var AppModule = /** @class */ (function () {
                 _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_12__["PlayerListComponent"],
                 _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_13__["UserListComponent"],
                 _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
-                _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
+                _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"],
+                _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__["LoginFormComponent"]
             ],
             imports: [
+                angular_font_awesome__WEBPACK_IMPORTED_MODULE_17__["AngularFontAwesomeModule"],
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
@@ -882,7 +959,9 @@ var AppModule = /** @class */ (function () {
             ],
             providers: [
                 _services_auth_service__WEBPACK_IMPORTED_MODULE_10__["AuthService"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+                _services_player_service__WEBPACK_IMPORTED_MODULE_18__["PlayerService"],
+                _services_oauth2_service__WEBPACK_IMPORTED_MODULE_19__["Oauth2Service"]
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
             exports: [
@@ -890,6 +969,7 @@ var AppModule = /** @class */ (function () {
                 _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ],
             entryComponents: [
+                _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__["LoginFormComponent"],
                 _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
                 _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ]
@@ -1081,7 +1161,7 @@ var Gamer = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2>ingame Component!</h2>\r\n<img id=\"box\" src=\"../../assets/images/box.JPG\" alt=\"Box Icon\">\r\n<canvas #playground width=800 height=600></canvas>\r\n\r\n\r\n<img #spaceshipimg class=\"imageLoader\" src=\"https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/apps/kspaceduel.png\" alt=\"The Spaceship\">\r\n"
+module.exports = "<h2>ingame Component!</h2>\n<img id=\"box\" src=\"../../assets/images/box.JPG\" alt=\"Box Icon\">\n<canvas #playground width=800 height=600></canvas>\n\n\n<img #spaceshipimg class=\"imageLoader\" src=\"https://cdn2.iconfinder.com/data/icons/crystalproject/crystal_project_256x256/apps/kspaceduel.png\" alt=\"The Spaceship\">\n"
 
 /***/ }),
 
@@ -1092,7 +1172,7 @@ module.exports = "<h2>ingame Component!</h2>\r\n<img id=\"box\" src=\"../../asse
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaW5nYW1lL0M6XFxVc2Vyc1xcX0FJTk9cXE5leHRjbG91ZFxcTWF4IFNwaWVzXFxUSE1cXFNvY2lhbCBNZWRpYSBTeXN0ZW1zXFxXQlMyXFxCb21iZXJtYW5cXHdiczItYm9tYmVybWFuXFxjbGllbnQvc3JjXFxhcHBcXGluZ2FtZVxcaW5nYW1lLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0MsWUFBVyxFQUNYOztBQUNEO0VBQ0UsY0FBYSxFQUNkIiwiZmlsZSI6InNyYy9hcHAvaW5nYW1lL2luZ2FtZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImNhbnZhcyB7XHJcbiB3aWR0aDogMTAwJTtcclxufVxyXG5pbWcge1xyXG4gIGRpc3BsYXk6IG5vbmU7XHJcbn1cclxuIl19 */"
+module.exports = "canvas {\n  width: 100%; }\n\nimg {\n  display: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3ZhbGVudGluL0Rlc2t0b3AvVEhNL3NlbWVzdGVyXzQvd2JzMi1ib21iZXJtYW4vY2xpZW50L3NyYy9hcHAvaW5nYW1lL2luZ2FtZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNDLFlBQVcsRUFDWDs7QUFDRDtFQUNFLGNBQWEsRUFDZCIsImZpbGUiOiJzcmMvYXBwL2luZ2FtZS9pbmdhbWUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJjYW52YXMge1xuIHdpZHRoOiAxMDAlO1xufVxuaW1nIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cbiJdfQ== */"
 
 /***/ }),
 
@@ -1382,6 +1462,96 @@ var IngameComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/login-form/login-form.component.html":
+/*!******************************************************!*\
+  !*** ./src/app/login-form/login-form.component.html ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title\">Login by Email and Password</h4>\n  <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click');\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <form>\n    <div class=\"form-group\">\n      <label >Email:</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label >Password:</label>\n      <input type=\"password\" class=\"form-control\"  [(ngModel)]=\"password\" name=\"password\">\n    </div>\n  </form>\n</div>\n<div class=\"modal-footer\">\n  <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"activeModal.close('Close click');\">Close</button>\n  <button type=\"button\" class=\"btn btn-success\" (click)=\"login()\">Login</button>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/login-form/login-form.component.scss":
+/*!******************************************************!*\
+  !*** ./src/app/login-form/login-form.component.scss ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2xvZ2luLWZvcm0vbG9naW4tZm9ybS5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/login-form/login-form.component.ts":
+/*!****************************************************!*\
+  !*** ./src/app/login-form/login-form.component.ts ***!
+  \****************************************************/
+/*! exports provided: LoginFormComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginFormComponent", function() { return LoginFormComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var LoginFormComponent = /** @class */ (function () {
+    function LoginFormComponent(activeModal, playerService) {
+        this.activeModal = activeModal;
+        this.playerService = playerService;
+        this.email = "";
+        this.password = "";
+    }
+    LoginFormComponent.prototype.ngOnInit = function () {
+    };
+    LoginFormComponent.prototype.login = function () {
+        var _this = this;
+        if ((this.email !== "") && (this.password !== "")) {
+            this.playerService.login(this.email, this.password)
+                .then(function (res) {
+                if (res) {
+                    console.log("succes!");
+                    _this.activeModal.dismiss();
+                    window.location.replace(_this.playerService.url + "player");
+                }
+                else {
+                    console.log("email or password wrong");
+                }
+            });
+        }
+        else {
+            console.log("error");
+        }
+    };
+    LoginFormComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-login-form',
+            template: __webpack_require__(/*! ./login-form.component.html */ "./src/app/login-form/login-form.component.html"),
+            styles: [__webpack_require__(/*! ./login-form.component.scss */ "./src/app/login-form/login-form.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"], _services_player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"]])
+    ], LoginFormComponent);
+    return LoginFormComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/login/login.component.html":
 /*!********************************************!*\
   !*** ./src/app/login/login.component.html ***!
@@ -1389,7 +1559,7 @@ var IngameComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n  <meta charset=\"UTF-8\">\r\n  <title>Title</title>\r\n  <link href=\"https://use.fontawesome.com/releases/v5.0.10/css/all.css\" rel=\"stylesheet\" type=\"text/css\">\r\n  <script type=\"application/javascript\" src=\"../client/node_modules/jquery/dist/jquery.js\"></script>\r\n  <script type=\"application/javascript\" src=\"../client/node_modules/popper.js/dist/popper.js\"></script>\r\n  <script type=\"application/javascript\" src=\"../client/node_modules/bootstrap/dist/js/bootstrap.js\"></script>\r\n  <script type=\"application/javascript\" src=\"../client/script/client.js\"></script>\r\n  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">\r\n</head>\r\n<body>\r\n\r\n<div class=\"container\">\r\n  <div class=\"d-flex justify-content-center\">\r\n    <h3 class=\"p-12\">Play BOMBERMAN</h3>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n  <div class=\"d-flex justify-content-center\">\r\n\r\n    <a class=\"btn btn-secondary\" href=\"/auth/google\">Login</a>\r\n\r\n    <form action=\"https://localhost:8443/auth/google\" method=\"get\">\r\n      <button type=\"submit\" class=\" btn btn-danger\" id=\"google\" >Google</button>\r\n    </form>\r\n\r\n    <form action=\"https://localhost:8443/auth/facebook\" method=\"get\">\r\n      <button type=\"submit\" class=\" btn btn-primary\" id=\"facebook\" >Facebook</button>\r\n    </form>\r\n  </div>\r\n\r\n</div>\r\n\r\n\r\n</body>\r\n</html>\r\n"
+module.exports = "\n\n\n\n\n\n  <div class=\"container\">\n\n    <div class=\"row\">\n\n      <div class=\"col-md-6 offset-md-3\">\n\n        <div class=\"row\">\n          <h3 class=\"col-md-6\">Or register with Facebook! --></h3>\n          <button (click)=\"facebookLogin()\" class=\"col-sm-6 btn btn-outline-info\"><i class=\"align-left fab fa-10x fa-facebook-square\"></i> </button>\n        </div>\n\n        <div class=\"form-group\">\n          <label >Username:</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"username\" #userameText=\"ngModel\"/>\n        </div>\n\n        <div class=\"form-group\">\n          <label >Email:</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"email\" #emailText=\"ngModel\"   />\n        </div>\n\n        <div class=\"form-group\">\n          <label >Password:</label>\n          <input type=\"password\" class=\"form-control\"  [(ngModel)]=\"password\" #passwordText=\"ngModel\" />\n        </div>\n\n        <div class=\"form-group\">\n          <button (click)=\"emailLogin()\" class=\"btn btn-primary\">Register</button>\n        </div>\n\n      </div>\n\n\n\n      </div>\n  </div>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<!--\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Title</title>\n  <link href=\"https://use.fontawesome.com/releases/v5.0.10/css/all.css\" rel=\"stylesheet\" type=\"text/css\">\n  <script type=\"application/javascript\" src=\"../client/node_modules/jquery/dist/jquery.js\"></script>\n  <script type=\"application/javascript\" src=\"../client/node_modules/popper.js/dist/popper.js\"></script>\n  <script type=\"application/javascript\" src=\"../client/node_modules/bootstrap/dist/js/bootstrap.js\"></script>\n  <script type=\"application/javascript\" src=\"../client/script/client.js\"></script>\n  <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">\n</head>\n<body>\n\n<div class=\"container\">\n  <div class=\"d-flex justify-content-center\">\n    <h3 class=\"p-12\">Play BOMBERMAN</h3>\n  </div>\n\n</div>\n\n\n<div class=\"container\">\n  <div class=\"d-flex justify-content-center\">\n\n    <a class=\"btn btn-secondary\" href=\"/auth/google\">Login</a>\n\n    <form action=\"https://localhost:8443/auth/google\" method=\"get\">\n      <button type=\"submit\" class=\" btn btn-danger\" id=\"google\" >Google</button>\n    </form>\n\n    <form action=\"https://localhost:8443/auth/facebook\" method=\"get\">\n      <button type=\"submit\" class=\" btn btn-primary\" id=\"facebook\" >Facebook</button>\n    </form>\n  </div>\n\n</div>\n\n\n</body>\n</html>\n\n-->\n"
 
 /***/ }),
 
@@ -1415,6 +1585,8 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_oauth2_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/oauth2.service */ "./src/app/services/oauth2.service.ts");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1425,10 +1597,34 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent() {
+    function LoginComponent(oauth, playerService) {
+        this.oauth = oauth;
+        this.playerService = playerService;
+        this.email = "";
+        this.password = "";
+        this.username = "";
     }
     LoginComponent.prototype.ngOnInit = function () {
+    };
+    LoginComponent.prototype.facebookLogin = function () {
+        this.oauth.facebookRedirect();
+    };
+    LoginComponent.prototype.emailLogin = function () {
+        var _this = this;
+        this.playerService.createPlayer(this.email, this.password, this.username)
+            .then(function (res) {
+            if (res) {
+                console.log(_this.playerService.isLoggedIn);
+                window.location.replace(_this.playerService.url + "player");
+            }
+            else {
+                console.log("email in use");
+            }
+        });
+        //this.playerService.login(this.email, password);
     };
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1436,7 +1632,7 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./login.component.html */ "./src/app/login/login.component.html"),
             styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/login/login.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_oauth2_service__WEBPACK_IMPORTED_MODULE_1__["Oauth2Service"], _services_player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -1510,7 +1706,7 @@ var Player = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\r\n<div class=\"card m-3\" style=\"width: 18rem;\">\r\n  <div class=\"card-body\">\r\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\r\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\r\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\r\n    <p class=\"card-text\">{{player.stats.kills}}</p>\r\n    <p class=\"card-text\">{{player.stats.points}}</p>\r\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\r\n  </div>\r\n</div>\r\n-->\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n\r\n    <div class=\"\" >\r\n\r\n\r\n      <div class=\"panel panel-info\">\r\n        <div class=\"panel-heading\">\r\n          <h3 class=\"panel-title\">Player Info</h3>\r\n        </div>\r\n        <div class=\"panel-body\">\r\n          <div class=\"row\">\r\n\r\n            <div class=\" col-md-9 col-lg-9 \">\r\n              <table class=\"table table-user-information\">\r\n                <tbody>\r\n\r\n                <tr>\r\n                  <td>Username: </td>\r\n                  <td>{{player.username}}</td>\r\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Email: </td>\r\n                  <td>{{player.email}}</td>\r\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Game Count: </td>\r\n                  <td>{{player.stats.gameCount}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Points: </td>\r\n                  <td>{{player.stats.points}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Kills: </td>\r\n                  <td>{{player.stats.kills}}</td>\r\n                </tr>\r\n                <tr>\r\n                  <td>Deaths: </td>\r\n                  <td>{{player.stats.deaths}}</td>\r\n                </tr>\r\n                </tbody>\r\n              </table>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<!--\n<div class=\"card m-3\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\n    <p class=\"card-text\">{{player.stats.kills}}</p>\n    <p class=\"card-text\">{{player.stats.points}}</p>\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\n  </div>\n</div>\n-->\n\n<div class=\"container\">\n  <div class=\"row\">\n\n    <div class=\"\" >\n\n\n      <div class=\"panel panel-info\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Player Info</h3>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n\n            <div class=\" col-md-9 col-lg-9 \">\n              <table class=\"table table-user-information\">\n                <tbody>\n\n                <tr>\n                  <td>Username: </td>\n                  <td>{{player.username}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Email: </td>\n                  <td>{{player.email}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Game Count: </td>\n                  <td>{{player.stats.gameCount}}</td>\n                </tr>\n                <tr>\n                  <td>Points: </td>\n                  <td>{{player.stats.points}}</td>\n                </tr>\n                <tr>\n                  <td>Kills: </td>\n                  <td>{{player.stats.kills}}</td>\n                </tr>\n                <tr>\n                  <td>Deaths: </td>\n                  <td>{{player.stats.deaths}}</td>\n                </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1537,6 +1733,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerComponent", function() { return PlayerComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+/* harmony import */ var _services_oauth2_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/oauth2.service */ "./src/app/services/oauth2.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1548,15 +1745,26 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var PlayerComponent = /** @class */ (function () {
-    function PlayerComponent(playerServie) {
+    function PlayerComponent(playerServie, oauth) {
         this.playerServie = playerServie;
+        this.oauth = oauth;
+        this.player = this.playerServie.currentPlayer;
     }
     PlayerComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.playerServie.login("new@test.de", "pw")
-            .then(function () {
-            _this.player = _this.playerServie.currentPlayer;
+        this.playerServie.checkLogin()
+            .then(function (res) {
+            if (res) {
+                console.log(_this.playerServie.currentPlayer);
+                _this.player = _this.playerServie.currentPlayer;
+            }
+            else {
+                if (!_this.playerServie.isLoggedIn) {
+                    _this.oauth.getProfile();
+                }
+            }
         });
     };
     PlayerComponent = __decorate([
@@ -1565,7 +1773,7 @@ var PlayerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./player.component.html */ "./src/app/player/player.component.html"),
             styles: [__webpack_require__(/*! ./player.component.scss */ "./src/app/player/player.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"], _services_oauth2_service__WEBPACK_IMPORTED_MODULE_2__["Oauth2Service"]])
     ], PlayerComponent);
     return PlayerComponent;
 }());
@@ -1617,6 +1825,8 @@ var AuthService = /** @class */ (function () {
             .then(function (data) {
             console.log(data.message);
             _this.isLoggedIn = true;
+            _this.email = data.email;
+            console.log(_this.email + "still logged in");
             return true;
         }).catch(function (err) {
             console.log(err.message);
@@ -1633,7 +1843,7 @@ var AuthService = /** @class */ (function () {
             .toPromise()
             .then(function (data) {
             _this.isLoggedIn = true;
-            _this.email = email;
+            console.log(_this.email + "logged in");
             //console.log(data.message);
         }).catch(function (err) {
             _this.isLoggedIn = false;
@@ -1677,6 +1887,59 @@ var AuthService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], AuthService);
     return AuthService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/oauth2.service.ts":
+/*!********************************************!*\
+  !*** ./src/app/services/oauth2.service.ts ***!
+  \********************************************/
+/*! exports provided: Oauth2Service */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Oauth2Service", function() { return Oauth2Service; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var Oauth2Service = /** @class */ (function () {
+    function Oauth2Service(http) {
+        this.http = http;
+        this.url = window.location.protocol + '//' + window.location.host + '/';
+    }
+    Oauth2Service.prototype.facebookRedirect = function () {
+        window.location.replace('https://localhost:8443/auth/facebook');
+    };
+    Oauth2Service.prototype.getProfile = function () {
+        return this.http.get('https://localhost:8443/oauth/userProfile')
+            .toPromise()
+            .then(function (res) {
+            console.log(res.player.player);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    };
+    Oauth2Service = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], Oauth2Service);
+    return Oauth2Service;
 }());
 
 
@@ -1762,20 +2025,24 @@ var PlayerService = /** @class */ (function () {
     };
     PlayerService.prototype.checkLogin = function () {
         var _this = this;
-        return this.http.get('https://localhost:8080/login/check')
+        return this.http.get(this.url + 'login/check')
             .toPromise()
-            .then(function (data) {
-            console.log(data.message);
+            .then(function (res) {
+            _this.isLoggedIn = true;
+            _this.currentPlayer = res.player;
+            //console.log(res.player);
+            return true;
         }).catch(function (err) {
             console.log(err);
             _this.isLoggedIn = false;
+            return false;
         });
     };
     PlayerService.prototype.getAllPlayers = function () {
         return this.http.get(this.url + 'players')
             .toPromise()
             .then(function (res) {
-            //console.log(data.players);
+            console.log(res);
             return res.players;
         }).catch(function (err) {
             console.log(err);
@@ -1790,9 +2057,11 @@ var PlayerService = /** @class */ (function () {
             _this.isLoggedIn = true;
             _this.currentPlayer = res.player;
             console.log(res.message);
+            return true;
         })
             .catch(function (err) {
             console.log(err.message);
+            return false;
         });
     };
     PlayerService.prototype.logout = function (email) {
@@ -1807,15 +2076,18 @@ var PlayerService = /** @class */ (function () {
             console.log(err.message);
         });
     };
-    PlayerService.prototype.createPlayer = function (player) {
-        return this.http.post(this.url + 'create/player', player, httpOptions)
+    PlayerService.prototype.createPlayer = function (email, password, username) {
+        var _this = this;
+        return this.http.post(this.url + 'create/player', { email: email, password: password, username: username }, httpOptions)
             .toPromise()
             .then(function (res) {
-            //this.isLoggedIn = true;
-            console.log(res.message);
+            _this.isLoggedIn = true;
+            console.log(res.player);
+            return true;
         })
             .catch(function (err) {
             console.log(err.message);
+            return false;
         });
     };
     PlayerService.prototype.getPlayer = function (email) {
@@ -1912,7 +2184,6 @@ var UserService = /** @class */ (function () {
             .catch(function (err) { return console.log("User nicht geaddet"); });
     };
     UserService.prototype.updateUser = function (user) {
-        console.log(user);
         return this.http.put(this.url + "user/" + user._id, user, httpOptions).toPromise()
             .then(function (res) {
             console.log("User geupdated");
@@ -1948,7 +2219,7 @@ var UserService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  user works!\r\n</p>\r\n"
+module.exports = "<p>\n  user works!\n</p>\n"
 
 /***/ }),
 
@@ -2065,7 +2336,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\_AINO\Nextcloud\Max Spies\THM\Social Media Systems\WBS2\Bomberman\wbs2-bomberman\client\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/valentin/Desktop/THM/semester_4/wbs2-bomberman/client/src/main.ts */"./src/main.ts");
 
 
 /***/ }),
