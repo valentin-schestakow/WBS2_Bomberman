@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -31,7 +34,7 @@ function run(server) {
         socket.on('move', function (data) {
             //console.log('made socket connection', data);
             //console.log(data.move+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
-            console.log(data.gamer.name + ": active Bombs: " + data.gamer.bombPlanted);
+            //console.log(data.gamer.name+": active Bombs: "+data.gamer.bombPlanted);
             gamers = checkGamerAction(data.move, data.gamer);
             //console.log("\t\t"+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
             socket.emit('getField', playField);
@@ -123,7 +126,7 @@ function generateField() {
         }
     }
 }
-var Field = (function () {
+var Field = /** @class */ (function () {
     function Field(posX, posY) {
         this.type = "Field";
         this.posX = posX;
@@ -132,7 +135,7 @@ var Field = (function () {
     return Field;
 }());
 exports.Field = Field;
-var Block = (function (_super) {
+var Block = /** @class */ (function (_super) {
     __extends(Block, _super);
     function Block(posX, posY) {
         var _this = _super.call(this, posX, posY) || this;
@@ -144,7 +147,7 @@ var Block = (function (_super) {
     return Block;
 }(Field));
 exports.Block = Block;
-var Bomb = (function (_super) {
+var Bomb = /** @class */ (function (_super) {
     __extends(Bomb, _super);
     function Bomb(posX, posY, timeLeft) {
         var _this = _super.call(this, posX, posY) || this;
@@ -159,43 +162,61 @@ var Bomb = (function (_super) {
 }(Field));
 exports.Bomb = Bomb;
 function checkGamerAction(action, gamer) {
-    //for debugging
-    //console.log(gamer.name+": "+"aktuelle Pos = "+" x:"+gamer.posX+" y:"+gamer.posY);
-    if (action === 'moveUp') {
-        if (gamer.posY > 0 && playField[gamer.posY / 25 - 1][gamer.posX / 25].type !== 'Block') {
-            gamer.posY -= 25;
+    for (var i = 0; i < gamers.length; i++) {
+        if (gamers[i].name == gamer.name) {
+            gamer.posY = gamers[i].posY;
+            gamer.posX = gamers[i].posX;
+            gamer.lives = gamers[i].lives;
         }
     }
-    else if (action === 'moveDown') {
-        if (gamer.posY / 25 < 14 && playField[gamer.posY / 25 + 1][gamer.posX / 25].type !== 'Block') {
-            gamer.posY += 25;
+    if (gamer.lives <= 0) {
+        gamer.color = "gray";
+    }
+    else { //only if alive
+        //for debugging
+        //console.log(gamer.name+": "+"aktuelle Pos = "+" x:"+gamer.posX+" y:"+gamer.posY);
+        if (action === 'moveUp') {
+            if (gamer.posY > 0 && playField[gamer.posY / 25 - 1][gamer.posX / 25].type !== 'Block') {
+                gamer.posY -= 25;
+            }
+        }
+        else if (action === 'moveDown') {
+            if (gamer.posY / 25 < 14 && playField[gamer.posY / 25 + 1][gamer.posX / 25].type !== 'Block') {
+                gamer.posY += 25;
+            }
+        }
+        else if (action === 'moveLeft') {
+            if (gamer.posX > 0 && playField[gamer.posY / 25][gamer.posX / 25 - 1].type !== 'Block') {
+                gamer.posX -= 25;
+            }
+        }
+        else if (action === 'moveRight') {
+            if (gamer.posX / 25 < 19 && playField[gamer.posY / 25][gamer.posX / 25 + 1].type !== 'Block') {
+                gamer.posX += 25;
+            }
+        }
+        if (action === 'plantBomb') {
+            if (gamer.bombPlanted < 10) {
+                gamer.bombPlanted++;
+                console.log(gamer.name + ": plant Bomb at x:" + gamer.posX / 25 + " y: " + gamer.posY / 25);
+                playField[gamer.posY / 25][gamer.posX / 25] = new Bomb(gamer.posX, gamer.posY, 2);
+                plantNewBomb(gamer);
+            }
+            else {
+                console.log(gamer.name + ": active bombs: " + gamer.bombPlanted);
+            }
         }
     }
-    else if (action === 'moveLeft') {
-        if (gamer.posX > 0 && playField[gamer.posY / 25][gamer.posX / 25 - 1].type !== 'Block') {
-            gamer.posX -= 25;
-        }
-    }
-    else if (action === 'moveRight') {
-        if (gamer.posX / 25 < 19 && playField[gamer.posY / 25][gamer.posX / 25 + 1].type !== 'Block') {
-            gamer.posX += 25;
-        }
-    }
-    if (action === 'plantBomb') {
-        if (gamer.bombPlanted < 10) {
-            gamer.bombPlanted++;
-            console.log(gamer.name + ": plant Bomb at x:" + gamer.posX / 25 + " y: " + gamer.posY / 25);
-            playField[gamer.posY / 25][gamer.posX / 25] = new Bomb(gamer.posX, gamer.posY, 2);
-            plantNewBomb(gamer);
-        }
-        else {
-            console.log(gamer.name + ": active bombs: " + gamer.bombPlanted);
-        }
+    if (playField[gamer.posY / 25][gamer.posX / 25].type == "Fire") {
+        gamer.lives--;
     }
     for (var i = 0; i < gamers.length; i++) {
         if (gamers[i].name == gamer.name) {
             gamers[i].posY = gamer.posY;
             gamers[i].posX = gamer.posX;
+            gamers[i].lives = gamer.lives;
+            gamers[i].color = gamer.color;
+            console.log(gamers[i].name + " lost life. " + gamers[i].lives + " Lives left.");
             //for debugging
             //console.log(gamers[i].name+": "+action+" x:"+gamers[i].posX+" y:"+gamers[i].posY);
         }
@@ -240,24 +261,41 @@ function bombExplode(posY, posX, gamer) {
 function freeBomb(gamer) {
     for (var i = 0; i < gamers.length; i++) {
         if (gamers[i].name == gamer.name) {
-            console.log(gamers[i].name + " bomb minus " + gamers[i].bombPlanted);
+            //console.log(gamers[i].name+" bomb minus "+gamers[i].bombPlanted);
             gamers[i].bombPlanted--;
-            console.log(gamers[i].name + " bomb after minus " + gamers[i].bombPlanted);
+            //console.log(gamers[i].name+" bomb after minus "+gamers[i].bombPlanted);
         }
     }
 }
 function explosionHelper(posY, posX, type) {
     if (posY > 0) {
         playField[posY - 1][posX].type = type;
+        burnPlayer(posY - 1, posX, type);
     }
     if (posY < 13) {
         playField[posY + 1][posX].type = type;
+        burnPlayer(posY + 1, posX, type);
     }
     if (posX > 0) {
         playField[posY][posX - 1].type = type;
+        burnPlayer(posY, posX - 1, type);
     }
     if (posX < 19) {
         playField[posY][posX + 1].type = type;
+        burnPlayer(posY, posX + 1, type);
     }
     playField[posY][posX].type = type;
+    burnPlayer(posY, posX, type);
+}
+function burnPlayer(y, x, type) {
+    x = x * 25;
+    y = y * 25;
+    if (type == 'Fire') {
+        for (var k = 0; k < gamers.length; k++) {
+            if (gamers[k].posX == x && gamers[k].posY == y) {
+                gamers[k].lives--;
+                console.log(gamers[k].name + " lost life. " + gamers[k].lives + " Lives left.");
+            }
+        }
+    }
 }
