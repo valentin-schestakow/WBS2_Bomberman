@@ -9,8 +9,11 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class AppComponent implements  OnInit{
   title = 'bomberman';
+  isLoggedIn: boolean = false;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService) {
+    //this.isLoggedIn = this.playerService.isLoggedIn;
+  }
 
   ngOnInit(): void {
 
@@ -35,5 +38,13 @@ export class AppComponent implements  OnInit{
         console.log(err)
       });
       */
+  }
+
+  loginButton(){
+    //window.location.replace(this.playerService.url+"login")
+  }
+
+  signUpButton(){
+    window.location.replace(this.playerService.url+"login");
   }
 }

@@ -15,6 +15,9 @@ import { UserListComponent } from './admin/user-list/user-list.component';
 import { UserDetailComponent } from './admin/user-list/user-detail/user-detail.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { PlayerDetailComponent } from './admin/player-list/player-detail/player-detail.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import {PlayerService} from './services/player.service';
+import {Oauth2Service} from './services/oauth2.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { PlayerDetailComponent } from './admin/player-list/player-detail/player-
     PlayerDetailComponent
   ],
   imports: [
+    AngularFontAwesomeModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -39,7 +43,9 @@ import { PlayerDetailComponent } from './admin/player-list/player-detail/player-
   ],
   providers: [
     AuthService,
-    HttpClient
+    HttpClient,
+    PlayerService,
+    Oauth2Service
   ],
   bootstrap: [AppComponent],
   exports: [

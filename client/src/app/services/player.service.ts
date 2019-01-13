@@ -71,10 +71,12 @@ export class PlayerService implements OnInit{
   constructor(private http: HttpClient) { }
 
   checkLogin() : Promise<void> {
-    return this.http.get('https://localhost:8080/login/check')
+    return this.http.get(this.url+'login/check')
       .toPromise()
-      .then((data: any) => {
-        console.log(data.message);
+      .then((res: any) => {
+        this.isLoggedIn = true;
+        this.currentPlayer = res.player;
+        //console.log(res.player);
       }).catch((err: HttpErrorResponse) => {
         console.log(err);
         this.isLoggedIn = false;
@@ -86,7 +88,7 @@ export class PlayerService implements OnInit{
     return this.http.get(this.url+'players')
       .toPromise()
       .then((res: any) => {
-        //console.log(data.players);
+        console.log(res);
         return <Player[]>res.players;
       }).catch((err: HttpErrorResponse) => {
       console.log(err);
@@ -119,15 +121,17 @@ export class PlayerService implements OnInit{
       });
   }
 
-  createPlayer(email: string, password: string, username: string) : Promise<void> {
+  createPlayer(email: string, password: string, username: string) : Promise<boolean> {
     return this.http.post(this.url+'create/player', {email: email, password: password, username: username}, httpOptions)
       .toPromise()
       .then((res: any) => {
-        //this.isLoggedIn = true;
-        console.log(res.message);
+        this.isLoggedIn = true;
+        console.log(res.player);
+        return true;
       })
       .catch((err) => {
         console.log(err.message);
+        return false;
       });
   }
 

@@ -4,7 +4,6 @@ var express = require("express");
 var passport = require("passport");
 var session = require("express-session");
 var pFacebook = require("passport-facebook");
-var pGoogle = require("passport-google-oauth20");
 var fs = require("fs");
 var https = require("https");
 var mongodb_1 = require("mongodb");
@@ -34,7 +33,7 @@ mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: tr
 }).catch(function (err) {
     console.error("Error connecting to database ...\n" + err);
 });
-var Player = /** @class */ (function () {
+var Player = (function () {
     function Player(id, time, username, email, password, stats) {
         this._id = id;
         //this.time     = time;
@@ -45,7 +44,7 @@ var Player = /** @class */ (function () {
     }
     return Player;
 }());
-var User = /** @class */ (function () {
+var User = (function () {
     function User(id, email, password, role) {
         this.email = email;
         this._id = id;
@@ -54,7 +53,7 @@ var User = /** @class */ (function () {
     }
     return User;
 }());
-var GameStats = /** @class */ (function () {
+var GameStats = (function () {
     function GameStats(gameCount, points, kills, deaths) {
         this.gameCount = gameCount;
         this.points = points;
@@ -80,11 +79,26 @@ console.log("-------------------------------------------------------------\n"
  ***  set up webSocket                                                       *
  *****************************************************************************/
 gameServer.run(server);
+router.use(passport.initialize());
+//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
+router.use(passport.session()); // persistent login sessions
+// used to serialize the user for the session
+// cokkie erstellen
+// serialisiert das user profille um es in der session zu speichern
+passport.serializeUser(function (profile, done) {
+    done(null, profile);
+});
+// used to deserialize the user
+// user informationen aus cookie auslesen
+// desalisiert das user profile aus der session d
+passport.deserializeUser(function (profile, done) {
+    done(null, profile);
+});
 /*****************************************************************************
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
 //--- Class that deals with Rights --------------------------------------------
-var Rights = /** @class */ (function () {
+var Rights = (function () {
     // can be extended here with other user-roles
     function Rights(player, admin, superadmin) {
         this.player = player;
@@ -102,7 +116,6 @@ function checkRights(req, res, rights) {
         res.json({ message: "No session: Please log in" }); // send HTTP-response
         return false;
     }
-    //--- check rights against the needed rights (provided as parameter) --------
     else {
         var rightsOK = true;
         var message = "unsufficient rights";
@@ -110,11 +123,11 @@ function checkRights(req, res, rights) {
             rightsOK = rightsOK && req.session.rights.player;
             message += ": not logged in";
         }
-        if (rights.admin) { // checks if "admin" is needed
+        if (rights.admin) {
             rightsOK = rightsOK && req.session.rights.admin;
             message += ": not Moderator";
         }
-        if (rights.superadmin) { // ckecks if "superadmin" is needed
+        if (rights.superadmin) {
             rightsOK = rightsOK && req.session.rights.superadmin;
             message += ", not admin";
         }
@@ -162,7 +175,7 @@ router.get("/login/check", function (req, res) {
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
-    res.status(200).json({ message: "player still logged in" });
+    res.status(200).json({ message: "player still logged in", player: req.session.player });
 });
 /**
  * --- login with: post /login -----------------------------------------
@@ -178,12 +191,12 @@ router.post("/login/player", function (req, res) {
         playerlistCollection.findOne(query).then(function (player) {
             if (player !== null) {
                 message = email + " logged in by email/password";
-                req.session.email = email; // set session-variable email
+                req.session.player = player; // set session-variable email
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
                 res.status(status).json({ message: message, player: player });
             }
-            else { // username and passwort does not match message = "Id " + id + " not found";
+            else {
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
                 res.status(status).json({ message: message });
@@ -194,8 +207,7 @@ router.post("/login/player", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    //--- nok -------------------------------------------------------------------
-    else { // either username or password not provided
+    else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -217,10 +229,10 @@ router.put("/user/:id", function (req, res) {
     var role = (req.body.role ? req.body.role : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     var query = { _id: new bson_1.ObjectID(id) };
-    if (password == "" || password == "$keepPassword") { // no new password set
+    if (password == "" || password == "$keepPassword") {
         updateData = { email: email, role: role };
     }
-    else { // new password set
+    else {
         updateData = { password: cryptoJS.MD5(password).toString(), email: email, role: role };
     }
     userlistCollection.updateOne(query, { $set: updateData })
@@ -326,8 +338,7 @@ router.post("/user/create", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    //--- nok -------------------------------------------------------------------
-    else { // some parameters are not provided
+    else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -362,7 +373,7 @@ router.post("/user/login", function (req, res) {
                     req.session.rights = new Rights(true, true, false);
                 status = 200;
             }
-            else { // username and passwort does not match message = "Id " + id + " not found";
+            else {
                 message = "Not Valid: user '" + email + "' does not match password";
                 status = 401;
             }
@@ -373,8 +384,7 @@ router.post("/user/login", function (req, res) {
             res.status(status).json({ message: message });
         });
     }
-    //--- nok -------------------------------------------------------------------
-    else { // either username or password not provided
+    else {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
     }
 });
@@ -422,30 +432,40 @@ router.post("/create/player", function (req, res) {
         return;
     }
     */
-    //-- ok -> insert user-data into database -----------------------------------
-    if ((username != "") && (email != "") && (password != "")) {
-        var insertData = {
-            email: email,
-            username: username,
-            password: cryptoJS.MD5(password).toString(),
-            stats: stats
-        };
-        playerlistCollection.insertOne(insertData)
-            .then(function (result) {
-            message = "Created: " + username;
-            status = 201;
+    var query = { email: email };
+    playerlistCollection.findOne(query)
+        .then(function (player) {
+        if (player !== null) {
+            message = "Email allready in use";
+            status = 404;
             res.status(status).json({ message: message });
-        })
-            .catch(function (error) {
-            message = "Database error: " + error.code;
-            status = 505;
-            res.status(status).json({ message: message });
-        });
-    }
-    //--- nok -------------------------------------------------------------------
-    else { // some parameters are not provided
+            console.log("email in use");
+        }
+        else {
+            var insertData_1 = {
+                email: email,
+                username: username,
+                password: cryptoJS.MD5(password).toString(),
+                stats: stats
+            };
+            playerlistCollection.insertOne(insertData_1)
+                .then(function (result) {
+                req.session.rights = new Rights(true, false, false);
+                req.session.player = insertData_1;
+                message = "Created: " + username;
+                status = 201;
+                res.status(status).json({ message: message, player: insertData_1 });
+            })
+                .catch(function (error) {
+                message = "Database error: " + error.code;
+                status = 505;
+                res.status(status).json({ message: message });
+            });
+        }
+    })
+        .catch(function (error) {
         res.status(400).json({ message: "Bad Request: not all mandatory parameters provided" });
-    }
+    });
 });
 /**
  * --- get user with /player/:email -----------------------------------------
@@ -498,13 +518,13 @@ router.put("/player/:email", function (req, res) {
     var password = (req.body.password ? req.body.password : "").trim();
     //--- ok -> update user with new attributes ---------------------------------
     query = { email: email };
-    if (password == "") { // no new password set
+    if (password == "") {
         updateData = { username: username };
     }
     else if (username == "") {
         updateData = { password: password };
     }
-    else { // new password set
+    else {
         updateData = { password: cryptoJS.MD5(password).toString(), username: username };
     }
     playerlistCollection.updateOne(query, { $set: updateData })
@@ -534,7 +554,7 @@ router.delete("/player/:email", function (req, res) {
     var message = ""; // To be set
     var email = (req.body.id != "" ? req.params.id : -1);
     //--- check Rights -> RETURN if not sufficient ------------------------------
-    if (!checkRights(req, res, new Rights(true, false, false))) {
+    if (!checkRights(req, res, new Rights(true, true, true))) {
         return;
     }
     //--- ok -> delete user from database ---------------------------------------
@@ -588,121 +608,72 @@ router.get("/players", function (req, res) {
         res.status(500).json({ message: "Database error" + error.code });
     });
 });
-router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
-// Routen innerhalb der Angular-Anwendung zurückleiten
-router.use("/*", express.static(__dirname + "/../client/dist/bomberman"));
-/*****************************************************************************
- ***  OAuth2         *
- *****************************************************************************/
-router.use(passport.initialize());
-//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
-router.use(passport.session()); // persistent login sessions
-// used to serialize the user for the session
-// cokkie erstellen
-// serialisiert das user profille um es in der session zu speichern
-passport.serializeUser(function (profile, done) {
-    done(null, profile);
-});
-// used to deserialize the user
-// user informationen aus cookie auslesen
-// desalisiert das user profile aus der session d
-passport.deserializeUser(function (profile, done) {
-    done(null, profile);
-});
-//kofnigurationsklasse welche die clientid und secret enthält
-var GoogleAuthConfig = /** @class */ (function () {
-    function GoogleAuthConfig() {
-        this.googleAuth = {
-            clientID: '85564632151-r3mqfgrsrhk2kcdrdn0fe4hvsvcm7do6.apps.googleusercontent.com',
-            clientSecret: 'zfmPBLMIxWEDdg8lJJJkuag9',
-            callbackURL: 'https://localhost:8080/auth/google/callback'
-        };
-    }
-    return GoogleAuthConfig;
-}());
-var FacebookAuthConfig = /** @class */ (function () {
+var FacebookAuthConfig = (function () {
     function FacebookAuthConfig() {
         this.facebookAuth = {
             clientID: '286966021819558',
             clientSecret: '1b6e3a21f4d58b43e54b70822611bddc',
-            callbackURL: 'https://localhost:8080/auth/facebook/callback'
+            callbackURL: 'https://localhost:8443/auth/facebook/callback'
         };
     }
     return FacebookAuthConfig;
 }());
 var facebookConfigAuth = new FacebookAuthConfig();
-var googlConfigAuth = new GoogleAuthConfig();
-// liefert die einstiegssseite aus
-router.get('/', function (req, res) {
-    var path = require('path');
-    res.sendFile(path.resolve(__dirname + '/../client/index.html'));
-    //res.sendFile(__dirname + 'client/index.html');
-});
-//liefer die profile seite aus wenn der benutzer eingeloggt ist. (dafür funktion: isloggedin)
-// route for showing the protected profile page
-router.get('/profile', isLoggedIn, function (req, res) {
-    var path = require('path');
-    res.sendFile(path.resolve(__dirname + '/../client/views/lala.html'));
-});
-router.get('/login', function (req, res) {
-    res.status(200).json({ message: "success" });
-});
-router.post('/userLogin', function (req, res) {
-    res.status(200).json({ message: "success" });
-});
-// route for logging out
-// loggt den benutzer aus und leitet an die einstiegsseite mit redirect (/) zurück
-router.get('/logout', function (req, res) {
-    req.logout();
-    //let path = require('path');
-    //res.sendFile(path.resolve(__dirname + '/../client/index.html'));
-    res.redirect('/');
-});
-// die route wird durch die profilseite mittels ajax request vom client aufgerufen
-// die route wird aufgerufen vom client nachdem jemand eingeloggt ist, um die gespeicherten benutzerdaten zu holen
-// holt sich den user von der session
-router.get('/userProfile', isLoggedIn, function (req, res) {
-    res.status(200);
-    var user = {
-        user: req.user // get the user out of session and pass to template
+router.get('/oauth/userProfile', isLoggedIn, function (req, res) {
+    //res.status(200);
+    var player = {
+        player: req.user // get the user out of session and pass to template
     };
-    res.send(JSON.stringify(user));
+    console.log(player.player.emails[0].value);
+    res.status(200).json({ player: player });
+    //res.send(JSON.stringify(user));
+    var username = player.player.name.givenName + " " + player.player.name.familyName;
+    var email = player.player.emails[0].value;
+    var password = "";
+    var stats = new GameStats(0, 0, 0, 0);
+    var query = { email: email };
+    playerlistCollection.findOne(query)
+        .then(function (player) {
+        if (player !== null) {
+            console.log("player allready exists");
+        }
+        else {
+            var insertData = {
+                email: email,
+                username: username,
+                password: cryptoJS.MD5(password).toString(),
+                stats: stats
+            };
+            playerlistCollection.insertOne(insertData)
+                .then(function (result) {
+                console.log("oauth player success " + result);
+            })
+                .catch(function (error) {
+                console.log("oauth player fail " + error);
+            });
+        }
+    })
+        .catch(function (error) {
+        console.log("Database error: " + error.code);
+    });
 });
-// send to google to do the authentication
-// profile gets us their basic information including their name
-// email gets their emails
-// 1. aufruf von route auth/google
-// wir daufgerufen wenn der benutzer sich über google authentifizieren möchte
-// hier wird angegeben das wir unsmit dem google account anmelden mlchten : strategie:google
-// und auf welche bereiche wir zugreifen wollen bei der authentifizierung
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-// aufruf von auth/google/callback -> aufruf von  redirect url um profil anzuzeigen
-// aufruf von der funktion wenn man eingeloggt ist, ansonsten leere seite
-// the callback after google has authenticated the user
-// diese route wird von google aufgerufen(der obigen?) wenn der benutzer sich autorisiert hat
-// bei erfolg wird der benutzer auf die profilseite weitergeleitet
-//bei fehlerbfall auf die einstiegsseite
-router.get('/auth/google/callback', passport.authenticate('google', {
-    successRedirect: '/login',
-    failureRedirect: '/'
-}));
 //der server authentifiziert den user & stellt zugriffsschlüssel für die erlaubten bereiche aus
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 // the callback after google has authenticated the user
 router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-    successRedirect: '/login',
-    failureRedirect: '/'
+    successRedirect: '/player',
 }));
 // Route middleware to make sure a user is logged in
 // diese funktion prüft ob benutzer eingeloggt ist
 // wird verwendet um zugriff auf dbestimmte seiten einzuschränken
 function isLoggedIn(req, res, next) {
     // If user is authenticated in the session, carry on
-    if (req.isAuthenticated())
+    if (req.isAuthenticated()) {
         return next();
-    // If they aren't redirect them to the login page
-    var path = require('path');
-    res.sendFile(path.resolve(__dirname + '/../client/views/login.html'));
+    }
+    else {
+        res.status(404).json({ message: "not logged in with facebook" });
+    }
 }
 //um authentifizierung in eigener anwendungbenutzten zu können
 //muss diese beim service registriert werden
@@ -713,23 +684,12 @@ var FacebookStrategy = pFacebook.Strategy;
 passport.use(new FacebookStrategy({
     clientID: facebookConfigAuth.facebookAuth.clientID,
     clientSecret: facebookConfigAuth.facebookAuth.clientSecret,
-    profileFields: ["name", "email", "photos", "gender"],
+    profileFields: ["name", "email"],
     callbackURL: facebookConfigAuth.facebookAuth.callbackURL,
     passReqToCallback: true // allows us to pass in the req from our route
 }, function (req, accessToken, refreshToken, profile, done) {
     done(null, profile);
 }));
-// hiermit wird passport also der middleware angezeigt welche strategienwir erlauben
-// die google strategie benutzt dabei die zugangsdaten aus dem konfigurationsobjekt weiter oben
-var GoogleStrategy = pGoogle.Strategy;
-passport.use(new GoogleStrategy({
-    clientID: googlConfigAuth.googleAuth.clientID,
-    clientSecret: googlConfigAuth.googleAuth.clientSecret,
-    callbackURL: googlConfigAuth.googleAuth.callbackURL,
-    passReqToCallback: true // allows us to pass in the req from our route
-}, 
-// diese callback funktion wir daufgerufen nacdem der benutzer sich eingeloggt hat, wir haben zugriff auf
-// das accesstoken und refreshtoken sowie auf das proil des benutzers
-function (req, accessToken, refreshToken, profile, done) {
-    done(null, profile);
-}));
+router.use("/", express.static(__dirname + "/../client/dist/bomberman"));
+// Routen innerhalb der Angular-Anwendung zurückleiten
+router.use("/*", express.static(__dirname + "/../client/dist/bomberman"));
