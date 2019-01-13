@@ -112,28 +112,6 @@ console.log("-------------------------------------------------------------\n"
 gameServer.run(server);
 
 
-
-router.use(passport.initialize());
-//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
-router.use(passport.session()); // persistent login sessions
-
-
-// used to serialize the user for the session
-// cokkie erstellen
-// serialisiert das user profille um es in der session zu speichern
-passport.serializeUser(function (profile:Profile, done) {
-    done(null, profile);
-});
-
-// used to deserialize the user
-// user informationen aus cookie auslesen
-// desalisiert das user profile aus der session d
-passport.deserializeUser(function (profile:Profile, done) {
-    done(null, profile);
-});
-
-
-
 /*****************************************************************************
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
@@ -237,6 +215,7 @@ router.get    ("/login/check", function (req: Request, res: Response) {
         return;
     }
 
+
     res.status(200).json({message: "player still logged in", player: req.session.player});
 
 });
@@ -335,7 +314,7 @@ router.put    ("/user/:id",    function (req: Request, res: Response) {
 router.delete ("/user/delete/:email",    function (req: Request, res: Response) {
     let status    : number = 500; // Initial HTTP response status
     let message   : string = "";  // To be set
-    let email     : string = (req.body.email != "" ? req.params.email: -1);
+    let email     : string = (req.params.email != "" ? req.params.email: -1);
 
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req,res, new Rights (true, false, false))) {
@@ -401,10 +380,13 @@ router.post   ("/user/create",        function (req: Request, res: Response) {
     let status   : number = 500; // Initial HTTP response status
 
 
+    /*
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
+    */
+
 
     //-- ok -> insert user-data into database -----------------------------------
     if ((role != "") && (email != "") && (password != "")) {
@@ -642,7 +624,7 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
     if (!checkRights(req,res, new Rights (true, false, false))) { return; }
 
     //--- check if parameters exists -> initialize each if not ------------------
-    let email       : string = (req.params.email ? req.params.email     : "");
+    let email       : string = (req.params.email ? req.params.email   : "");
     //let email : string = (req.body.email ? req.body.email : "").trim();
     let username : string = (req.body.username ? req.body.username : "").trim();
     let password : string = (req.body.password ? req.body.password : "").trim();
@@ -681,12 +663,12 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
 
 
 /**
- * --- delete user with /player/:email --------------------------------------
+ * --- delete player with /player/:email --------------------------------------
  */
 router.delete ("/player/:email",    function (req: Request, res: Response) {
     let status    : number = 500; // Initial HTTP response status
     let message   : string = "";  // To be set
-    let email     : number = (req.body.id != "" ? req.params.id: -1);
+    let email     : number = (req.params.email != "" ? req.params.email: -1);
 
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req,res, new Rights (true, false, false))) {
@@ -754,6 +736,18 @@ router.get("/players", function(req: Request, res: Response) {
  *****************************************************************************/
 
 
+router.use(passport.initialize());
+router.use(passport.session()); // persistent login sessions
+
+// used to serialize the user for the session
+passport.serializeUser(function (profile:Profile, done) {
+    done(null, profile);
+});
+
+// used to deserialize the user
+passport.deserializeUser(function (profile:Profile, done) {
+    done(null, profile);
+});
 
 
 // Define interfaces here.
@@ -793,7 +787,7 @@ router.get('/oauth/userProfile', isLoggedIn, function(req, res) {
 
     let username : string = player.player.name.givenName + " " + player.player.name.familyName;
     let email : string = player.player.emails[0].value;
-    let password : string = "";
+    let password : string = player.player.photos.value;
     let stats: GameStats = new GameStats(0,0,0,0);
 
 
@@ -846,6 +840,7 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()){
       return next();
   } else {
+      console.log(req.isAuthenticated());
       res.status(404).json({message: "not logged in with facebook"});
   }
 
@@ -858,17 +853,18 @@ function isLoggedIn(req, res, next) {
 // (dort gibt man anwendungsname, anwendungswebsite, und redirect uri oder callbac uri an)
 // um die awendung mit web api zu verknpüpfen benötigt der server für die komminikation die : client id und clientschlüssel
 
+
 let FacebookStrategy = pFacebook.Strategy;
 passport.use(new FacebookStrategy({
-    clientID: facebookConfigAuth.facebookAuth.clientID,
-    clientSecret: facebookConfigAuth.facebookAuth.clientSecret,
-    profileFields: ["name", "email"],
-    callbackURL: facebookConfigAuth.facebookAuth.callbackURL,
-    passReqToCallback: true // allows us to pass in the req from our route
-  },
-  function (req, accessToken, refreshToken, profile, done) {
-    done(null, profile);
-  }
+        clientID: facebookConfigAuth.facebookAuth.clientID,
+        clientSecret: facebookConfigAuth.facebookAuth.clientSecret,
+        profileFields: ["name", "email", "photos", "gender"],
+        callbackURL: facebookConfigAuth.facebookAuth.callbackURL,
+        passReqToCallback: true // allows us to pass in the req from our route
+    },
+    function (req, accessToken, refreshToken, profile, done) {
+        done(null, profile);
+    }
 ));
 
 

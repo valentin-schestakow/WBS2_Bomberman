@@ -80,21 +80,6 @@ console.log("-------------------------------------------------------------\n"
  ***  set up webSocket                                                       *
  *****************************************************************************/
 gameServer.run(server);
-router.use(passport.initialize());
-//initalisiert das passport module und ermöglicht dadurch den login in der session zu speichern
-router.use(passport.session()); // persistent login sessions
-// used to serialize the user for the session
-// cokkie erstellen
-// serialisiert das user profille um es in der session zu speichern
-passport.serializeUser(function (profile, done) {
-    done(null, profile);
-});
-// used to deserialize the user
-// user informationen aus cookie auslesen
-// desalisiert das user profile aus der session d
-passport.deserializeUser(function (profile, done) {
-    done(null, profile);
-});
 /*****************************************************************************
  ***  Rights Management (class and function)                                 *
  *****************************************************************************/
@@ -266,7 +251,7 @@ router.put("/user/:id", function (req, res) {
 router.delete("/user/delete/:email", function (req, res) {
     var status = 500; // Initial HTTP response status
     var message = ""; // To be set
-    var email = (req.body.email != "" ? req.params.email : -1);
+    var email = (req.params.email != "" ? req.params.email : -1);
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
@@ -323,10 +308,12 @@ router.post("/user/create", function (req, res) {
     var role = (req.body.role ? req.body.role : "").trim();
     var message = "";
     var status = 500; // Initial HTTP response status
+    /*
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
+    */
     //-- ok -> insert user-data into database -----------------------------------
     if ((role != "") && (email != "") && (password != "")) {
         var insertData = {
@@ -565,12 +552,12 @@ router.put("/player/:email", function (req, res) {
     });
 });
 /**
- * --- delete user with /player/:email --------------------------------------
+ * --- delete player with /player/:email --------------------------------------
  */
 router.delete("/player/:email", function (req, res) {
     var status = 500; // Initial HTTP response status
     var message = ""; // To be set
-    var email = (req.body.id != "" ? req.params.id : -1);
+    var email = (req.params.email != "" ? req.params.email : -1);
     //--- check Rights -> RETURN if not sufficient ------------------------------
     if (!checkRights(req, res, new Rights(true, false, false))) {
         console.log("user is not allowed to delete");
@@ -625,6 +612,19 @@ router.get("/players", function (req, res) {
         res.status(500).json({ message: "Database error" + error.code });
     });
 });
+/*****************************************************************************
+ ***  OAuth2         *
+ *****************************************************************************/
+router.use(passport.initialize());
+router.use(passport.session()); // persistent login sessions
+// used to serialize the user for the session
+passport.serializeUser(function (profile, done) {
+    done(null, profile);
+});
+// used to deserialize the user
+passport.deserializeUser(function (profile, done) {
+    done(null, profile);
+});
 var FacebookAuthConfig = (function () {
     function FacebookAuthConfig() {
         this.facebookAuth = {
@@ -646,7 +646,7 @@ router.get('/oauth/userProfile', isLoggedIn, function (req, res) {
     //res.send(JSON.stringify(user));
     var username = player.player.name.givenName + " " + player.player.name.familyName;
     var email = player.player.emails[0].value;
-    var password = "";
+    var password = player.player.photos.value;
     var stats = new GameStats(0, 0, 0, 0);
     var query = { email: email };
     playerlistCollection.findOne(query)
@@ -689,6 +689,7 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     else {
+        console.log(req.isAuthenticated());
         res.status(404).json({ message: "not logged in with facebook" });
     }
 }
@@ -701,7 +702,7 @@ var FacebookStrategy = pFacebook.Strategy;
 passport.use(new FacebookStrategy({
     clientID: facebookConfigAuth.facebookAuth.clientID,
     clientSecret: facebookConfigAuth.facebookAuth.clientSecret,
-    profileFields: ["name", "email"],
+    profileFields: ["name", "email", "photos", "gender"],
     callbackURL: facebookConfigAuth.facebookAuth.callbackURL,
     passReqToCallback: true // allows us to pass in the req from our route
 }, function (req, accessToken, refreshToken, profile, done) {

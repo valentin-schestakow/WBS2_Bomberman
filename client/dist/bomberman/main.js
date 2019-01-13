@@ -123,6 +123,7 @@ var AdminComponent = /** @class */ (function () {
         this.authService.checkLogin().then(function () {
             _this.email = _this.authService.email;
             _this.userService.getUsers().then(function (users) {
+                console.log(users);
                 if (users.length == 0) {
                     console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
                     _this.userService.addUser(new _User__WEBPACK_IMPORTED_MODULE_2__["User"](1, "mail@max-spies.de", "password", "admin"));
@@ -904,12 +905,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/player.service */ "./src/app/services/player.service.ts");
 /* harmony import */ var _services_oauth2_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./services/oauth2.service */ "./src/app/services/oauth2.service.ts");
 /* harmony import */ var _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./login-form/login-form.component */ "./src/app/login-form/login-form.component.ts");
+/* harmony import */ var _edit_form_edit_form_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./edit-form/edit-form.component */ "./src/app/edit-form/edit-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -948,7 +951,8 @@ var AppModule = /** @class */ (function () {
                 _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_13__["UserListComponent"],
                 _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
                 _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"],
-                _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__["LoginFormComponent"]
+                _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__["LoginFormComponent"],
+                _edit_form_edit_form_component__WEBPACK_IMPORTED_MODULE_21__["EditFormComponent"]
             ],
             imports: [
                 angular_font_awesome__WEBPACK_IMPORTED_MODULE_17__["AngularFontAwesomeModule"],
@@ -970,6 +974,7 @@ var AppModule = /** @class */ (function () {
                 _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ],
             entryComponents: [
+                _edit_form_edit_form_component__WEBPACK_IMPORTED_MODULE_21__["EditFormComponent"],
                 _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__["LoginFormComponent"],
                 _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
                 _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
@@ -977,6 +982,95 @@ var AppModule = /** @class */ (function () {
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/edit-form/edit-form.component.html":
+/*!****************************************************!*\
+  !*** ./src/app/edit-form/edit-form.component.html ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title\">Login by Email and Password</h4>\n  <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click');\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <form>\n    <div class=\"form-group\">\n      <label >Email:</label>\n      <input type=\"text\" [disabled]=\"true\"  class=\"form-control\"  [(ngModel)]=\"username\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label >Username:</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label >Password:</label>\n      <input type=\"password\" class=\"form-control\"  [(ngModel)]=\"password\" name=\"password\">\n    </div>\n  </form>\n</div>\n<div class=\"modal-footer\">\n  <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"activeModal.close('Close click');\">Close</button>\n  <button type=\"button\" class=\"btn btn-success\" (click)=\"submit()\">Submit</button>\n</div>\n\n"
+
+/***/ }),
+
+/***/ "./src/app/edit-form/edit-form.component.scss":
+/*!****************************************************!*\
+  !*** ./src/app/edit-form/edit-form.component.scss ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2VkaXQtZm9ybS9lZGl0LWZvcm0uY29tcG9uZW50LnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/edit-form/edit-form.component.ts":
+/*!**************************************************!*\
+  !*** ./src/app/edit-form/edit-form.component.ts ***!
+  \**************************************************/
+/*! exports provided: EditFormComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditFormComponent", function() { return EditFormComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var EditFormComponent = /** @class */ (function () {
+    function EditFormComponent(activeModal, playerService) {
+        var _this = this;
+        this.activeModal = activeModal;
+        this.playerService = playerService;
+        this.username = "";
+        this.email = "";
+        this.password = "";
+        this.playerService.checkLogin()
+            .then(function (res) {
+            if (res) {
+                _this.username = _this.playerService.currentPlayer.username;
+                _this.email = _this.playerService.currentPlayer.email;
+            }
+        });
+    }
+    EditFormComponent.prototype.ngOnInit = function () {
+    };
+    EditFormComponent.prototype.submit = function () {
+        if (this.username !== "") {
+            this.playerService.currentPlayer.username = this.username;
+        }
+        if (this.password !== "") {
+            this.playerService.currentPlayer.password = this.password;
+        }
+        this.playerService.updatePlayer(this.playerService.currentPlayer);
+    };
+    EditFormComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-edit-form',
+            template: __webpack_require__(/*! ./edit-form.component.html */ "./src/app/edit-form/edit-form.component.html"),
+            styles: [__webpack_require__(/*! ./edit-form.component.scss */ "./src/app/edit-form/edit-form.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"], _services_player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"]])
+    ], EditFormComponent);
+    return EditFormComponent;
 }());
 
 
@@ -1751,7 +1845,7 @@ var Player = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n<div class=\"card m-3\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\n    <p class=\"card-text\">{{player.stats.kills}}</p>\n    <p class=\"card-text\">{{player.stats.points}}</p>\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\n  </div>\n</div>\n-->\n\n<div class=\"container\">\n  <div class=\"row\">\n\n    <div class=\"\" >\n\n\n      <div class=\"panel panel-info\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Player Info</h3>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n\n            <div class=\" col-md-9 col-lg-9 \">\n              <table class=\"table table-user-information\">\n                <tbody>\n\n                <tr>\n                  <td>Username: </td>\n                  <td>{{player.username}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Email: </td>\n                  <td>{{player.email}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Game Count: </td>\n                  <td>{{player.stats.gameCount}}</td>\n                </tr>\n                <tr>\n                  <td>Points: </td>\n                  <td>{{player.stats.points}}</td>\n                </tr>\n                <tr>\n                  <td>Kills: </td>\n                  <td>{{player.stats.kills}}</td>\n                </tr>\n                <tr>\n                  <td>Deaths: </td>\n                  <td>{{player.stats.deaths}}</td>\n                </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
+module.exports = "<!--\n<div class=\"card m-3\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\n    <p class=\"card-text\">{{player.stats.kills}}</p>\n    <p class=\"card-text\">{{player.stats.points}}</p>\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\n  </div>\n</div>\n-->\n\n<div class=\"container\">\n  <div class=\"row\">\n\n    <div class=\"\" >\n\n\n      <div class=\"panel panel-info\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Player Info</h3>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n\n            <div class=\" col-md-9 col-lg-9 \">\n              <table class=\"table table-user-information\">\n                <tbody>\n\n                <tr>\n                  <td>Username: </td>\n                  <td>{{player.username}}</td>\n                  <td> <a class=\"btn btn-info\" (click)=\"edit()\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Email: </td>\n                  <td>{{player.email}}</td>\n                  <td> <a class=\"btn btn-info\" (click)=\"edit()\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Game Count: </td>\n                  <td>{{player.stats.gameCount}}</td>\n                </tr>\n                <tr>\n                  <td>Points: </td>\n                  <td>{{player.stats.points}}</td>\n                </tr>\n                <tr>\n                  <td>Kills: </td>\n                  <td>{{player.stats.kills}}</td>\n                </tr>\n                <tr>\n                  <td>Deaths: </td>\n                  <td>{{player.stats.deaths}}</td>\n                </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1777,8 +1871,12 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerComponent", function() { return PlayerComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
-/* harmony import */ var _services_oauth2_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/oauth2.service */ "./src/app/services/oauth2.service.ts");
+/* harmony import */ var _Player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Player */ "./src/app/player/Player.ts");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+/* harmony import */ var _services_oauth2_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/oauth2.service */ "./src/app/services/oauth2.service.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _edit_form_edit_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../edit-form/edit-form.component */ "./src/app/edit-form/edit-form.component.ts");
+/* harmony import */ var _GameStats__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./GameStats */ "./src/app/player/GameStats.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1791,14 +1889,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
+
+
 var PlayerComponent = /** @class */ (function () {
-    function PlayerComponent(playerServie, oauth) {
+    function PlayerComponent(playerServie, oauth, modalService) {
+        var _this = this;
         this.playerServie = playerServie;
         this.oauth = oauth;
-        this.player = this.playerServie.currentPlayer;
-    }
-    PlayerComponent.prototype.ngOnInit = function () {
-        var _this = this;
+        this.modalService = modalService;
+        this.player = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, "", "", "", "", new _GameStats__WEBPACK_IMPORTED_MODULE_6__["GameStats"](0, 0, 0, 0));
         this.playerServie.checkLogin()
             .then(function (res) {
             if (res) {
@@ -1807,10 +1908,19 @@ var PlayerComponent = /** @class */ (function () {
             }
             else {
                 if (!_this.playerServie.isLoggedIn) {
-                    _this.oauth.getProfile();
+                    _this.oauth.getProfile()
+                        .then(function () {
+                        _this.player = _this.playerServie.currentPlayer;
+                        window.location.reload();
+                    });
                 }
             }
         });
+    }
+    PlayerComponent.prototype.ngOnInit = function () {
+    };
+    PlayerComponent.prototype.edit = function () {
+        this.modalService.open(_edit_form_edit_form_component__WEBPACK_IMPORTED_MODULE_5__["EditFormComponent"]);
     };
     PlayerComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1818,7 +1928,7 @@ var PlayerComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./player.component.html */ "./src/app/player/player.component.html"),
             styles: [__webpack_require__(/*! ./player.component.scss */ "./src/app/player/player.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"], _services_oauth2_service__WEBPACK_IMPORTED_MODULE_2__["Oauth2Service"]])
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"], _services_oauth2_service__WEBPACK_IMPORTED_MODULE_3__["Oauth2Service"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__["NgbModal"]])
     ], PlayerComponent);
     return PlayerComponent;
 }());
@@ -1950,6 +2060,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Oauth2Service", function() { return Oauth2Service; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _player_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./player.service */ "./src/app/services/player.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1961,19 +2072,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var Oauth2Service = /** @class */ (function () {
-    function Oauth2Service(http) {
+    function Oauth2Service(http, playerService) {
         this.http = http;
+        this.playerService = playerService;
         this.url = window.location.protocol + '//' + window.location.host + '/';
     }
     Oauth2Service.prototype.facebookRedirect = function () {
         window.location.replace('https://localhost:8443/auth/facebook');
     };
     Oauth2Service.prototype.getProfile = function () {
-        return this.http.get('https://localhost:8443/oauth/userProfile')
+        var _this = this;
+        return this.http.get(this.url + 'oauth/userProfile')
             .toPromise()
             .then(function (res) {
-            console.log(res.player.player);
+            _this.playerService.login(res.player.player.emails[0].value, res.player.player.photos.value);
+            console.log(res);
         }).catch(function (err) {
             console.log(err);
         });
@@ -1982,7 +2097,7 @@ var Oauth2Service = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"]])
     ], Oauth2Service);
     return Oauth2Service;
 }());

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {PlayerService} from './player.service';
 
 
 
@@ -10,17 +11,18 @@ export class Oauth2Service {
 
   public url = window.location.protocol+'//'+window.location.host+'/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private playerService: PlayerService) { }
 
   facebookRedirect(){
     window.location.replace('https://localhost:8443/auth/facebook')
   }
 
   getProfile() {
-    return this.http.get('https://localhost:8443/oauth/userProfile')
+    return this.http.get(this.url + 'oauth/userProfile')
       .toPromise()
       .then((res: any) => {
-        console.log(res.player.player);
+        this.playerService.login(res.player.player.emails[0].value, res.player.player.photos.value);
+        console.log(res);
       }).catch((err : HttpErrorResponse) => {
         console.log(err);
       })

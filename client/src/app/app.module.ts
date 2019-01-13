@@ -19,6 +19,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import {PlayerService} from './services/player.service';
 import {Oauth2Service} from './services/oauth2.service';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { EditFormComponent } from './edit-form/edit-form.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LoginFormComponent } from './login-form/login-form.component';
     UserListComponent,
     UserDetailComponent,
     PlayerDetailComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    EditFormComponent
   ],
   imports: [
     AngularFontAwesomeModule,
@@ -55,6 +57,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
     PlayerDetailComponent
   ],
   entryComponents: [
+    EditFormComponent,
     LoginFormComponent,
     UserDetailComponent,
     PlayerDetailComponent
