@@ -3,6 +3,7 @@ import {Gamer} from './Gamer';
 import {Bomb} from './Bomb';
 import {Field} from './Field';
 import {Block} from './Block';
+import {Player} from '../player/Player';
 import {delay} from 'rxjs/operators';
 import {interval, timer} from 'rxjs';
 import {PlayerService} from '../services/player.service';
@@ -32,7 +33,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
   context: CanvasRenderingContext2D;
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
   //ctx: CanvasRenderingContext2D;
-
+  currentPlayer: Player = this.playerService.currentPlayer;
 
 
   constructor(private playerService: PlayerService) {
@@ -60,24 +61,28 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.playerService.emitField(this.playField);
   }
   broadcastPlayer(){
-    this.playerService.emitGamer(this.playerService.currentPlayer);
+    this.playerService.emitGamer(this.currentPlayer);
   }
 
   ngOnInit() {
-    this.broadcastPlayer();
-    this.broadcastField();
-    this.size = 25;
-    this.myPlayer =  new Gamer(0, 0, this.playerService.currentPlayer.username);
-    this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
-    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '2000');//3200
-    (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '1500');//2400
-    this.context.scale(4,4);
+    this.playerService.checkLogin().then(() => {
+      console.log("Username:"+this.playerService.currentPlayer.username);
+      this.currentPlayer = this.playerService.currentPlayer;
+      this.broadcastPlayer();
+      this.broadcastField();
+      this.size = 25;
+      this.myPlayer =  new Gamer(0, 0, this.currentPlayer.username);
+      this.context = (this.playground.nativeElement as HTMLCanvasElement).getContext('2d');
+      (this.playground.nativeElement as HTMLCanvasElement).setAttribute('width', '2000');//3200
+      (this.playground.nativeElement as HTMLCanvasElement).setAttribute('height', '1500');//2400
+      this.context.scale(4,4);
+      this.generatePlayField();
+    });
 
-    this.generatePlayField();
   }
 
   ngAfterViewInit() {
-    this.reprintCanvas();
+    //this.reprintCanvas();
 
   }
 
@@ -139,6 +144,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
   }
 
   playerAction(action: string) {
+
     this.broadcastMove(action, this.myPlayer);
     /*
     if (action === 'moveUp') {
@@ -224,6 +230,8 @@ export class IngameComponent implements OnInit, AfterViewInit {
   keyEvent(event: KeyboardEvent) {
     //console.log(event.code);
     //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
+    //this.playerService.checkLogin();
+    //console.log("Username:"+this.playerService.currentPlayer.username);
 
     if (event.code === 'KeyW' || event.code === 'ArrowUp') {
       this.playerAction('moveUp' );

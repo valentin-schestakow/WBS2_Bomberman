@@ -71,10 +71,11 @@ export class PlayerService implements OnInit{
   constructor(private http: HttpClient) { }
 
   checkLogin() : Promise<void> {
-    return this.http.get('https://localhost:8080/login/check')
+    return this.http.get(this.url+'login/check')
       .toPromise()
       .then((data: any) => {
-        console.log(data.message);
+        //console.log(data.message);
+        this.currentPlayer = data.player;
       }).catch((err: HttpErrorResponse) => {
         console.log(err);
         this.isLoggedIn = false;
@@ -100,11 +101,15 @@ export class PlayerService implements OnInit{
       .then((res: any) => {
       this.isLoggedIn = true;
       this.currentPlayer = res.player;
-      console.log(res.player);
+      //console.log(res.player);
     })
       .catch((err) => {
       console.log(err.message);
     });
+  }
+
+  getCurrentPlayer() : Player{
+    return this.currentPlayer;
   }
 
   logout(email: string) : Promise<void> {

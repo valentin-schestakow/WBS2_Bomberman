@@ -1,6 +1,6 @@
 import {Field} from './gameServer';
 
-export class Gamer extends Field{
+export class Gamer { //extends Field{
 
   public points: number;
   public lives: number;
@@ -11,9 +11,10 @@ export class Gamer extends Field{
   public posX: number;
   public posY: number;
   public bombPlanted:number;
+  public type: string;
 
   constructor (posX: number, posY: number, name: string) {
-    super(posX, posY);
+    //super(posX, posY);
     this.type = "Gamer";
     this.bombPlanted = 0;
     this.lives = 3;
@@ -21,8 +22,8 @@ export class Gamer extends Field{
     this.bombs = 1;
     this.name = name;
     //this.color = this.getRandomColor();
-    //this.posX = posX;
-    //this.posY = posY;
+    this.posX = posX;
+    this.posY = posY;
     this.points = 0;
   }
 

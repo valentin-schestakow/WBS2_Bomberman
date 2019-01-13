@@ -162,7 +162,7 @@ router.get("/login/check", function (req, res) {
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
-    res.status(200).json({ message: "player still logged in" });
+    res.status(200).json({ message: "player still logged in", player: req.session.player });
 });
 /**
  * --- login with: post /login -----------------------------------------
@@ -179,6 +179,7 @@ router.post("/login/player", function (req, res) {
             if (player !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email; // set session-variable email
+                req.session.player = player;
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
                 res.status(status).json({ message: message, player: player });

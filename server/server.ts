@@ -218,7 +218,7 @@ router.get    ("/login/check", function (req: Request, res: Response) {
         return;
     }
 
-    res.status(200).json({message: "player still logged in"});
+    res.status(200).json({message: "player still logged in", player: req.session.player});
 
 });
 
@@ -239,7 +239,7 @@ router.post   ("/login/player",       function (req: Request, res: Response) {
             if (player !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email;    // set session-variable email
-
+                req.session.player = player;
                 req.session.rights = new Rights(true, false, false);
                 status = 200;
                 res.status(status).json({message: message, player: player});

@@ -1026,10 +1026,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var IngameComponent = /** @class */ (function () {
-    //ctx: CanvasRenderingContext2D;
     function IngameComponent(playerService) {
         var _this = this;
         this.playerService = playerService;
+        //ctx: CanvasRenderingContext2D;
+        this.currentPlayer = this.playerService.currentPlayer;
         this.playerService.receiveMove().subscribe(function (data) {
             //console.log(data)
         });
@@ -1040,7 +1041,7 @@ var IngameComponent = /** @class */ (function () {
         });
         this.playerService.receiveGamer().subscribe(function (data) {
             //console.log(data);
-            _this.myPlayer = data;
+            _this.gamers = data;
             //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
             //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
             _this.reprintCanvas();
@@ -1053,20 +1054,26 @@ var IngameComponent = /** @class */ (function () {
         this.playerService.emitField(this.playField);
     };
     IngameComponent.prototype.broadcastPlayer = function () {
-        this.playerService.emitGamer(this.myPlayer);
+        this.playerService.emitGamer(this.currentPlayer);
     };
     IngameComponent.prototype.ngOnInit = function () {
-        this.broadcastField();
-        this.size = 25;
-        this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, 'xXSlyerXx');
-        this.context = this.playground.nativeElement.getContext('2d');
-        this.playground.nativeElement.setAttribute('width', '2000'); //3200
-        this.playground.nativeElement.setAttribute('height', '1500'); //2400
-        this.context.scale(4, 4);
-        this.generatePlayField();
+        var _this = this;
+        this.playerService.checkLogin().then(function () {
+            console.log("Username:" + _this.playerService.currentPlayer.username);
+            _this.currentPlayer = _this.playerService.currentPlayer;
+            _this.broadcastPlayer();
+            _this.broadcastField();
+            _this.size = 25;
+            _this.myPlayer = new _Gamer__WEBPACK_IMPORTED_MODULE_1__["Gamer"](0, 0, _this.currentPlayer.username);
+            _this.context = _this.playground.nativeElement.getContext('2d');
+            _this.playground.nativeElement.setAttribute('width', '2000'); //3200
+            _this.playground.nativeElement.setAttribute('height', '1500'); //2400
+            _this.context.scale(4, 4);
+            _this.generatePlayField();
+        });
     };
     IngameComponent.prototype.ngAfterViewInit = function () {
-        this.reprintCanvas();
+        //this.reprintCanvas();
     };
     IngameComponent.prototype.generatePlayField = function () {
         var size = 25;
@@ -1107,11 +1114,15 @@ var IngameComponent = /** @class */ (function () {
                 this.context.fillRect(this.playField[i][j].posX, this.playField[i][j].posY, 25, 25);
             }
         }
-        this.printPlayer(this.myPlayer);
+        //this.printPlayer(this.myPlayer);
+        for (var _i = 0, _a = this.gamers; _i < _a.length; _i++) {
+            var gamer = _a[_i];
+            this.printPlayer(gamer);
+        }
         //this.context.drawImage(this.spaceshipAlly.nativeElement, this.myPlayer.posX * this.size, this.myPlayer.posY * this.size, this.size, this.size);
     };
     IngameComponent.prototype.printPlayer = function (gamer) {
-        this.context.fillStyle = 'blue';
+        this.context.fillStyle = gamer.color;
         this.context.fillRect(gamer.posX, gamer.posY, 25, 25);
         //this.context.drawImage(this.spaceshipAlly.nativeElement, gamer.posX * this.size, gamer.posY * this.size, this.size, this.size);
         this.context.font = "5px";
@@ -1191,6 +1202,8 @@ var IngameComponent = /** @class */ (function () {
     IngameComponent.prototype.keyEvent = function (event) {
         //console.log(event.code);
         //console.log("LastPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
+        //this.playerService.checkLogin();
+        //console.log("Username:"+this.playerService.currentPlayer.username);
         if (event.code === 'KeyW' || event.code === 'ArrowUp') {
             this.playerAction('moveUp');
         }
@@ -1619,8 +1632,8 @@ var PlayerService = /** @class */ (function () {
     PlayerService.prototype.emitField = function (field) {
         this.socket.emit('getField', field);
     };
-    PlayerService.prototype.emitGamer = function (gamer) {
-        this.socket.emit('gamer', gamer);
+    PlayerService.prototype.emitGamer = function (player) {
+        this.socket.emit('gamer', player);
     };
     PlayerService.prototype.receiveMove = function () {
         var _this = this;
@@ -1654,10 +1667,11 @@ var PlayerService = /** @class */ (function () {
     };
     PlayerService.prototype.checkLogin = function () {
         var _this = this;
-        return this.http.get('https://localhost:8080/login/check')
+        return this.http.get(this.url + 'login/check')
             .toPromise()
             .then(function (data) {
-            console.log(data.message);
+            //console.log(data.message);
+            _this.currentPlayer = data.player;
         }).catch(function (err) {
             console.log(err);
             _this.isLoggedIn = false;
@@ -1681,11 +1695,14 @@ var PlayerService = /** @class */ (function () {
             .then(function (res) {
             _this.isLoggedIn = true;
             _this.currentPlayer = res.player;
-            console.log(res.player);
+            //console.log(res.player);
         })
             .catch(function (err) {
             console.log(err.message);
         });
+    };
+    PlayerService.prototype.getCurrentPlayer = function () {
+        return this.currentPlayer;
     };
     PlayerService.prototype.logout = function (email) {
         var _this = this;

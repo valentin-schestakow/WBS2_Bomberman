@@ -9,7 +9,7 @@ let activeBombs: Bomb[];
 let activeBomb: Bomb;
 let gamer: Gamer;
 let myPlayer: Player;
-let gamers: Gamer[];
+let gamers: Gamer[] = [];
 
 export function run(server) {
     generateField();
@@ -38,11 +38,12 @@ export function run(server) {
             socket.emit('bombplace', Field);
             socket.broadcast.emit('bombplace', Field);
         });
-        socket.on('gamer', function (player) {
-            //console.log(gamer);
+        socket.on('gamer', function (player: Player) {
+            console.log("Player connected: "+player.username);
             //socket.emit(ww'gamer',gamer);
             //Player will be castet to gamer an broadcasted to all
-            //spawnGamer(player);
+
+            spawnGamer(player);
             socket.emit('gamer', gamers);
             socket.broadcast.emit('gamer', gamers);
         });
@@ -65,21 +66,21 @@ function spawnGamer(newPlayer: Player) {
     let playerNumb = gamers.length;
     switch (playerNumb) {
         case 0: {
-            newGamer = new Gamer(25, 25, "sda");
-            //newGamer.color = "blue";
-            //gamers.push(newGamer);
+            newGamer = new Gamer(0, 0, newPlayer.username);
+            newGamer.color = "blue";
+            gamers.push(newGamer);
             break;
         }
         case 1: {
-            //newGamer = new Gamer(0, 25, newPlayer.username);
-            //newGamer.color = "yellow";
-            //gamers.push(newGamer);
+            newGamer = new Gamer(0, 25, newPlayer.username);
+            newGamer.color = "yellow";
+            gamers.push(newGamer);
             break;
         }
         case 2: {
-            //newGamer = new Gamer(25, 0, newPlayer.username);
-            //newGamer.color = "pink";
-            //gamers.push(newGamer);
+            newGamer = new Gamer(25, 0, newPlayer.username);
+            newGamer.color = "pink";
+            gamers.push(newGamer);
             break;
         }
         default: {
@@ -89,6 +90,7 @@ function spawnGamer(newPlayer: Player) {
     }
 }
 
+//Function that prints the acual field in the console
 function printField() {
     let row = "\t0|1|2|3|4|5|6|7|8|9|0|1|2|3|4|5|6|7|8|9|\n";
     for (let i = 0; i < playField.length; i++) {
@@ -101,6 +103,7 @@ function printField() {
     console.log(row);
 }
 
+//funktion that generates and fills the playfield with random blocks
 function generateField() {
     playField = [];
     for (let i = 0; i < 15; i++) {
@@ -149,6 +152,7 @@ export class Bomb extends Field {
 }
 
 function checkGamerAction(action: string, gamer: Gamer) {
+    console.log(gamer.name+": "+"aktuelle Pos = "+" x:"+gamer.posX+" y:"+gamer.posY);
     if (action === 'moveUp') {
         if (gamer.posY > 0 && playField[gamer.posY / 25 - 1][gamer.posX / 25].type !== 'Block') {
             gamer.posY -= 25;
@@ -183,11 +187,18 @@ function checkGamerAction(action: string, gamer: Gamer) {
             }, 1000);
         }
     }
-    for(let findGamer of gamers){
-        if(findGamer.name == gamer.name){
-            findGamer = gamer;
+
+
+    for (let i = 0; i < gamers.length; i++){
+        if(gamers[i].name == gamer.name){
+            gamers[i] = gamer;
+            console.log(gamers[i].name+": "+action+" x:"+gamers[i].posX+" y:"+gamers[i].posY);
         }
     }
+    for(let findGamer of gamers){
+        console.log(findGamer.name+": "+"aktuelle pos von spieler"+" x:"+findGamer.posX+" y:"+findGamer.posY);
+    }
+
     return gamers;
 }
 
