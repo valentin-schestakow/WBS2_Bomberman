@@ -18,6 +18,7 @@ import { PlayerDetailComponent } from './admin/player-list/player-detail/player-
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import {PlayerService} from './services/player.service';
 import {Oauth2Service} from './services/oauth2.service';
+import { LoginFormComponent } from './login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {Oauth2Service} from './services/oauth2.service';
     PlayerListComponent,
     UserListComponent,
     UserDetailComponent,
-    PlayerDetailComponent
+    PlayerDetailComponent,
+    LoginFormComponent
   ],
   imports: [
     AngularFontAwesomeModule,
@@ -53,6 +55,7 @@ import {Oauth2Service} from './services/oauth2.service';
     PlayerDetailComponent
   ],
   entryComponents: [
+    LoginFormComponent,
     UserDetailComponent,
     PlayerDetailComponent
   ]

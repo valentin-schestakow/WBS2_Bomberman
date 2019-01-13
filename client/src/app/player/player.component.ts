@@ -12,22 +12,24 @@ export class PlayerComponent implements OnInit {
 
   player: Player;
 
-  constructor(public playerServie: PlayerService, public oauth: Oauth2Service) { }
+  constructor(public playerServie: PlayerService, public oauth: Oauth2Service) {
+    this.player = this.playerServie.currentPlayer;
+  }
 
 
   ngOnInit() {
     this.playerServie.checkLogin()
-      .then(() =>{
-        console.log(this.playerServie.currentPlayer);
-      })
-      .catch(() => {
-        if (!this.playerServie.isLoggedIn){
-          this.oauth.getProfile();
+      .then((res:boolean) => {
+        if(res) {
+          console.log(this.playerServie.currentPlayer);
+          this.player = this.playerServie.currentPlayer;
+        } else {
+          if (!this.playerServie.isLoggedIn){
+            this.oauth.getProfile();
+          }
         }
+
       })
-
-
-
   }
 
 }

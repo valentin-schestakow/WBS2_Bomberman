@@ -8,7 +8,7 @@
     <a class="navbar-brand navbar-header"  href="#">BOMBERMAN</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item">
-        <button class="btn btn-outline-success my-2 my-sm-0 "  type="submit">Login</button>
+        <button class="btn btn-outline-success my-2 my-sm-0 " (click)="loginButton()" type="submit">Login</button>
       </li>
       <li class="nav-item">
         <button class="btn btn-outline-warning my-2 my-sm-0" (click)="signUpButton()" type="submit">Sign Up</button>
@@ -26,11 +26,11 @@
       <a class="navbar-brand navbar-header text-primary"  href="/play">Play BOMBERMAN!</a>
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
-          <a class="nav-link"  href="#">Stats</a>
+          <a class="nav-link"  href="player">Stats</a>
         </li>
       </ul>
       <a class="nav-item justify-content-end">
-        <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+        <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logoutButton()" type="submit">Logout</button>
       </a>
     </div>
   </nav>

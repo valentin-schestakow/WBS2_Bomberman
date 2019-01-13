@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PlayerService} from './services/player.service';
-import {HttpErrorResponse} from '@angular/common/http';
-
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {LoginFormComponent} from './login-form/login-form.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,14 +9,18 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class AppComponent implements  OnInit{
   title = 'bomberman';
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean;
 
-  constructor(private playerService: PlayerService) {
-    //this.isLoggedIn = this.playerService.isLoggedIn;
+  constructor(private playerService: PlayerService, private modalService: NgbModal) {
+    this.playerService.checkLogin()
+      .then((res:boolean) => {
+        this.isLoggedIn = res;
+      });
   }
 
   ngOnInit(): void {
 
+    //this.isLoggedIn = this.playerService.isLoggedIn;
     /*
     this.playerService.checkLogin()
       .then(() => {
@@ -41,10 +45,20 @@ export class AppComponent implements  OnInit{
   }
 
   loginButton(){
-    //window.location.replace(this.playerService.url+"login")
+    const modalRef = this.modalService.open(LoginFormComponent);
+
   }
 
   signUpButton(){
     window.location.replace(this.playerService.url+"login");
   }
+
+  logoutButton(){
+    this.playerService.logout(this.playerService.currentPlayer.email)
+      .then(() => {
+        window.location.replace('/');
+      })
+  }
+
+
 }

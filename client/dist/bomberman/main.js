@@ -617,7 +617,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n<h1>Welcome to {{ title }}!</h1>\n-->\n<div *ngIf=\"!isLoggedIn\">\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n  <div class=\"collapse navbar-collapse\" >\n\n    <a class=\"navbar-brand navbar-header\"  href=\"#\">BOMBERMAN</a>\n    <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\n      <li class=\"nav-item\">\n        <button class=\"btn btn-outline-success my-2 my-sm-0 \"  type=\"submit\">Login</button>\n      </li>\n      <li class=\"nav-item\">\n        <button class=\"btn btn-outline-warning my-2 my-sm-0\" (click)=\"signUpButton()\" type=\"submit\">Sign Up</button>\n      </li>\n    </ul>\n  </div>\n</nav>\n</div>\n\n\n<div *ngIf=\"isLoggedIn\">\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <div class=\"collapse navbar-collapse\">\n\n      <a class=\"navbar-brand navbar-header text-primary\"  href=\"/play\">Play BOMBERMAN!</a>\n      <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"  href=\"#\">Stats</a>\n        </li>\n      </ul>\n      <a class=\"nav-item justify-content-end\">\n        <button class=\"btn btn-outline-danger my-2 my-sm-0\" type=\"submit\">Logout</button>\n      </a>\n    </div>\n  </nav>\n</div>\n<router-outlet></router-outlet>\n\n\n"
+module.exports = "<!--\n<h1>Welcome to {{ title }}!</h1>\n-->\n<div *ngIf=\"!isLoggedIn\">\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n  <div class=\"collapse navbar-collapse\" >\n\n    <a class=\"navbar-brand navbar-header\"  href=\"#\">BOMBERMAN</a>\n    <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\n      <li class=\"nav-item\">\n        <button class=\"btn btn-outline-success my-2 my-sm-0 \" (click)=\"loginButton()\" type=\"submit\">Login</button>\n      </li>\n      <li class=\"nav-item\">\n        <button class=\"btn btn-outline-warning my-2 my-sm-0\" (click)=\"signUpButton()\" type=\"submit\">Sign Up</button>\n      </li>\n    </ul>\n  </div>\n</nav>\n</div>\n\n\n<div *ngIf=\"isLoggedIn\">\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <div class=\"collapse navbar-collapse\">\n\n      <a class=\"navbar-brand navbar-header text-primary\"  href=\"/play\">Play BOMBERMAN!</a>\n      <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\"  href=\"player\">Stats</a>\n        </li>\n      </ul>\n      <a class=\"nav-item justify-content-end\">\n        <button class=\"btn btn-outline-danger my-2 my-sm-0\" (click)=\"logoutButton()\" type=\"submit\">Logout</button>\n      </a>\n    </div>\n  </nav>\n</div>\n<router-outlet></router-outlet>\n\n\n"
 
 /***/ }),
 
@@ -644,6 +644,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/player.service */ "./src/app/services/player.service.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login-form/login-form.component */ "./src/app/login-form/login-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -655,14 +657,21 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(playerService) {
+    function AppComponent(playerService, modalService) {
+        var _this = this;
         this.playerService = playerService;
+        this.modalService = modalService;
         this.title = 'bomberman';
-        this.isLoggedIn = false;
-        //this.isLoggedIn = this.playerService.isLoggedIn;
+        this.playerService.checkLogin()
+            .then(function (res) {
+            _this.isLoggedIn = res;
+        });
     }
     AppComponent.prototype.ngOnInit = function () {
+        //this.isLoggedIn = this.playerService.isLoggedIn;
         /*
         this.playerService.checkLogin()
           .then(() => {
@@ -686,10 +695,16 @@ var AppComponent = /** @class */ (function () {
           */
     };
     AppComponent.prototype.loginButton = function () {
-        //window.location.replace(this.playerService.url+"login")
+        var modalRef = this.modalService.open(_login_form_login_form_component__WEBPACK_IMPORTED_MODULE_3__["LoginFormComponent"]);
     };
     AppComponent.prototype.signUpButton = function () {
         window.location.replace(this.playerService.url + "login");
+    };
+    AppComponent.prototype.logoutButton = function () {
+        this.playerService.logout(this.playerService.currentPlayer.email)
+            .then(function () {
+            window.location.replace('/');
+        });
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -697,7 +712,7 @@ var AppComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]])
+        __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -736,12 +751,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angular_font_awesome__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! angular-font-awesome */ "./node_modules/angular-font-awesome/dist/angular-font-awesome.es5.js");
 /* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./services/player.service */ "./src/app/services/player.service.ts");
 /* harmony import */ var _services_oauth2_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./services/oauth2.service */ "./src/app/services/oauth2.service.ts");
+/* harmony import */ var _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./login-form/login-form.component */ "./src/app/login-form/login-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -778,7 +795,8 @@ var AppModule = /** @class */ (function () {
                 _admin_player_list_player_list_component__WEBPACK_IMPORTED_MODULE_12__["PlayerListComponent"],
                 _admin_user_list_user_list_component__WEBPACK_IMPORTED_MODULE_13__["UserListComponent"],
                 _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
-                _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
+                _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"],
+                _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__["LoginFormComponent"]
             ],
             imports: [
                 angular_font_awesome__WEBPACK_IMPORTED_MODULE_17__["AngularFontAwesomeModule"],
@@ -800,6 +818,7 @@ var AppModule = /** @class */ (function () {
                 _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ],
             entryComponents: [
+                _login_form_login_form_component__WEBPACK_IMPORTED_MODULE_20__["LoginFormComponent"],
                 _admin_user_list_user_detail_user_detail_component__WEBPACK_IMPORTED_MODULE_14__["UserDetailComponent"],
                 _admin_player_list_player_detail_player_detail_component__WEBPACK_IMPORTED_MODULE_16__["PlayerDetailComponent"]
             ]
@@ -1292,6 +1311,96 @@ var IngameComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/login-form/login-form.component.html":
+/*!******************************************************!*\
+  !*** ./src/app/login-form/login-form.component.html ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title\">Login by Email and Password</h4>\n  <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click');\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <form>\n    <div class=\"form-group\">\n      <label >Email:</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label >Password:</label>\n      <input type=\"password\" class=\"form-control\"  [(ngModel)]=\"password\" name=\"password\">\n    </div>\n  </form>\n</div>\n<div class=\"modal-footer\">\n  <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"activeModal.close('Close click');\">Close</button>\n  <button type=\"button\" class=\"btn btn-success\" (click)=\"login()\">Login</button>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/login-form/login-form.component.scss":
+/*!******************************************************!*\
+  !*** ./src/app/login-form/login-form.component.scss ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2xvZ2luLWZvcm0vbG9naW4tZm9ybS5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/login-form/login-form.component.ts":
+/*!****************************************************!*\
+  !*** ./src/app/login-form/login-form.component.ts ***!
+  \****************************************************/
+/*! exports provided: LoginFormComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginFormComponent", function() { return LoginFormComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _services_player_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/player.service */ "./src/app/services/player.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var LoginFormComponent = /** @class */ (function () {
+    function LoginFormComponent(activeModal, playerService) {
+        this.activeModal = activeModal;
+        this.playerService = playerService;
+        this.email = "";
+        this.password = "";
+    }
+    LoginFormComponent.prototype.ngOnInit = function () {
+    };
+    LoginFormComponent.prototype.login = function () {
+        var _this = this;
+        if ((this.email !== "") && (this.password !== "")) {
+            this.playerService.login(this.email, this.password)
+                .then(function (res) {
+                if (res) {
+                    console.log("succes!");
+                    _this.activeModal.dismiss();
+                    window.location.replace(_this.playerService.url + "player");
+                }
+                else {
+                    console.log("email or password wrong");
+                }
+            });
+        }
+        else {
+            console.log("error");
+        }
+    };
+    LoginFormComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-login-form',
+            template: __webpack_require__(/*! ./login-form.component.html */ "./src/app/login-form/login-form.component.html"),
+            styles: [__webpack_require__(/*! ./login-form.component.scss */ "./src/app/login-form/login-form.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbActiveModal"], _services_player_service__WEBPACK_IMPORTED_MODULE_2__["PlayerService"]])
+    ], LoginFormComponent);
+    return LoginFormComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/login/login.component.html":
 /*!********************************************!*\
   !*** ./src/app/login/login.component.html ***!
@@ -1414,7 +1523,7 @@ var Player = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\n<div class=\"card m-3\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\n    <p class=\"card-text\">{{player.stats.kills}}</p>\n    <p class=\"card-text\">{{player.stats.points}}</p>\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\n  </div>\n</div>\n-->\n\n<!--\n<div class=\"container\">\n  <div class=\"row\">\n\n    <div class=\"\" >\n\n\n      <div class=\"panel panel-info\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Player Info</h3>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n\n            <div class=\" col-md-9 col-lg-9 \">\n              <table class=\"table table-user-information\">\n                <tbody>\n\n                <tr>\n                  <td>Username: </td>\n                  <td>{{player.username}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Email: </td>\n                  <td>{{player.email}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Game Count: </td>\n                  <td>{{player.stats.gameCount}}</td>\n                </tr>\n                <tr>\n                  <td>Points: </td>\n                  <td>{{player.stats.points}}</td>\n                </tr>\n                <tr>\n                  <td>Kills: </td>\n                  <td>{{player.stats.kills}}</td>\n                </tr>\n                <tr>\n                  <td>Deaths: </td>\n                  <td>{{player.stats.deaths}}</td>\n                </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n-->\n"
+module.exports = "<!--\n<div class=\"card m-3\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">{{player.email}} {{player._id}}</h5>\n    <h6 class=\"card-subtitle mb-2 text-muted\">{{player.username}}</h6>\n    <p class=\"card-text\">\"deaths: \" {{player.stats.deaths}}</p>\n    <p class=\"card-text\">{{player.stats.kills}}</p>\n    <p class=\"card-text\">{{player.stats.points}}</p>\n    <p class=\"card-text\">{{player.stats.gameCount}}</p>\n  </div>\n</div>\n-->\n\n<div class=\"container\">\n  <div class=\"row\">\n\n    <div class=\"\" >\n\n\n      <div class=\"panel panel-info\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Player Info</h3>\n        </div>\n        <div class=\"panel-body\">\n          <div class=\"row\">\n\n            <div class=\" col-md-9 col-lg-9 \">\n              <table class=\"table table-user-information\">\n                <tbody>\n\n                <tr>\n                  <td>Username: </td>\n                  <td>{{player.username}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Email: </td>\n                  <td>{{player.email}}</td>\n                  <td> <a href=\"#\" class=\"btn btn-info\">Edit</a></td>\n                </tr>\n                <tr>\n                  <td>Game Count: </td>\n                  <td>{{player.stats.gameCount}}</td>\n                </tr>\n                <tr>\n                  <td>Points: </td>\n                  <td>{{player.stats.points}}</td>\n                </tr>\n                <tr>\n                  <td>Kills: </td>\n                  <td>{{player.stats.kills}}</td>\n                </tr>\n                <tr>\n                  <td>Deaths: </td>\n                  <td>{{player.stats.deaths}}</td>\n                </tr>\n                </tbody>\n              </table>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1458,16 +1567,20 @@ var PlayerComponent = /** @class */ (function () {
     function PlayerComponent(playerServie, oauth) {
         this.playerServie = playerServie;
         this.oauth = oauth;
+        this.player = this.playerServie.currentPlayer;
     }
     PlayerComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.playerServie.checkLogin()
-            .then(function () {
-            console.log(_this.playerServie.currentPlayer);
-        })
-            .catch(function () {
-            if (!_this.playerServie.isLoggedIn) {
-                _this.oauth.getProfile();
+            .then(function (res) {
+            if (res) {
+                console.log(_this.playerServie.currentPlayer);
+                _this.player = _this.playerServie.currentPlayer;
+            }
+            else {
+                if (!_this.playerServie.isLoggedIn) {
+                    _this.oauth.getProfile();
+                }
             }
         });
     };
@@ -1733,9 +1846,11 @@ var PlayerService = /** @class */ (function () {
             _this.isLoggedIn = true;
             _this.currentPlayer = res.player;
             //console.log(res.player);
+            return true;
         }).catch(function (err) {
             console.log(err);
             _this.isLoggedIn = false;
+            return false;
         });
     };
     PlayerService.prototype.getAllPlayers = function () {
@@ -1757,9 +1872,11 @@ var PlayerService = /** @class */ (function () {
             _this.isLoggedIn = true;
             _this.currentPlayer = res.player;
             console.log(res.message);
+            return true;
         })
             .catch(function (err) {
             console.log(err.message);
+            return false;
         });
     };
     PlayerService.prototype.logout = function (email) {
