@@ -35,8 +35,7 @@ export class AdminComponent implements OnInit {
         this.email = this.authService.email;
         this.userService.getUsers().then(
           (users: User[]) => {
-
-
+            console.log(users);
             if(users.length==0){
               console.log("keine User gefunden, erstelle Admin Accout: mail@max-spies.de");
               this.userService.addUser(new User(1,"mail@max-spies.de","password","admin"));

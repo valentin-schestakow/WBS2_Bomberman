@@ -1,11 +1,8 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -128,7 +125,7 @@ function generateField() {
         }
     }
 }
-var Field = /** @class */ (function () {
+var Field = (function () {
     function Field(posX, posY) {
         this.type = "Field";
         this.posX = posX;
@@ -137,7 +134,7 @@ var Field = /** @class */ (function () {
     return Field;
 }());
 exports.Field = Field;
-var Block = /** @class */ (function (_super) {
+var Block = (function (_super) {
     __extends(Block, _super);
     function Block(posX, posY) {
         var _this = _super.call(this, posX, posY) || this;
@@ -149,7 +146,7 @@ var Block = /** @class */ (function (_super) {
     return Block;
 }(Field));
 exports.Block = Block;
-var Bomb = /** @class */ (function (_super) {
+var Bomb = (function (_super) {
     __extends(Bomb, _super);
     function Bomb(posX, posY, timeLeft) {
         var _this = _super.call(this, posX, posY) || this;
@@ -174,7 +171,7 @@ function checkGamerAction(action, gamer) {
     if (gamer.lives <= 0) {
         gamer.color = "gray";
     }
-    else { //only if alive
+    else {
         //for debugging
         //console.log(gamer.name+": "+"aktuelle Pos = "+" x:"+gamer.posX+" y:"+gamer.posY);
         if (action === 'moveUp') {

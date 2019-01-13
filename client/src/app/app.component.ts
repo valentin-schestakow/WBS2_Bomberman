@@ -66,8 +66,7 @@ export class AppComponent implements  OnInit{
   }
 
   loginButton(){
-    const modalRef = this.modalService.open(LoginFormComponent);
-
+    this.modalService.open(LoginFormComponent);
   }
 
   signUpButton(){

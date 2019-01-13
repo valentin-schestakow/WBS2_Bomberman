@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Gamer = /** @class */ (function () {
+var Gamer = (function () {
     function Gamer(posX, posY, name) {
         this.color = "";
         //super(posX, posY);
