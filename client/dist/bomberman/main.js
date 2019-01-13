@@ -1044,7 +1044,7 @@ var IngameComponent = /** @class */ (function () {
             _this.gamers = data;
             for (var _i = 0, _a = _this.gamers; _i < _a.length; _i++) {
                 var gamer = _a[_i];
-                if (gamer.name = _this.myPlayer.name) {
+                if (gamer.name == _this.myPlayer.name) {
                     _this.myPlayer = gamer;
                 }
             }

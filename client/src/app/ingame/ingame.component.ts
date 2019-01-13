@@ -50,7 +50,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
       this.gamers = data;
 
       for (let gamer of this.gamers){
-        if (gamer.name = this.myPlayer.name){
+        if (gamer.name == this.myPlayer.name){
           this.myPlayer = gamer;
         }
       }

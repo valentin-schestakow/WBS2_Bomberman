@@ -4,11 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/app/login/login.component.ts" line="21" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3be60f9-5422-4fbe-9382-903769f9aeff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/gameServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server/gameServer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../server/gameServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../server/gameServer.ts" afterDir="false" />
-    </list>
+    <list default="true" id="c3be60f9-5422-4fbe-9382-903769f9aeff" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/temp/" />
