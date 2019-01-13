@@ -2,20 +2,41 @@ import {Component, OnInit} from '@angular/core';
 import {PlayerService} from './services/player.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {LoginFormComponent} from './login-form/login-form.component';
+import {IngameComponent} from './ingame/ingame.component';
+import {Player} from './player/Player';
+import {Gamer} from './ingame/Gamer';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers:[PlayerService]
 })
 export class AppComponent implements  OnInit{
   title = 'bomberman';
   isLoggedIn: boolean;
+  currentPlayer: Player;
+  myPlayer: Gamer;
+  lives: number = 0;
+  private gamers: Gamer[];
 
+  //this.ingameComponent.myPlayer.lives;
   constructor(private playerService: PlayerService, private modalService: NgbModal) {
     this.playerService.checkLogin()
       .then((res:boolean) => {
         this.isLoggedIn = res;
+        this.currentPlayer = this.playerService.currentPlayer;
       });
+
+    this.playerService.receiveGamer().subscribe( data => {
+      this.gamers = data;
+      for (let gamer of this.gamers){
+        if (gamer.name == this.currentPlayer.username){
+          this.myPlayer = gamer;
+        }
+      }
+      this.lives = this.myPlayer.lives;
+    });
+
   }
 
   ngOnInit(): void {

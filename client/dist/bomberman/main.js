@@ -769,7 +769,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--\r\n<h1>Welcome to {{ title }}!</h1>\r\n-->\r\n<div *ngIf=\"!isLoggedIn\">\r\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\r\n  <div class=\"collapse navbar-collapse\" >\r\n\r\n    <a class=\"navbar-brand navbar-header\"  href=\"#\">BOMBERMAN</a>\r\n    <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\r\n      <li class=\"nav-item\">\r\n        <button class=\"btn btn-outline-success my-2 my-sm-0 \" (click)=\"loginButton()\" type=\"submit\">Login</button>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <button class=\"btn btn-outline-warning my-2 my-sm-0\" (click)=\"signUpButton()\" type=\"submit\">Sign Up</button>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n</nav>\r\n</div>\r\n\r\n\r\n<div *ngIf=\"isLoggedIn\">\r\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\r\n    <div class=\"collapse navbar-collapse\">\r\n\r\n      <a class=\"navbar-brand navbar-header text-primary\"  href=\"/play\">Play BOMBERMAN!</a>\r\n      <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\"  href=\"player\">Stats</a>\r\n        </li>\r\n      </ul>\r\n      <a class=\"nav-item justify-content-end\">\r\n        <button class=\"btn btn-outline-danger my-2 my-sm-0\" (click)=\"logoutButton()\" type=\"submit\">Logout</button>\r\n      </a>\r\n    </div>\r\n  </nav>\r\n</div>\r\n<router-outlet></router-outlet>\r\n\r\n\r\n"
+module.exports = "<!--\r\n<h1>Welcome to {{ title }}!</h1>\r\n-->\r\n<div *ngIf=\"!isLoggedIn\">\r\n<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\r\n  <div class=\"collapse navbar-collapse\" >\r\n\r\n    <a class=\"navbar-brand navbar-header\"  href=\"#\">BOMBERMAN</a>\r\n    <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\r\n      <li class=\"nav-item\">\r\n        <button class=\"btn btn-outline-success my-2 my-sm-0 \" (click)=\"loginButton()\" type=\"submit\">Login</button>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <button class=\"btn btn-outline-warning my-2 my-sm-0\" (click)=\"signUpButton()\" type=\"submit\">Sign Up</button>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n</nav>\r\n</div>\r\n\r\n\r\n<div *ngIf=\"isLoggedIn\">\r\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\r\n    <div class=\"collapse navbar-collapse\">\r\n      <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\r\n        <li class=\"nav-item\">\r\n          <p class=\"nav-link\">Lives: {{lives}}</p>\r\n        </li>\r\n      </ul>\r\n      <a class=\"navbar-brand navbar-header text-primary\"  href=\"/play\">Play BOMBERMAN!</a>\r\n      <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\"  href=\"player\">Stats</a>\r\n        </li>\r\n      </ul>\r\n      <a class=\"nav-item justify-content-end\">\r\n        <button class=\"btn btn-outline-danger my-2 my-sm-0\" (click)=\"logoutButton()\" type=\"submit\">Logout</button>\r\n      </a>\r\n    </div>\r\n  </nav>\r\n</div>\r\n<router-outlet></router-outlet>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -812,14 +812,27 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AppComponent = /** @class */ (function () {
+    //this.ingameComponent.myPlayer.lives;
     function AppComponent(playerService, modalService) {
         var _this = this;
         this.playerService = playerService;
         this.modalService = modalService;
         this.title = 'bomberman';
+        this.lives = 0;
         this.playerService.checkLogin()
             .then(function (res) {
             _this.isLoggedIn = res;
+            _this.currentPlayer = _this.playerService.currentPlayer;
+        });
+        this.playerService.receiveGamer().subscribe(function (data) {
+            _this.gamers = data;
+            for (var _i = 0, _a = _this.gamers; _i < _a.length; _i++) {
+                var gamer = _a[_i];
+                if (gamer.name == _this.currentPlayer.username) {
+                    _this.myPlayer = gamer;
+                }
+            }
+            _this.lives = _this.myPlayer.lives;
         });
     }
     AppComponent.prototype.ngOnInit = function () {
@@ -862,6 +875,7 @@ var AppComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
+            providers: [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"]],
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
         __metadata("design:paramtypes", [_services_player_service__WEBPACK_IMPORTED_MODULE_1__["PlayerService"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"]])
