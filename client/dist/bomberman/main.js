@@ -1042,6 +1042,12 @@ var IngameComponent = /** @class */ (function () {
         this.playerService.receiveGamer().subscribe(function (data) {
             //console.log(data);
             _this.gamers = data;
+            for (var _i = 0, _a = _this.gamers; _i < _a.length; _i++) {
+                var gamer = _a[_i];
+                if (gamer.name = _this.myPlayer.name) {
+                    _this.myPlayer = gamer;
+                }
+            }
             //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
             //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
             _this.reprintCanvas();

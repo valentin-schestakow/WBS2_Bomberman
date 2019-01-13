@@ -48,6 +48,12 @@ export class IngameComponent implements OnInit, AfterViewInit {
     this.playerService.receiveGamer().subscribe( data => {
       //console.log(data);
       this.gamers = data;
+
+      for (let gamer of this.gamers){
+        if (gamer.name = this.myPlayer.name){
+          this.myPlayer = gamer;
+        }
+      }
       //console.log("CurrentPos x:"+this.convertAbsolutePosToRelativePos(this.myPlayer.posX)+ " y: "+this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
       //console.log("CurrentPos x:"+this.myPlayer.posX+ " y: "+this.myPlayer.posY);
       this.reprintCanvas();
