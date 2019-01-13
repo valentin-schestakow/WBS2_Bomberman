@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c3be60f9-5422-4fbe-9382-903769f9aeff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/app/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ingame/ingame.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/gameServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server/gameServer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/gameServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../server/gameServer.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
@@ -426,12 +428,12 @@
       <workItem from="1546955935832" duration="602000" />
       <workItem from="1546963391073" duration="3109000" />
       <workItem from="1547058228530" duration="1051000" />
-      <workItem from="1547376885057" duration="5229000" />
+      <workItem from="1547376885057" duration="5807000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61947000" />
+    <option name="totallyTimeSpent" value="62525000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">

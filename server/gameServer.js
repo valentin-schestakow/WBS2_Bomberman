@@ -73,14 +73,20 @@ function spawnGamer(newPlayer) {
             break;
         }
         case 1: {
-            newGamer = new Gamer_1.Gamer(0, 25, newPlayer.username);
+            newGamer = new Gamer_1.Gamer(475, 0, newPlayer.username);
             newGamer.color = "yellow";
             gamers.push(newGamer);
             break;
         }
         case 2: {
-            newGamer = new Gamer_1.Gamer(25, 0, newPlayer.username);
+            newGamer = new Gamer_1.Gamer(0, 350, newPlayer.username);
             newGamer.color = "pink";
+            gamers.push(newGamer);
+            break;
+        }
+        case 3: {
+            newGamer = new Gamer_1.Gamer(475, 350, newPlayer.username);
+            newGamer.color = "black";
             gamers.push(newGamer);
             break;
         }

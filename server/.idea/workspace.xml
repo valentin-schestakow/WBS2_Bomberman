@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd6389b3-6701-4ee8-bb86-e257805e6191" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../client/dist/bomberman/main.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/ingame/ingame.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gameServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gameServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -95,13 +95,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="8" />
-          <entry key="ts" value="2181" />
+          <entry key="ts" value="2208" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="8" />
-          <entry key="TypeScript" value="2181" />
+          <entry key="TypeScript" value="2208" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -155,13 +155,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gameServer.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="32" column="39" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="39" />
+            <state relative-caret-position="351">
+              <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
               <folding>
                 <element signature="e#0#36#0" expanded="true" />
                 <element signature="n#!!block;n#printField#0" />
                 <element signature="n#!!block;n#generateField#0" />
-                <element signature="n#Field#0" />
                 <element signature="n#Block#0" />
                 <element signature="n#Bomb#0" />
                 <element signature="n#!!block;n#bombExplode#0" />
@@ -313,12 +312,12 @@
       <workItem from="1546963355195" duration="3565000" />
       <workItem from="1547058216621" duration="1062000" />
       <workItem from="1547372972794" duration="1310000" />
-      <workItem from="1547376892242" duration="6436000" />
+      <workItem from="1547376892242" duration="7282000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57957000" />
+    <option name="totallyTimeSpent" value="58803000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -404,13 +403,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gameServer.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="32" column="39" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="39" />
+        <state relative-caret-position="351">
+          <caret line="90" column="9" lean-forward="true" selection-start-line="90" selection-start-column="9" selection-end-line="90" selection-end-column="9" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
             <element signature="n#!!block;n#printField#0" />
             <element signature="n#!!block;n#generateField#0" />
-            <element signature="n#Field#0" />
             <element signature="n#Block#0" />
             <element signature="n#Bomb#0" />
             <element signature="n#!!block;n#bombExplode#0" />
