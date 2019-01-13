@@ -30,13 +30,16 @@ export function run(server) {
             //console.log('made socket connection', data);
             //console.log(data.move+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
             //console.log(data.gamer.name+": active Bombs: "+data.gamer.bombPlanted);
-            gamers = checkGamerAction(data.move, data.gamer);
+            if(data.gamer != undefined) {
+                gamers = checkGamerAction(data.move, data.gamer);
+            }
             //console.log("\t\t"+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
             socket.emit('getField', playField);
             socket.broadcast.emit('getField', playField);
             socket.emit('gamer', gamers);
             socket.broadcast.emit('gamer', gamers);
             //socket.emit('move', data);
+
         });
         socket.on('bombplace', function (Field) {
             socket.emit('bombplace', Field);
