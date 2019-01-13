@@ -15,14 +15,15 @@ var Gamer_1 = require("./Gamer");
 var size = 25;
 var playField;
 var activeBombs;
-var activeBomb;
+//let activeBomb: Bomb;
 var gamer;
 var myPlayer;
 var gamers = [];
+var io;
 function run(server) {
     generateField();
     console.log("Start GameServer");
-    var io = socket(server);
+    io = socket(server);
     console.log("Generated Field: ");
     printField();
     io.on('connection', function (socket) {
@@ -30,6 +31,7 @@ function run(server) {
         socket.on('move', function (data) {
             //console.log('made socket connection', data);
             //console.log(data.move+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
+            console.log(data.gamer.name + ": active Bombs: " + data.gamer.bombPlanted);
             gamers = checkGamerAction(data.move, data.gamer);
             //console.log("\t\t"+"\t pos x "+data.gamer.posX/25+" y "+data.gamer.posY/25 );
             socket.emit('getField', playField);
@@ -157,7 +159,8 @@ var Bomb = (function (_super) {
 }(Field));
 exports.Bomb = Bomb;
 function checkGamerAction(action, gamer) {
-    console.log(gamer.name + ": " + "aktuelle Pos = " + " x:" + gamer.posX + " y:" + gamer.posY);
+    //for debugging
+    //console.log(gamer.name+": "+"aktuelle Pos = "+" x:"+gamer.posX+" y:"+gamer.posY);
     if (action === 'moveUp') {
         if (gamer.posY > 0 && playField[gamer.posY / 25 - 1][gamer.posX / 25].type !== 'Block') {
             gamer.posY -= 25;
@@ -179,50 +182,69 @@ function checkGamerAction(action, gamer) {
         }
     }
     if (action === 'plantBomb') {
-        if (gamer.bombPlanted < 1) {
+        if (gamer.bombPlanted < 10) {
             gamer.bombPlanted++;
-            console.log("Plant Bomb at x:" + gamer.posX / 25 + " y: " + gamer.posY / 25);
+            console.log(gamer.name + ": plant Bomb at x:" + gamer.posX / 25 + " y: " + gamer.posY / 25);
             playField[gamer.posY / 25][gamer.posX / 25] = new Bomb(gamer.posX, gamer.posY, 2);
-            activeBomb = (new Bomb(gamer.posX, gamer.posY, 2));
-            var interval_1 = setInterval(function () {
-                if (activeBomb.timeLeft > 0) {
-                    activeBomb.timeLeft--;
-                }
-                else {
-                    bombExplode(activeBomb.posY / 25, activeBomb.posX / 25, gamer);
-                    clearInterval(interval_1);
-                }
-            }, 1000);
+            plantNewBomb(gamer);
+        }
+        else {
+            console.log(gamer.name + ": active bombs: " + gamer.bombPlanted);
         }
     }
     for (var i = 0; i < gamers.length; i++) {
         if (gamers[i].name == gamer.name) {
-            gamers[i] = gamer;
-            console.log(gamers[i].name + ": " + action + " x:" + gamers[i].posX + " y:" + gamers[i].posY);
+            gamers[i].posY = gamer.posY;
+            gamers[i].posX = gamer.posX;
+            //for debugging
+            //console.log(gamers[i].name+": "+action+" x:"+gamers[i].posX+" y:"+gamers[i].posY);
         }
     }
-    for (var _i = 0, gamers_1 = gamers; _i < gamers_1.length; _i++) {
-        var findGamer = gamers_1[_i];
-        console.log(findGamer.name + ": " + "aktuelle pos von spieler" + " x:" + findGamer.posX + " y:" + findGamer.posY);
+    /* // Print Pos of all active gamers for debugging
+    for(let findGamer of gamers){
+        console.log(findGamer.name+": "+"aktuelle pos von spieler"+" x:"+findGamer.posX+" y:"+findGamer.posY);
     }
+    */
     return gamers;
+}
+function plantNewBomb(gamer) {
+    var activeBomb = (new Bomb(gamer.posX, gamer.posY, 2));
+    var interval = setInterval(function () {
+        if (activeBomb.timeLeft > 0) {
+            activeBomb.timeLeft--;
+        }
+        else {
+            bombExplode(activeBomb.posY / 25, activeBomb.posX / 25, gamer);
+            clearInterval(interval);
+        }
+    }, 1000);
 }
 function bombExplode(posY, posX, gamer) {
     explosionHelper(posY, posX, "Fire");
     //eprintCanvas(); socketEMIT!
     var timeleft = 1;
-    var interval = setInterval(function () {
+    var interval2 = setInterval(function () {
         if (timeleft > 0) {
             timeleft--;
         }
         else {
             explosionHelper(posY, posX, "Field");
-            gamer.bombPlanted--;
+            freeBomb(gamer);
             //socket emit
             //socket.emit('getField', playField);
-            clearInterval(interval);
+            console.log(gamer.name + ": bomb finished x:" + posX + " y:" + posY);
+            clearInterval(interval2);
         }
     }, 1000);
+}
+function freeBomb(gamer) {
+    for (var i = 0; i < gamers.length; i++) {
+        if (gamers[i].name == gamer.name) {
+            console.log(gamers[i].name + " bomb minus " + gamers[i].bombPlanted);
+            gamers[i].bombPlanted--;
+            console.log(gamers[i].name + " bomb after minus " + gamers[i].bombPlanted);
+        }
+    }
 }
 function explosionHelper(posY, posX, type) {
     if (posY > 0) {

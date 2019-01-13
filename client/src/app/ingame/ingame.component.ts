@@ -29,6 +29,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
   gamers: Gamer[];
   size: number;
   myBomb: Bomb;
+  bombs: Bomb[] = [];
   /** Canvas 2d context */
   context: CanvasRenderingContext2D;
   @ViewChild('spaceshipimg') spaceshipAlly: ElementRef;
@@ -180,7 +181,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
     if (action === 'plantBomb') {
       if (this.myPlayer.bombPlanted < 1) {
 
-        this.myPlayer.bombPlanted++;
+        //this.myPlayer.bombPlanted++;
         console.log("Plant Bomb at x:" + this.convertAbsolutePosToRelativePos(this.myPlayer.posX) + " y: " + this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
         this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
           new Bomb(this.myPlayer.posX, this.myPlayer.posY, 2);
@@ -275,7 +276,7 @@ export class IngameComponent implements OnInit, AfterViewInit {
         timeleft--;
       } else {
         this.explosionHelper(posY,posX,"Field");
-        this.myPlayer.bombPlanted--;
+        //this.myPlayer.bombPlanted--;
         this.reprintCanvas();
         this.broadcastField();
         clearInterval(interval);

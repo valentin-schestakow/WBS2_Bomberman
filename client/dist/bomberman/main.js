@@ -1029,6 +1029,7 @@ var IngameComponent = /** @class */ (function () {
     function IngameComponent(playerService) {
         var _this = this;
         this.playerService = playerService;
+        this.bombs = [];
         //ctx: CanvasRenderingContext2D;
         this.currentPlayer = this.playerService.currentPlayer;
         this.playerService.receiveMove().subscribe(function (data) {
@@ -1163,7 +1164,7 @@ var IngameComponent = /** @class */ (function () {
     */
         if (action === 'plantBomb') {
             if (this.myPlayer.bombPlanted < 1) {
-                this.myPlayer.bombPlanted++;
+                //this.myPlayer.bombPlanted++;
                 console.log("Plant Bomb at x:" + this.convertAbsolutePosToRelativePos(this.myPlayer.posX) + " y: " + this.convertAbsolutePosToRelativePos(this.myPlayer.posY));
                 this.playField[this.convertAbsolutePosToRelativePos(this.myPlayer.posY)][this.convertAbsolutePosToRelativePos(this.myPlayer.posX)] =
                     new _Bomb__WEBPACK_IMPORTED_MODULE_2__["Bomb"](this.myPlayer.posX, this.myPlayer.posY, 2);
@@ -1244,7 +1245,7 @@ var IngameComponent = /** @class */ (function () {
             }
             else {
                 _this.explosionHelper(posY, posX, "Field");
-                _this.myPlayer.bombPlanted--;
+                //this.myPlayer.bombPlanted--;
                 _this.reprintCanvas();
                 _this.broadcastField();
                 clearInterval(interval);

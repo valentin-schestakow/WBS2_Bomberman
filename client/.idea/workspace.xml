@@ -4,7 +4,15 @@
     <bookmark url="file://$PROJECT_DIR$/src/app/login/login.component.ts" line="21" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3be60f9-5422-4fbe-9382-903769f9aeff" name="Default Changelist" comment="" />
+    <list default="true" id="c3be60f9-5422-4fbe-9382-903769f9aeff" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/bomberman/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/bomberman/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/bomberman/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/dist/bomberman/main.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/ingame/ingame.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/ingame/ingame.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../server/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/gameServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../server/gameServer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../server/gameServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../server/gameServer.ts" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/dist/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -105,14 +113,14 @@
         <counts>
           <entry key="html" value="20" />
           <entry key="scss" value="33" />
-          <entry key="ts" value="1436" />
+          <entry key="ts" value="1477" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="20" />
           <entry key="SCSS" value="33" />
-          <entry key="TypeScript" value="1436" />
+          <entry key="TypeScript" value="1477" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -172,10 +180,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/ingame/ingame.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="54" column="9" lean-forward="true" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
+            <state relative-caret-position="181">
+              <caret line="183" column="38" lean-forward="true" selection-start-line="183" selection-start-column="38" selection-end-line="183" selection-end-column="38" />
               <folding>
                 <element signature="e#0#102#0" expanded="true" />
+                <element signature="n#!!block;n#ngAfterViewInit#0;n#IngameComponent#0" />
+                <element signature="n#!!block;n#generatePlayField#0;n#IngameComponent#0" />
+                <element signature="e#4861#6180#0" />
                 <element signature="n#!!block;n#explosionHelper#0;n#IngameComponent#0" />
               </folding>
             </state>
@@ -206,6 +217,7 @@
       <find>broadcastPlayer</find>
       <find>new Ga</find>
       <find>currentPlayer</find>
+      <find>bombPlanted</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -424,12 +436,12 @@
       <workItem from="1546955935832" duration="602000" />
       <workItem from="1546963391073" duration="3109000" />
       <workItem from="1547058228530" duration="1051000" />
-      <workItem from="1547376885057" duration="5807000" />
+      <workItem from="1547376885057" duration="11794000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62525000" />
+    <option name="totallyTimeSpent" value="68512000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -609,16 +621,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/login/login.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/services/player.service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
@@ -639,12 +641,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/login/login.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/ingame/ingame.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="54" column="9" lean-forward="true" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="9" />
+        <state relative-caret-position="181">
+          <caret line="183" column="38" lean-forward="true" selection-start-line="183" selection-start-column="38" selection-end-line="183" selection-end-column="38" />
           <folding>
             <element signature="e#0#102#0" expanded="true" />
+            <element signature="n#!!block;n#ngAfterViewInit#0;n#IngameComponent#0" />
+            <element signature="n#!!block;n#generatePlayField#0;n#IngameComponent#0" />
+            <element signature="e#4861#6180#0" />
             <element signature="n#!!block;n#explosionHelper#0;n#IngameComponent#0" />
           </folding>
         </state>
