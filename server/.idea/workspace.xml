@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dd6389b3-6701-4ee8-bb86-e257805e6191" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../client/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../client/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../client/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../client/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gameServer.js" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gameServer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/gameServer.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -101,13 +101,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="8" />
-          <entry key="ts" value="1398" />
+          <entry key="ts" value="1430" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="8" />
-          <entry key="TypeScript" value="1398" />
+          <entry key="TypeScript" value="1430" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -129,8 +129,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
+            <state relative-caret-position="-1071">
               <caret line="276" column="81" lean-forward="true" selection-start-line="276" selection-start-column="81" selection-end-line="276" selection-end-column="81" />
+              <folding>
+                <element signature="e#12468#13647#0" />
+                <element signature="e#13816#14282#0" />
+                <element signature="e#14462#15955#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -138,9 +143,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gameServer.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="207" column="10" selection-start-line="207" selection-start-column="10" selection-end-line="207" selection-end-column="10" />
+            <state relative-caret-position="374">
+              <caret line="34" column="13" lean-forward="true" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
               <folding>
+                <element signature="e#0#36#0" expanded="true" />
                 <element signature="n#!!block;n#spawnGamer#0" />
                 <element signature="n#Field#0" />
                 <element signature="n#Block#0" />
@@ -311,7 +317,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70676000" />
+    <option name="totallyTimeSpent" value="71020000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -370,13 +376,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="276" column="81" lean-forward="true" selection-start-line="276" selection-start-column="81" selection-end-line="276" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9405">
@@ -398,11 +397,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/server.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1071">
+          <caret line="276" column="81" lean-forward="true" selection-start-line="276" selection-start-column="81" selection-end-line="276" selection-end-column="81" />
+          <folding>
+            <element signature="e#12468#13647#0" />
+            <element signature="e#13816#14282#0" />
+            <element signature="e#14462#15955#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gameServer.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="207" column="10" selection-start-line="207" selection-start-column="10" selection-end-line="207" selection-end-column="10" />
+        <state relative-caret-position="374">
+          <caret line="34" column="13" lean-forward="true" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
           <folding>
+            <element signature="e#0#36#0" expanded="true" />
             <element signature="n#!!block;n#spawnGamer#0" />
             <element signature="n#Field#0" />
             <element signature="n#Block#0" />
