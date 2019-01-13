@@ -31,12 +31,10 @@
                 <tr>
                   <td>Username: </td>
                   <td>{{player.username}}</td>
-                  <td> <a class="btn btn-info" (click)="edit()">Edit</a></td>
                 </tr>
                 <tr>
                   <td>Email: </td>
                   <td>{{player.email}}</td>
-                  <td> <a class="btn btn-info" (click)="edit()">Edit</a></td>
                 </tr>
                 <tr>
                   <td>Game Count: </td>
@@ -53,6 +51,9 @@
                 <tr>
                   <td>Deaths: </td>
                   <td>{{player.stats.deaths}}</td>
+                </tr>
+                <tr>
+                  <td> <a class="btn btn-info" (click)="edit()">Edit</a></td>
                 </tr>
                 </tbody>
               </table>

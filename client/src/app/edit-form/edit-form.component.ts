@@ -18,8 +18,8 @@ export class EditFormComponent implements OnInit {
     this.playerService.checkLogin()
       .then((res:boolean) => {
         if(res) {
-          this.username = this.playerService.currentPlayer.username;
           this.email = this.playerService.currentPlayer.email;
+          this.username = this.playerService.currentPlayer.username;
         }
       })
   }
@@ -28,7 +28,6 @@ export class EditFormComponent implements OnInit {
   }
 
   submit() {
-
 
     if (this.username !== "") {
       this.playerService.currentPlayer.username = this.username;
@@ -39,9 +38,8 @@ export class EditFormComponent implements OnInit {
     }
 
     this.playerService.updatePlayer(this.playerService.currentPlayer);
-
-
-
+    this.activeModal.close();
+    window.location.reload();
   }
 
 }

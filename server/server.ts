@@ -629,7 +629,6 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
     let username : string = (req.body.username ? req.body.username : "").trim();
     let password : string = (req.body.password ? req.body.password : "").trim();
 
-
     //--- ok -> update user with new attributes ---------------------------------
     query = {email: email};
     if (password == "" || password == '$keepPassword') { // no new password set
@@ -643,6 +642,20 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
     playerlistCollection.updateOne(query, {$set: updateData})
         .then((result: UpdateWriteOpResult) => {
             if (result.matchedCount === 1) {
+                let query:Object = {email: email};
+                playerlistCollection.findOne(query)
+                    .then((player: Player) => {
+                        if (player !== null) {
+                           req.session.player = player;
+                        } else {
+
+                        }
+                    })
+                    .catch((error: MongoError) => {
+                        message = "Database error: " + error.code;
+                        status = 505;
+                        res.status(status).json({player: null, message: message});
+                    });
                 message = username + " successfully updated";
                 status = 201;
                 res.status(status).json({message: message});
@@ -657,6 +670,8 @@ router.put    ("/player/:email",    function (req: Request, res: Response) {
             status = 505;
             res.status(status).json({message: message});
         });
+
+
 });
 
 
