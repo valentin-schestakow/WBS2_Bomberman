@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var socket = require("socket.io");
 var Gamer_1 = require("./Gamer");
+var server_1 = require("./server");
 var size = 25;
 var playField;
 var activeBombs;
@@ -50,6 +51,7 @@ function run(server) {
             console.log("Player connected: " + player.username);
             //socket.emit(ww'gamer',gamer);
             //Player will be castet to gamer an broadcasted to all
+            //myPlayer = player;
             spawnGamer(player);
             socket.emit('gamer', gamers);
             socket.broadcast.emit('gamer', gamers);
@@ -208,6 +210,7 @@ function checkGamerAction(action, gamer) {
     }
     if (playField[gamer.posY / 25][gamer.posX / 25].type == "Fire") {
         //gamer.lives--;
+        updateKillStats(gamer);
         gamer.lives > 0 ? gamer.lives-- : gamer.lives;
     }
     for (var i = 0; i < gamers.length; i++) {
@@ -298,4 +301,31 @@ function burnPlayer(y, x, type) {
             }
         }
     }
+}
+function updateKillStats(gamer) {
+    var deaths1 = 0;
+    var updateData = {};
+    var query = { username: gamer.name };
+    server_1.playerlistCollection.findOne(query)
+        .then(function (player) {
+        if (player !== null) {
+            console.log("Selected item is " + player.stats + " acual deaths: " + player.stats.deaths);
+            deaths1 = player.stats.deaths;
+            deaths1 = deaths1 + 1;
+            updateData.stats = { deaths: deaths1 };
+            server_1.playerlistCollection.updateOne(query, { $set: updateData })
+                .then(function (result) {
+                console.log(gamer.name + " successfully updated deaths " + deaths1);
+            })
+                .catch(function (error) {
+                console.log("updateone error: " + error.code);
+            });
+        }
+        else {
+            console.log("Player " + player.email + " not found");
+        }
+    })
+        .catch(function (error) {
+        console.log("findOne error: " + error.code);
+    });
 }

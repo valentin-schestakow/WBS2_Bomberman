@@ -1,6 +1,8 @@
 import * as socket from "socket.io";
 import {Gamer} from "./Gamer";
-import {Player} from "./server"
+import {Player,playerlistCollection} from "./server"
+import * as cryptoJS from "crypto-js";
+import {MongoError, UpdateWriteOpResult} from "mongodb";
 
 
 let size: number = 25;
@@ -49,7 +51,7 @@ export function run(server) {
             console.log("Player connected: "+player.username);
             //socket.emit(ww'gamer',gamer);
             //Player will be castet to gamer an broadcasted to all
-
+            //myPlayer = player;
             spawnGamer(player);
             socket.emit('gamer', gamers);
             socket.broadcast.emit('gamer', gamers);
@@ -209,6 +211,7 @@ function checkGamerAction(action: string, gamer: Gamer) {
 
     if(playField[gamer.posY/25][gamer.posX/25].type == "Fire"){
         //gamer.lives--;
+        updateKillStats(gamer);
         gamer.lives > 0?gamer.lives--:gamer.lives;
     }
 
@@ -308,5 +311,33 @@ function burnPlayer(y,x,type){
 }
 
 
+
+function updateKillStats(gamer: Gamer){
+    let deaths1 = 0;
+    let updateData  : any = {};
+    let query = {username: gamer.name};
+    playerlistCollection.findOne(query)
+        .then((player) => {
+            if (player !== null) {
+                console.log("Selected item is " + player.stats+ " acual deaths: "+ player.stats.deaths);
+                deaths1 = player.stats.deaths;
+                deaths1 = deaths1+1;
+                updateData.stats = {deaths: deaths1};
+                playerlistCollection.updateOne(query, {$set: updateData})
+                    .then((result: UpdateWriteOpResult) => {
+                        console.log(gamer.name + " successfully updated deaths "+ deaths1);
+                    })
+                    .catch((error: MongoError) => {
+                        console.log( "updateone error: " + error.code);
+                    });
+            } else {
+                console.log("Player " + player.email + " not found");
+            }
+        })
+        .catch((error: MongoError) => {
+            console.log("findOne error: " + error.code);
+        });
+
+}
 
 

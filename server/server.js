@@ -15,19 +15,18 @@ var gameServer = require("../server/gameServer");
  ***  setup database and its structure                                       *
  *****************************************************************************/
 var bombermanDB;
-var playerlistCollection;
 var userlistCollection;
 //---- connect to database ----------------------------------------------------
 mongodb_1.MongoClient.connect("mongodb://localhost:27017", { useNewUrlParser: true })
     .then(function (dbClient) {
     bombermanDB = dbClient.db("bomberman");
-    playerlistCollection = bombermanDB.collection("player");
+    exports.playerlistCollection = bombermanDB.collection("player");
     userlistCollection = bombermanDB.collection("user");
-    return playerlistCollection.findOne({ email: "test@test.de" });
+    return exports.playerlistCollection.findOne({ email: "test@test.de" });
 })
     .then(function (res) {
     if (!res) {
-        playerlistCollection.insertOne({ email: "test@test.de", password: cryptoJS.MD5("test").toString(), username: "test" });
+        exports.playerlistCollection.insertOne({ email: "test@test.de", password: cryptoJS.MD5("test").toString(), username: "test" });
     }
     console.log("Database is connected ...\n");
 }).catch(function (err) {
@@ -174,7 +173,7 @@ router.post("/login/player", function (req, res) {
     //---- ok -> check email/password in database and set Rights -------------
     if (password != "" && email != "") {
         var query = { email: email, password: cryptoJS.MD5(password).toString() };
-        playerlistCollection.findOne(query).then(function (player) {
+        exports.playerlistCollection.findOne(query).then(function (player) {
             if (player !== null) {
                 message = email + " logged in by email/password";
                 req.session.email = email; // set session-variable email
@@ -438,7 +437,7 @@ router.post("/create/player", function (req, res) {
     }
     */
     var query = { email: email };
-    playerlistCollection.findOne(query)
+    exports.playerlistCollection.findOne(query)
         .then(function (player) {
         if (player !== null) {
             message = "Email allready in use";
@@ -453,7 +452,7 @@ router.post("/create/player", function (req, res) {
                 password: cryptoJS.MD5(password).toString(),
                 stats: stats
             };
-            playerlistCollection.insertOne(insertData_1)
+            exports.playerlistCollection.insertOne(insertData_1)
                 .then(function (result) {
                 req.session.rights = new Rights(true, false, false);
                 req.session.player = insertData_1;
@@ -485,7 +484,7 @@ router.get("/player/:email", function (req, res) {
     }
     //--- ok -> get user from database ------------------------------------------
     var query = { email: email };
-    playerlistCollection.findOne(query)
+    exports.playerlistCollection.findOne(query)
         .then(function (player) {
         if (player !== null) {
             message = "Selected item is " + player.email;
@@ -532,11 +531,11 @@ router.put("/player/:email", function (req, res) {
     else {
         updateData = { password: cryptoJS.MD5(password).toString(), username: username };
     }
-    playerlistCollection.updateOne(query, { $set: updateData })
+    exports.playerlistCollection.updateOne(query, { $set: updateData })
         .then(function (result) {
         if (result.matchedCount === 1) {
             var query_1 = { email: email };
-            playerlistCollection.findOne(query_1)
+            exports.playerlistCollection.findOne(query_1)
                 .then(function (player) {
                 if (player !== null) {
                     req.session.player = player;
@@ -579,13 +578,13 @@ router.delete("/player/:email", function (req, res) {
     }
     //--- ok -> delete user from database ---------------------------------------
     var query = { email: email };
-    playerlistCollection.findOne(query)
+    exports.playerlistCollection.findOne(query)
         .then(function (res) {
         if (res["username"] == 'admin') {
             //return Promise.reject<DeleteWriteOpResultObject>(new Error("Cannot delete admin."))
         }
         else {
-            return playerlistCollection.deleteOne(query);
+            return exports.playerlistCollection.deleteOne(query);
         }
     })
         .then(function (result) {
@@ -614,7 +613,7 @@ router.get("/players", function (req, res) {
     }
     */
     var query = {};
-    playerlistCollection.find(query).toArray()
+    exports.playerlistCollection.find(query).toArray()
         .then(function (players) {
         players = players.map(function (player) {
             player['password'] = '$keepPassword';
@@ -663,7 +662,7 @@ router.get('/oauth/userProfile', isLoggedIn, function (req, res) {
     var password = player.player.photos.value;
     var stats = new GameStats(0, 0, 0, 0);
     var query = { email: email };
-    playerlistCollection.findOne(query)
+    exports.playerlistCollection.findOne(query)
         .then(function (player) {
         if (player !== null) {
             console.log("player allready exists");
@@ -675,7 +674,7 @@ router.get('/oauth/userProfile', isLoggedIn, function (req, res) {
                 password: cryptoJS.MD5(password).toString(),
                 stats: stats
             };
-            playerlistCollection.insertOne(insertData)
+            exports.playerlistCollection.insertOne(insertData)
                 .then(function (result) {
                 console.log("oauth player success " + result);
             })

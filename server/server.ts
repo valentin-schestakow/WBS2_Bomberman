@@ -26,7 +26,7 @@ import * as gameServer from '../server/gameServer';
  ***  setup database and its structure                                       *
  *****************************************************************************/
 let bombermanDB: Db;
-let playerlistCollection: Collection;
+export let playerlistCollection: Collection;
 let userlistCollection: Collection;
 //---- connect to database ----------------------------------------------------
 MongoClient.connect("mongodb://localhost:27017",{ useNewUrlParser: true })
