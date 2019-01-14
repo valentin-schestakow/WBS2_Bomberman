@@ -17,14 +17,16 @@ export class Oauth2Service {
     window.location.replace('https://localhost:8443/auth/facebook')
   }
 
-  getProfile() {
+  getProfile() : Promise<boolean>{
     return this.http.get(this.url + 'oauth/userProfile')
       .toPromise()
       .then((res: any) => {
         this.playerService.login(res.player.player.emails[0].value, res.player.player.photos.value);
         console.log(res);
+        return true;
       }).catch((err : HttpErrorResponse) => {
         console.log(err);
+        return false;
       })
   }
 

@@ -68,6 +68,7 @@ export class PlayerService implements OnInit{
 
   public currentPlayer: Player;
   public isLoggedIn = false;
+  public currentEmail: string;
 
   constructor(private http: HttpClient) { }
 
@@ -76,6 +77,7 @@ export class PlayerService implements OnInit{
       .toPromise()
       .then((res: any) => {
         this.isLoggedIn = true;
+        this.currentEmail = res.email;
         this.currentPlayer = res.player;
         //console.log(res.player);
         return true;
@@ -149,6 +151,7 @@ export class PlayerService implements OnInit{
     return this.http.get(this.url+'player/'+email)
       .toPromise()
       .then((data: any) => {
+        this.currentPlayer = data.player;
         console.log(data.player);
       }).catch((err: HttpErrorResponse) => {
       console.log(err);

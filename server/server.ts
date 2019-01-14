@@ -216,7 +216,7 @@ router.get    ("/login/check", function (req: Request, res: Response) {
     }
 
 
-    res.status(200).json({message: "player still logged in", player: req.session.player});
+    res.status(200).json({message: "player still logged in", email: req.session.email, player: req.session.player});
 
 });
 
@@ -612,7 +612,7 @@ router.get    ("/player/:email",    function (req: Request, res: Response) {
 
 
 /**
- * --- update user with: put /user/:email ---------------------------------
+ * --- update player with: put /user/:email ---------------------------------
  */
 router.put    ("/player/:email",    function (req: Request, res: Response) {
     let status      : number = 500; // Initial HTTP response status

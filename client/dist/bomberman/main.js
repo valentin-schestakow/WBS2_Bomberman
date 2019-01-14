@@ -1009,7 +1009,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title\">Login by Email and Password</h4>\n  <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click');\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <form>\n    <div class=\"form-group\">\n      <label >Email:</label>\n      <input type=\"text\" [disabled]=\"true\"  class=\"form-control\"  [(ngModel)]=\"email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label >Username:</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label >Password:</label>\n      <input type=\"password\" class=\"form-control\"  [(ngModel)]=\"password\" name=\"password\">\n    </div>\n  </form>\n</div>\n<div class=\"modal-footer\">\n  <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"activeModal.close('Close click');\">Close</button>\n  <button type=\"button\" class=\"btn btn-success\" (click)=\"submit()\">Submit</button>\n</div>\n\n"
+module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title\">Edit</h4>\n  <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click');\">\n    <span aria-hidden=\"true\">&times;</span>\n  </button>\n</div>\n<div class=\"modal-body\">\n  <form>\n    <div class=\"form-group\">\n      <label >Email:</label>\n      <input type=\"text\" [disabled]=\"true\"  class=\"form-control\"  [(ngModel)]=\"email\" name=\"email\">\n    </div>\n    <div class=\"form-group\">\n      <label >Username:</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"username\" name=\"username\">\n    </div>\n    <div class=\"form-group\">\n      <label >Password:</label>\n      <input type=\"password\" class=\"form-control\"  [(ngModel)]=\"password\" name=\"password\">\n    </div>\n  </form>\n</div>\n<div class=\"modal-footer\">\n  <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"activeModal.close('Close click');\">Close</button>\n  <button type=\"button\" class=\"btn btn-success\" (click)=\"submit()\">Submit</button>\n</div>\n\n"
 
 /***/ }),
 
@@ -1060,8 +1060,12 @@ var EditFormComponent = /** @class */ (function () {
         this.playerService.checkLogin()
             .then(function (res) {
             if (res) {
-                _this.email = _this.playerService.currentPlayer.email;
-                _this.username = _this.playerService.currentPlayer.username;
+                _this.playerService.getPlayer(_this.playerService.currentEmail)
+                    .then(function (res) {
+                    _this.email = _this.playerService.currentPlayer.email;
+                    _this.username = _this.playerService.currentPlayer.username;
+                    //window.location.reload();
+                });
             }
         });
     }
@@ -1071,8 +1075,11 @@ var EditFormComponent = /** @class */ (function () {
         if (this.username !== "") {
             this.playerService.currentPlayer.username = this.username;
         }
-        if (this.password !== "") {
+        if (this.password.trim() !== "") {
             this.playerService.currentPlayer.password = this.password;
+        }
+        else {
+            this.playerService.currentPlayer.password = "$keepPassword";
         }
         this.playerService.updatePlayer(this.playerService.currentPlayer);
         this.activeModal.close();
@@ -1910,24 +1917,33 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var PlayerComponent = /** @class */ (function () {
-    function PlayerComponent(playerServie, oauth, modalService) {
+    function PlayerComponent(playerService, oauth, modalService) {
         var _this = this;
-        this.playerServie = playerServie;
+        this.playerService = playerService;
         this.oauth = oauth;
         this.modalService = modalService;
         this.player = new _Player__WEBPACK_IMPORTED_MODULE_1__["Player"](0, "", "", "", "", new _GameStats__WEBPACK_IMPORTED_MODULE_6__["GameStats"](0, 0, 0, 0));
-        this.playerServie.checkLogin()
+        this.playerService.checkLogin()
             .then(function (res) {
             if (res) {
-                console.log(_this.playerServie.currentPlayer);
-                _this.player = _this.playerServie.currentPlayer;
+                _this.playerService.getPlayer(_this.playerService.currentPlayer.email)
+                    .then(function () {
+                    _this.player = _this.playerService.currentPlayer;
+                    console.log(_this.player);
+                    //window.location.reload();
+                });
             }
             else {
-                if (!_this.playerServie.isLoggedIn) {
+                if (!_this.playerService.isLoggedIn) {
                     _this.oauth.getProfile()
-                        .then(function () {
-                        _this.player = _this.playerServie.currentPlayer;
-                        window.location.reload();
+                        .then(function (res) {
+                        if (res) {
+                            _this.player = _this.playerService.currentPlayer;
+                            window.location.reload();
+                        }
+                        else {
+                            window.location.replace(_this.playerService.url);
+                        }
                     });
                 }
             }
@@ -2105,8 +2121,10 @@ var Oauth2Service = /** @class */ (function () {
             .then(function (res) {
             _this.playerService.login(res.player.player.emails[0].value, res.player.player.photos.value);
             console.log(res);
+            return true;
         }).catch(function (err) {
             console.log(err);
+            return false;
         });
     };
     Oauth2Service = __decorate([
@@ -2205,6 +2223,7 @@ var PlayerService = /** @class */ (function () {
             .toPromise()
             .then(function (res) {
             _this.isLoggedIn = true;
+            _this.currentEmail = res.email;
             _this.currentPlayer = res.player;
             //console.log(res.player);
             return true;
@@ -2271,9 +2290,11 @@ var PlayerService = /** @class */ (function () {
         });
     };
     PlayerService.prototype.getPlayer = function (email) {
+        var _this = this;
         return this.http.get(this.url + 'player/' + email)
             .toPromise()
             .then(function (data) {
+            _this.currentPlayer = data.player;
             console.log(data.player);
         }).catch(function (err) {
             console.log(err);

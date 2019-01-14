@@ -18,8 +18,12 @@ export class EditFormComponent implements OnInit {
     this.playerService.checkLogin()
       .then((res:boolean) => {
         if(res) {
-          this.email = this.playerService.currentPlayer.email;
-          this.username = this.playerService.currentPlayer.username;
+          this.playerService.getPlayer(this.playerService.currentEmail)
+            .then((res:any) =>{
+              this.email = this.playerService.currentPlayer.email;
+              this.username = this.playerService.currentPlayer.username;
+              //window.location.reload();
+            })
         }
       })
   }
@@ -33,8 +37,10 @@ export class EditFormComponent implements OnInit {
       this.playerService.currentPlayer.username = this.username;
     }
 
-    if (this.password !== "") {
+    if (this.password.trim() !== "") {
       this.playerService.currentPlayer.password = this.password;
+    } else {
+      this.playerService.currentPlayer.password = "$keepPassword";
     }
 
     this.playerService.updatePlayer(this.playerService.currentPlayer);

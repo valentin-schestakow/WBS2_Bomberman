@@ -16,19 +16,28 @@ export class PlayerComponent implements OnInit {
 
   player: Player;
 
-  constructor(public playerServie: PlayerService, public oauth: Oauth2Service, private modalService: NgbModal) {
+  constructor(public playerService: PlayerService, public oauth: Oauth2Service, private modalService: NgbModal) {
     this.player = new Player(0,"","","","",new GameStats(0,0,0,0));
-    this.playerServie.checkLogin()
+    this.playerService.checkLogin()
       .then((res:boolean) => {
         if(res) {
-          console.log(this.playerServie.currentPlayer);
-          this.player = this.playerServie.currentPlayer;
+          this.playerService.getPlayer(this.playerService.currentPlayer.email)
+            .then(() =>{
+              this.player = this.playerService.currentPlayer;
+              console.log(this.player);
+              //window.location.reload();
+            })
         } else {
-          if (!this.playerServie.isLoggedIn){
+          if (!this.playerService.isLoggedIn){
             this.oauth.getProfile()
-              .then(() => {
-                this.player = this.playerServie.currentPlayer;
-                window.location.reload();
+              .then((res:boolean) => {
+                if (res) {
+                  this.player = this.playerService.currentPlayer;
+                  window.location.reload();
+                } else {
+                  window.location.replace(this.playerService.url);
+                }
+
               });
           }
         }

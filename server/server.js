@@ -161,7 +161,7 @@ router.get("/login/check", function (req, res) {
     if (!checkRights(req, res, new Rights(true, false, false))) {
         return;
     }
-    res.status(200).json({ message: "player still logged in", player: req.session.player });
+    res.status(200).json({ message: "player still logged in", email: req.session.email, player: req.session.player });
 });
 /**
  * --- login with: post /login -----------------------------------------
@@ -505,7 +505,7 @@ router.get("/player/:email", function (req, res) {
     });
 });
 /**
- * --- update user with: put /user/:email ---------------------------------
+ * --- update player with: put /user/:email ---------------------------------
  */
 router.put("/player/:email", function (req, res) {
     var status = 500; // Initial HTTP response status
