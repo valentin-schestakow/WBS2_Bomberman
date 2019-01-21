@@ -4,6 +4,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
+### Online version on AWS
+
+[Bomberman online](https://ec2-35-157-91-78.eu-central-1.compute.amazonaws.com:8443/)
+
+### Offline version
+
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
