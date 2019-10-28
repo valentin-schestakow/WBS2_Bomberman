@@ -779,8 +779,8 @@ interface iFacebookAuth extends iAuth {
 
 class FacebookAuthConfig {
   facebookAuth :iFacebookAuth = {
-    clientID: '286966021819558',
-    clientSecret: '1b6e3a21f4d58b43e54b70822611bddc',
+    clientID: 'deleted for privacy reasons',
+    clientSecret: 'deleted for privacy reasons',
     callbackURL: 'https://localhost:8443/auth/facebook/callback'
   };
 }
